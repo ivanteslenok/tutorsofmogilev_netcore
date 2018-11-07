@@ -19,18 +19,18 @@ namespace TutorsOfMogilev_NetCore
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(opts =>
                 opts.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    _configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ContactRepository>();
             services.AddScoped<ContactTypeRepository>();

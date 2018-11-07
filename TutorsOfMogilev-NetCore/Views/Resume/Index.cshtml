@@ -20,9 +20,8 @@
 }
 
 <div class="resume">
-    @using (Html.BeginForm("AddResume", "Resume", FormMethod.Post))
-    {
-        @Html.LabelFor(x => x.Resume.FirstName)
-        @Html.TextBoxFor(x => x.Resume.FirstName)
-    }
+    <form asp-controller="Resume" asp-action="AddResume" method="post">
+        <label asp-for="Resume.FirstName"></label>
+        <input type="text" asp-for="Resume.FirstName" />
+    </form>
 </div>
