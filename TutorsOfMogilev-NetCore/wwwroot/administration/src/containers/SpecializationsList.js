@@ -5,9 +5,9 @@ import { getSortedSpecializations } from './../selectors/specializations';
 import * as specializationAC from '../AC/specialization';
 import * as dialogsAC from '../AC/dialogs';
 import EditableList from '../components/EditableList/index';
-import DeleteConfirmDialog from '../hocs/DeleteConfirmDialog';
-import DialogWithInput from '../hocs/DialogWithInput';
-import CreateBtn from '../hocs/CreateBtn';
+import DeleteConfirmDialog from '../components/DeleteConfirmDialog';
+import DialogWithInput from '../components/DialogWithInput';
+import CreateBtn from '../components/CreateBtn';
 import Loading from '../components/Loading';
 import Paper from '@material-ui/core/Paper';
 

@@ -48,7 +48,6 @@ export default function reducerWithCrud(entityName) {
       case entityName + CREATE_ITEM + FAIL:
       case entityName + UPDATE_ITEM + FAIL:
       case entityName + REMOVE_ITEM + FAIL:
-        // to do error alert
         return { ...state, loading: false, loaded: false };
 
       default:

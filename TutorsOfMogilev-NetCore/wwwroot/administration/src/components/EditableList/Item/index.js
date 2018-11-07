@@ -1,5 +1,5 @@
 import React from 'react';
-import IconBtn from '../../../hocs/IconBtn';
+import IconBtn from '../../../components/IconBtn';
 
 import './index.css';
 

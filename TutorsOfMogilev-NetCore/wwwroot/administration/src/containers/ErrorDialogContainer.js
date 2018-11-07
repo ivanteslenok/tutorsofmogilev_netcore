@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ErrorDialog from '../hocs/ErrorDialog';
+import ErrorDialog from '../components/ErrorDialog';
 import * as dialogsAC from '../AC/dialogs';
 
 const mapStateToProps = state => {
