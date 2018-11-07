@@ -1,0 +1,280 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: #000;
+}
+
+ul li {
+  list-style: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+ "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 12pt;
+  background-image: url(../images/Background.gif);
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+  max-width: 280px;
+}
+
+main {
+  border-top: 1px solid #ddd;
+  position: relative;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+  text-align: right;
+  display: block;
+}
+
+.nav__item {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  opacity: 0.5;
+  border: 1px solid transparent;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.nav__item:hover {
+  opacity: 1;
+}
+
+.nav__item::before {
+  margin-right: 10px;
+}
+
+.nav__item_home::before {
+  content: url(../images/home_16.png);
+}
+
+.nav__item_tutors::before {
+  content: url(../images/teacher-at-the-blackboard_16.png);
+}
+
+.nav__item_resume::before {
+  content: url(../images/contract_16.png);
+}
+
+.nav__item_about-us::before {
+  content: url(../images/about-us_16.png);
+}
+
+.nav__item_tariff::before {
+  content: url(../images/tariff_16.png);
+}
+
+.nav__item_contacts::before {
+  content: url(../images/opened-email-envelope_16.png);
+}
+
+.nav__item_administration::before {
+  content: url(../images/settings-gears_16.png);
+}
+
+.nav__item_active {
+  opacity: 1;
+  border-top: 2px solid #FFC107;
+  border-bottom: 1px solid #fff;
+}
+
+@media screen and (max-width: 970px) {
+  .nav__item {
+    font-size: 0;
+  }
+  .nav__item:before {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .nav__item {
+    padding: 15px;
+  }
+}
+
+header {
+  width: 100%;
+  /* background-color: #800bbb; */
+  background-color: #607D8B;
+}
+
+.head-box {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 23px;
+}
+
+.logo {
+  text-transform: uppercase;
+  color: #fff;
+  padding-top: 1px;
+  padding-left: 2px;
+  display: inline-block;
+}
+
+.logo:hover {
+  color: #fff;
+}
+
+/*card gradient https://css-tricks.com/examples/GradientBorder/ */
+.bot-left-gradient::before, .bot-left-gradient::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: -2px;
+}
+
+.bot-left-gradient {
+  position: relative;
+}
+
+.bot-left-gradient::before {
+  top: -2px;
+  width: 2px;
+  background-image: -webkit-linear-gradient(transparent, #FFC107);
+}
+
+.bot-left-gradient::after {
+  right: -2px;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, #FFC107, transparent);
+}
+
+.subjects {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 10px 0;
+  width: 240px;
+  -webkit-transform: translate(0%, 0%);
+          transform: translate(0%, 0%);
+  border-right: 1px solid #ddd;
+  text-align: center;
+  /* http://nisnom.com/veb-razrabotki/menyu-s-interesnym-effektom-pri-navedenie-ssylki-obvodyatsya-slovno-karandashom-ili-sharikovoj-ruchkoj/#more-2804 
+    Draw links
+    */
+}
+
+.subjects-header {
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: 900;
+}
+
+.subjects__item {
+  margin: 5px;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.subjects__link {
+  position: relative;
+}
+
+.subjects__link svg {
+  fill: none;
+  stroke: #2196F3;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 338;
+  stroke-dashoffset: 338;
+  stroke-linecap: round;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 60px);
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: stroke-dashoffset 0s 0.2s, opacity 0.2s;
+  transition: stroke-dashoffset 0s 0.2s, opacity 0.2s;
+  z-index: -1;
+}
+
+.subjects__link_active svg {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  -webkit-transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  stroke: #F44336;
+}
+
+.subjects__link:hover svg {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  -webkit-transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.content {
+  width: 800px;
+  margin-left: auto;
+}
+
+.card {
+  margin: 10px 5px;
+  padding: 10px;
+}
+
+.card-title {
+  font-style: italic;
+}
+
+.card-title:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.card-info {
+  font-size: 11pt;
+  margin: 10px 0;
+  min-height: 140px;
+}
+
+.card-name:after {
+  content: '\A';
+  white-space: pre;
+}
+
+.card-photo {
+  height: 150px;
+  margin-right: 15px;
+  float: left;
+}
+
+.card-label {
+  font-weight: bold;
+}
+
+.card-label::after {
+  content: ': ';
+}
+/*# sourceMappingURL=tutorsList.css.map */

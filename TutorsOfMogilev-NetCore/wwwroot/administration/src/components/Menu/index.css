@@ -1,0 +1,24 @@
+nav {
+  position: absolute;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  box-shadow: none;
+  background-color: #ee6e73;
+}
+
+.menu-head {
+  margin: 0;
+  line-height: 60px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 2em;
+  padding-left: 20px;
+  padding-bottom: 3px;
+  cursor: default;
+  font-weight: 400;
+  color: #fff;
+}
+
+.menu-head i {
+  padding-right: 15px;
+}

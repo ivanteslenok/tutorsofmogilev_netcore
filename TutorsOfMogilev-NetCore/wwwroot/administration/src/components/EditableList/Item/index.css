@@ -1,0 +1,22 @@
+.editable-list-item {
+  position: relative;
+  margin: 0 10px;
+  padding: 5px 10px;
+  line-height: 50px;
+  box-shadow: 0;
+  transition: linear .3s;
+}
+
+.editable-list-item:hover {
+  box-shadow: -4px 4px 10px #9E9E9E;
+}
+
+.editable-list-item:last-child {  
+  border-bottom: none;
+}
+
+.del-btn-block {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+}

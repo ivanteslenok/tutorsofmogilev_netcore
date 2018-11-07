@@ -1,0 +1,28 @@
+﻿@model ResumePageVM
+
+@{
+    ViewBag.Title = "Резюме";
+}
+
+@section Menu
+{
+    @await Component.InvokeAsync("Menu", new { menuModel = Model.Menu })
+}
+
+@section Styles
+    {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/resume.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/resume.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<div class="resume">
+    @using (Html.BeginForm("AddResume", "Resume", FormMethod.Post))
+    {
+        @Html.LabelFor(x => x.Resume.FirstName)
+        @Html.TextBoxFor(x => x.Resume.FirstName)
+    }
+</div>

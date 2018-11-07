@@ -1,0 +1,116 @@
+@import 'layout';
+@import 'menu';
+@import 'header';
+@import 'bot-left-gradient';
+    
+@mixin drowed {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transition: opacity 0s, stroke-dashoffset 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.subjects {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 10px 0;
+    width: 240px;
+    transform: translate(0%, 0%);
+    border-right: 1px solid #ddd;
+    text-align: center;
+
+    &-header {
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: 900;
+    }
+
+    &__item {
+        margin: 5px;
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    /* http://nisnom.com/veb-razrabotki/menyu-s-interesnym-effektom-pri-navedenie-ssylki-obvodyatsya-slovno-karandashom-ili-sharikovoj-ruchkoj/#more-2804 
+    Draw links
+    */
+    &__link {
+        position: relative;
+    
+        svg {
+            fill: none;
+            stroke: #2196F3;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke-dasharray: 338;
+            stroke-dashoffset: 338;
+            stroke-linecap: round;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(100% + 60px);
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            transition: stroke-dashoffset 0s 0.2s, opacity 0.2s;
+            z-index: -1;
+        }
+    
+        &_active {
+            svg {
+                @include drowed;
+                stroke: #F44336;
+            }
+        }
+    
+        &:hover {
+            svg {
+                @include drowed;  
+            }
+        }
+    }
+}
+
+.content {
+    width: 800px;
+    margin-left: auto;
+}
+
+.card {
+    margin: 10px 5px;
+    padding: 10px;
+
+    &-title {
+        font-style: italic;
+    
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    }
+    
+    &-info {
+        font-size: 11pt;
+        margin: 10px 0;
+        min-height: 140px;
+    }
+    
+    &-name:after {
+        content: '\A';
+        white-space: pre;
+    }
+    
+    &-photo {
+        height: 150px;
+        margin-right: 15px;
+        float: left;
+    }
+    
+    &-label {
+        font-weight: bold;
+    
+        &::after {
+            content: ': '
+        }
+    }
+}

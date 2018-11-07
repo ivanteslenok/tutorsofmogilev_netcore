@@ -5,12 +5,46 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\aboutUs.css" />
+    <None Include="wwwroot\css\aboutUs.css.map" />
+    <None Include="wwwroot\css\aboutUs.scss" />
+    <None Include="wwwroot\css\contacts.css" />
+    <None Include="wwwroot\css\contacts.css.map" />
+    <None Include="wwwroot\css\contacts.scss" />
+    <None Include="wwwroot\css\resume.css" />
+    <None Include="wwwroot\css\resume.css.map" />
+    <None Include="wwwroot\css\resume.scss" />
+    <None Include="wwwroot\css\tariffs.css" />
+    <None Include="wwwroot\css\tariffs.css.map" />
+    <None Include="wwwroot\css\tariffs.scss" />
+    <None Include="wwwroot\css\tutorsList.css" />
+    <None Include="wwwroot\css\tutorsList.css.map" />
+    <None Include="wwwroot\css\tutorsList.scss" />
+    <None Include="wwwroot\css\_bot-left-gradient.scss" />
+    <None Include="wwwroot\css\_colors.scss" />
+    <None Include="wwwroot\css\_header.scss" />
+    <None Include="wwwroot\css\_layout.scss" />
+    <None Include="wwwroot\css\_menu.scss" />
+    <None Include="wwwroot\uploads\UsersPhotos\2DdwDE_yPh4.jpg" />
+    <None Include="wwwroot\uploads\UsersPhotos\default-user.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\DataEntity\DataEntity.csproj" />
+    <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\Modules\Modules.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,69 @@
+﻿@model TutorsListVM
+
+@{
+    ViewBag.Title = "Репетиторы";
+}
+
+@section Menu
+{
+    @await Component.InvokeAsync("Menu", new { menuModel = Model.Menu })
+}
+
+@section Styles
+{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/tutorsList.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/tutorsList.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<div class="subjects">
+    <span class="subjects-header">Предметы:</span>
+    <ul class="subjects__list">
+        <li>
+            @await Component.InvokeAsync(
+                "SubjectLink",
+                new { currentSubj = Model.PaginationInfo.CurrentSubject })
+        </li>
+        @foreach (var subj in Model.Subjects)
+        {
+            <li class="subjects__item">
+                @await Component.InvokeAsync(
+                    "SubjectLink", 
+                    new { subjectName = subj.Name, currentSubj = Model.PaginationInfo.CurrentSubject })
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="content">
+    @foreach (var tutor in Model.Tutors)
+    {
+        <div class="card bot-left-gradient">
+            <a class="card-title" title="Подробнее" href="">
+                <span class="card-name">@tutor.FIO</span>
+                <span class="card-subjects">@tutor.Subjects</span>
+            </a>
+            <div class="card-info">
+                @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
+                {
+                    <img src="~/uploads/UsersPhotos/default-user.png" class="card-photo">
+                }
+                else
+                {
+                    <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo">
+                }
+                <p class="card-education"><span class="card-label">Образование</span>@tutor.Education</p>
+                <p class="card-district"><span class="card-label">Район</span>@tutor.District</p>
+                <p class="card-cost"><span class="card-label">Стоимость</span>@tutor.Cost</p>
+                <p class="card-specialization"><span class="card-label">Специализация</span>@tutor.Specializations</p>
+            </div>
+        </div>
+    }
+
+    @await Component.InvokeAsync("Pagination", new { paginationInfo = Model.PaginationInfo })
+
+    <div></div>
+</div>

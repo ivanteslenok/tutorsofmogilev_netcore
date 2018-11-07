@@ -1,0 +1,20 @@
+﻿@model MenuModel
+
+@{
+    ViewBag.Title = "Тарифы";
+}
+
+@section Menu
+{
+    @await Component.InvokeAsync("Menu", new { menuModel = Model })
+}
+
+@section Styles
+    {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/tariffs.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/tariffs.min.css" asp-append-version="true" />
+    </environment>
+}

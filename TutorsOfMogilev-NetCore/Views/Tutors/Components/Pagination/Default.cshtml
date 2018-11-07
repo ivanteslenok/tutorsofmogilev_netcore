@@ -1,0 +1,37 @@
+﻿@model PaginationInfo
+
+<ul class="pagination">
+    @await Component.InvokeAsync(
+        "PaginationOneStepLink",
+        new
+        {
+            symbol = Model.PrevPageSymbol,
+            label = Model.PrevPageText,
+            page = Model.PrevPageNumber,
+            subject = Model.CurrentSubject,
+            disabled = !Model.HasPrevPage
+        })
+    
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        var className = i == Model.PageNumber ? "active" : "";
+
+        <li class="@className">
+            <a asp-controller="Tutors"
+               asp-action="List"
+               asp-route-Subject="@Model.CurrentSubject"
+               asp-route-PageNumber="@i">@i</a>
+        </li>
+    }
+
+    @await Component.InvokeAsync(
+        "PaginationOneStepLink",
+        new
+        {
+            symbol = Model.NextPageSymbol,
+            label = Model.NextPageText,
+            page = Model.NextPageNumber,
+            subject = Model.CurrentSubject,
+            disabled = !Model.HasNextPage
+        })
+</ul>

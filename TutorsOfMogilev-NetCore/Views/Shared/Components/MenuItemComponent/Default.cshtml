@@ -1,0 +1,10 @@
+﻿@model MenuItem
+
+@{
+    var className = $"nav__item {Model.CssClassName}";
+    className = Model.IsActive ? $"{className} nav__item_active" : className;
+}
+
+<a class="@className" 
+   asp-controller="@Model.Controller"
+   asp-action="@Model.Action">@Model.Name</a>
