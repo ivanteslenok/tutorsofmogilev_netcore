@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,23 +15,23 @@ export default function DialogWithInput({
   title,
   description
 }) {
-  let input;
+  let input = createRef();
 
   const onAccept = () => {
-    if (input.value.length < 1) return;
+    if (input.current.value.length < 1) return;
 
-    handleAccept(input.value);
+    handleAccept(input.current.value);
     handleClose();
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
+    <Dialog fullWidth maxWidth='sm' open={isOpen} onClose={handleClose}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>{description}</DialogContentText>
         <TextField
           defaultValue={inputValue}
-          inputRef={node => (input = node)}
+          inputRef={input}
           onKeyPress={ev => {
             ev.key === 'Enter' && onAccept();
           }}
@@ -51,3 +51,5 @@ export default function DialogWithInput({
     </Dialog>
   );
 }
+
+
