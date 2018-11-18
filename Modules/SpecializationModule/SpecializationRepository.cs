@@ -36,17 +36,19 @@ namespace Modules.SpecializationModule
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
-            var totalCount = query.Count();
+            var totalCount = query.CountAsync();
 
-            var result = await query
+            var result = query
                 .ApplyPaging(filter)
                 .AsNoTracking()
                 .ToListAsync();
 
+            await Task.WhenAll(totalCount, result);
+
             return new ListModel<Specialization>
             {
-                Items = result,
-                TotalCount = totalCount
+                Items = result.Result,
+                TotalCount = totalCount.Result
             };
         }
 
