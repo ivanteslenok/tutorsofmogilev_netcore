@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Extensions;
 using Core.Models;
+using Data.DTOs;
 using Data.Entities;
+using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.PhoneModule.Extensions;
@@ -20,19 +22,18 @@ namespace Modules.PhoneModule
             _db = applicationContext;
         }
 
-        public async Task<List<Phone>> GetList()
+        public async Task<List<PhoneDTO>> GetList()
         {
             return await _db.Phones
-                //.Include(ct => ct.Tutor)
                 .OrderBy(x => x.Id)
+                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<ListModel<Phone>> GetList(PhoneListFilter filter)
+        public async Task<ListModel<PhoneDTO>> GetList(PhoneListFilter filter)
         {
             var query = _db.Phones
-                //.Include(ct => ct.Tutor)
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
@@ -40,37 +41,40 @@ namespace Modules.PhoneModule
 
             var result = query
                 .ApplyPaging(filter)
+                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
             await Task.WhenAll(totalCount, result);
 
-            return new ListModel<Phone>
+            return new ListModel<PhoneDTO>
             {
                 Items = result.Result,
                 TotalCount = totalCount.Result
             };
         }
 
-        public async Task<Phone> GetItem(int? id)
+        public async Task<PhoneDTO> GetItem(int? id)
         {
-            return await _db.Phones.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _db.Phones.FirstOrDefaultAsync(x => x.Id == id);
+
+            return item.CreateDto();
         }
 
-        public async Task<Phone> InsertItem(Phone item)
+        public async Task<PhoneDTO> InsertItem(Phone item)
         {
             _db.Phones.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item : null;
+            return i > 0 ? item.CreateDto() : null;
         }
 
-        public async Task<Phone> UpdateItem(Phone item)
+        public async Task<PhoneDTO> UpdateItem(Phone item)
         {
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item : null;
+            return i > 0 ? item.CreateDto() : null;
         }
 
         public async Task<bool> DeleteItem(int id)

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Core.Models;
+using Data.DTOs;
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Modules.TutorModule;
@@ -21,7 +22,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         }
         
         [HttpGet]
-        public async Task<ListModel<Tutor>> Get([FromQuery] TutorListFilter filter)
+        public async Task<ListModel<TutorDTO>> Get([FromQuery] TutorListFilter filter)
         {
             return await _tutorRepository.GetList(filter);
         }

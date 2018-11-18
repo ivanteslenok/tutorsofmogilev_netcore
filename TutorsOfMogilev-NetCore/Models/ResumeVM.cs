@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Data.DTOs;
 using Data.Entities;
 
 namespace TutorsOfMogilev_NetCore.Models
@@ -50,14 +51,14 @@ namespace TutorsOfMogilev_NetCore.Models
         
         [Required(ErrorMessage = "Введите район в котором вы проживаете")]
         [Display(Name = "Район")]
-        public District District { get; set; }
+        public DistrictDTO District { get; set; }
         
-        public List<District> Districts { get; set; }
+        public List<DistrictDTO> Districts { get; set; }
         
-        public List<Specialization> Specializations { get; set; }
+        public List<SpecializationDTO> Specializations { get; set; }
         
-        public List<Subject> Subjects { get; set; }
+        public List<SubjectDTO> Subjects { get; set; }
         
-        public List<ContactType> ContactTypes { get; set; }
+        public List<ContactTypeDTO> ContactTypes { get; set; }
     }
 }

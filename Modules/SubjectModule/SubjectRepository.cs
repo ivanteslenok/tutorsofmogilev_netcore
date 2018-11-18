@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Extensions;
 using Core.Models;
+using Data.DTOs;
 using Data.Entities;
+using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.SubjectModule.Extensions;
@@ -20,19 +22,18 @@ namespace Modules.SubjectModule
             _db = applicationContext;
         }
 
-        public async Task<List<Subject>> GetList()
+        public async Task<List<SubjectDTO>> GetList()
         {
             return await _db.Subjects
-                //.Include(s => s.Tutors)
                 .OrderBy(x => x.Id)
+                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<ListModel<Subject>> GetList(SubjectListFilter filter)
+        public async Task<ListModel<SubjectDTO>> GetList(SubjectListFilter filter)
         {
             var query = _db.Subjects
-                //.Include(s => s.Tutors)
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
@@ -40,37 +41,40 @@ namespace Modules.SubjectModule
 
             var result = query
                 .ApplyPaging(filter)
+                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
             await Task.WhenAll(totalCount, result);
 
-            return new ListModel<Subject>
+            return new ListModel<SubjectDTO>
             {
                 Items = result.Result,
                 TotalCount = totalCount.Result
             };
         }
 
-        public async Task<Subject> GetItem(int? id)
+        public async Task<SubjectDTO> GetItem(int? id)
         {
-            return await _db.Subjects.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _db.Subjects.FirstOrDefaultAsync(x => x.Id == id);
+
+            return item.CreateDto();
         }
 
-        public async Task<Subject> InsertItem(Subject item)
+        public async Task<SubjectDTO> InsertItem(Subject item)
         {
             _db.Subjects.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item : null;
+            return i > 0 ? item.CreateDto() : null;
         }
 
-        public async Task<Subject> UpdateItem(Subject item)
+        public async Task<SubjectDTO> UpdateItem(Subject item)
         {
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item : null;
+            return i > 0 ? item.CreateDto() : null;
         }
 
         public async Task<bool> DeleteItem(int id)

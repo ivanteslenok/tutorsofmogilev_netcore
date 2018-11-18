@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Core.Models;
-using Data.Entities;
+using Data.DTOs;
 
 namespace TutorsOfMogilev_NetCore.Models
 {
     public class TutorsListVM
     {
         public List<TutorVM> Tutors { get; set; }
-        public List<Subject> Subjects { get; set; }
+        public List<SubjectDTO> Subjects { get; set; }
         public PaginationInfo PaginationInfo { get; set; }
         public MenuModel Menu { get; set; }
     }

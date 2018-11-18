@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Data.DTOs;
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Modules.SpecializationModule;
@@ -20,7 +21,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         }
         
         [HttpGet]
-        public async Task<List<Specialization>> Get()
+        public async Task<List<SpecializationDTO>> Get()
         {
             return await _specializationRepository.GetList();
         }

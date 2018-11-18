@@ -33,15 +33,13 @@ namespace TutorsOfMogilev_NetCore.Services
                     Cost = x.Cost.ToString(),
                     District = x.District.Name,
                     Education = x.Education,
-                    Specializations = x.TutorSpecializations
-                        .Select(ts => ts.Specialization)
+                    Specializations = x.Specializations
                         .Aggregate(
                             new StringBuilder(), 
                             (acc, next) => StringAggregator(acc, next.Name)
                             )
                         .ToString(),
-                    Subjects = x.TutorSubjects
-                        .Select(ts => ts.Subject)
+                    Subjects = x.Subjects
                         .Aggregate(
                             new StringBuilder(), 
                             (acc, next) => StringAggregator(acc, next.Name)

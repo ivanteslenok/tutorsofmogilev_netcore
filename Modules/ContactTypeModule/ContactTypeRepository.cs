@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Extensions;
 using Core.Models;
+using Data.DTOs;
 using Data.Entities;
+using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.ContactTypeModule.Extensions;
@@ -20,19 +22,18 @@ namespace Modules.ContactTypeModule
             _db = applicationContext;
         }
 
-        public async Task<List<ContactType>> GetList()
+        public async Task<List<ContactTypeDTO>> GetList()
         {
             return await _db.ContactTypes
-                //.Include(ct => ct.Contacts)
                 .OrderBy(x => x.Id)
+                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<ListModel<ContactType>> GetList(ContactTypeListFilter filter)
+        public async Task<ListModel<ContactTypeDTO>> GetList(ContactTypeListFilter filter)
         {
             var query = _db.ContactTypes
-                //.Include(ct => ct.Contacts)
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
@@ -40,37 +41,40 @@ namespace Modules.ContactTypeModule
 
             var result = query
                 .ApplyPaging(filter)
+                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
             await Task.WhenAll(totalCount, result);
 
-            return new ListModel<ContactType>
+            return new ListModel<ContactTypeDTO>
             {
                 Items = result.Result,
                 TotalCount = totalCount.Result
             };
         }
 
-        public async Task<ContactType> GetItem(int? id)
+        public async Task<ContactTypeDTO> GetItem(int? id)
         {
-            return await _db.ContactTypes.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _db.ContactTypes.FirstOrDefaultAsync(x => x.Id == id);
+
+            return item.CreateDto();
         }
 
-        public async Task<ContactType> InsertItem(ContactType item)
+        public async Task<ContactTypeDTO> InsertItem(ContactType item)
         {
             _db.ContactTypes.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item : null;
+            return i > 0 ? item.CreateDto() : null;
         }
 
-        public async Task<ContactType> UpdateItem(ContactType item)
+        public async Task<ContactTypeDTO> UpdateItem(ContactType item)
         {
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item : null;
+            return i > 0 ? item.CreateDto() : null;
         }
 
         public async Task<bool> DeleteItem(int id)
