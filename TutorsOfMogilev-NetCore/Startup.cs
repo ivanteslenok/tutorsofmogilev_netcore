@@ -12,6 +12,7 @@ using Modules.PhoneModule;
 using Modules.SpecializationModule;
 using Modules.SubjectModule;
 using Modules.TutorModule;
+using Newtonsoft.Json;
 using TutorsOfMogilev_NetCore.Filters;
 using TutorsOfMogilev_NetCore.Services;
 
@@ -47,7 +48,10 @@ namespace TutorsOfMogilev_NetCore
             services.AddMvc(config =>
                 {
                     config.Filters.Add(new CustomExceptionFilter(new HostingEnvironment()));
-                });
+                })
+                .AddJsonOptions(
+                    options => options.SerializerSettings.ReferenceLoopHandling =
+                        ReferenceLoopHandling.Ignore);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
