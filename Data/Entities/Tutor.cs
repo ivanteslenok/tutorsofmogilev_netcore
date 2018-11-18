@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities
 {
@@ -14,6 +15,7 @@ namespace Data.Entities
         public string Job { get; set; }
         public string Address { get; set; }
         public byte? Experience { get; set; }
+        [Column(TypeName = "decimal(7,2)")]
         public decimal? Cost { get; set; }
         public int? Rating { get; set; }
         public bool IsVisible { get; set; }
