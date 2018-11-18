@@ -21,9 +21,9 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         }
         
         [HttpGet]
-        public async Task<ListModel<Tutor>> Get([FromBody] TutorListFilter filter)
+        public async Task<ListModel<Tutor>> Get([FromQuery] TutorListFilter filter)
         {
-            return await _tutorRepository.GetList(filter ?? new TutorListFilter());
+            return await _tutorRepository.GetList(filter);
         }
         
         [HttpGet("{id}")]
