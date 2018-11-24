@@ -8,17 +8,47 @@ namespace Modules.TutorModule.Extensions
     {
         public static IQueryable<Tutor> ApplySorting(this IQueryable<Tutor> query, Filter filter)
         {
-            switch (filter.SortBy)
+            var by = filter.SortBy?.ToUpper() ?? "ID";
+            var direction = filter.SortDirection?.ToUpper() ?? "ASC";
+
+            switch (by)
             {
-                case "id":
-                    query = filter.DescSort ? query.OrderByDescending(t => t.Id) : query.OrderBy(t => t.Id);
-                break;
-                case "rating":
-                    query = filter.DescSort ? query.OrderByDescending(t => t.Rating) : query.OrderBy(t => t.Rating);
+                case "ID":
+                    switch (direction)
+                    {
+                        case "ASC":
+                            query = query.OrderBy(t => t.Id);
+                            break;
+                        case "DESC":
+                            query = query.OrderByDescending(t => t.Id);
+                            break;
+                    }
+                    break;
+                case "LASTNAME":
+                    switch (direction)
+                    {
+                        case "ASC":
+                            query = query.OrderBy(t => t.LastName);
+                            break;
+                        case "DESC":
+                            query = query.OrderByDescending(t => t.LastName);
+                            break;
+                    }
+                    break;
+                case "RATING":
+                    switch (direction)
+                    {
+                        case "ASC":
+                            query = query.OrderBy(t => t.Rating);
+                            break;
+                        case "DESC":
+                            query = query.OrderByDescending(t => t.Rating);
+                            break;
+                    }
                     break;
                 default:
-                    query = filter.DescSort ? query.OrderByDescending(t => t.Id) : query.OrderBy(t => t.Id);
-                break;
+                    query = query.OrderBy(t => t.Id);
+                    break;
             }
 
             return query;

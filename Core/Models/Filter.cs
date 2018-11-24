@@ -6,6 +6,6 @@
         public int PageSize { get; set; }
         
         public string SortBy { get; set; }
-        public bool DescSort { get; set; }
+        public string SortDirection { get; set; }
     }
 }

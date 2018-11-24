@@ -24,7 +24,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
         {
             filter.PageSize = 5;
             filter.IsVisible = true;
-            filter.DescSort = true;
+            filter.SortDirection = "desc";
             filter.SortBy = "rating";
             filter.Subject = RouteData.Values["Subject"]?.ToString();
 
