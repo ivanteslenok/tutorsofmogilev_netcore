@@ -86,6 +86,10 @@ export default class EnityList extends Component {
       </>
     );
 
-    return <Paper style={{ width: '50%', margin: '0 auto' }}>{content}</Paper>;
+    return (
+      <Paper style={{ width: '50%', minHeight: '100px', margin: '0 auto', position: 'relative' }}>
+        {content}
+      </Paper>
+    );
   }
 }
