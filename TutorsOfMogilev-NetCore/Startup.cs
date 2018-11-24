@@ -35,10 +35,7 @@ namespace TutorsOfMogilev_NetCore
                 opts.UseSqlServer(
                     _configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAutoMapper(mc =>
-            {
-                mc.AddProfile(new MapperProfile());
-            });
+            services.AddAutoMapper(mc => { mc.AddProfile(new MapperProfile()); });
 
             services.AddScoped<ContactRepository>();
             services.AddScoped<ContactTypeRepository>();
@@ -68,11 +65,11 @@ namespace TutorsOfMogilev_NetCore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(builder => 
+                app.UseCors(builder =>
                     builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                    );
+                );
             }
             else
             {
