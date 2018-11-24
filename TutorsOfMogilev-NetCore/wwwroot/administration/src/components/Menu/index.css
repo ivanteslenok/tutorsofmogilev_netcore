@@ -1,7 +1,7 @@
 nav {
-  position: absolute;
+  position: fixed;
   left: 0;
-  width: 300px;
+  width: 220px;
   height: 100%;
   box-shadow: none;
   background-color: #ee6e73;
@@ -11,7 +11,7 @@ nav {
   margin: 0;
   line-height: 60px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  font-size: 2em;
+  font-size: 1.3em;
   padding-left: 20px;
   padding-bottom: 3px;
   cursor: default;
@@ -20,5 +20,9 @@ nav {
 }
 
 .menu-head i {
-  padding-right: 15px;
+  padding: 10px 10px 0 0;
+  margin-left: -10px;
+  font-size: 1.2em;
+  position: relative;
+  top: 4px;
 }
