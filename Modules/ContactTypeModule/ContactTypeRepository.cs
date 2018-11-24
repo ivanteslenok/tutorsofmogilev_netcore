@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Extensions;
 using Core.Models;
 using Data.DTOs;
 using Data.Entities;
-using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.ContactTypeModule.Extensions;
@@ -16,19 +16,22 @@ namespace Modules.ContactTypeModule
     public class ContactTypeRepository
     {
         private readonly ApplicationContext _db;
+        private readonly IMapper _mapper;
 
-        public ContactTypeRepository(ApplicationContext applicationContext)
+        public ContactTypeRepository(ApplicationContext applicationContext, IMapper mapper)
         {
             _db = applicationContext;
+            _mapper = mapper;
         }
 
         public async Task<List<ContactTypeDTO>> GetList()
         {
-            return await _db.ContactTypes
+            var entities = await _db.ContactTypes
                 .OrderBy(x => x.Id)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
+
+            return _mapper.Map<List<ContactTypeDTO>>(entities);
         }
 
         public async Task<ListModel<ContactTypeDTO>> GetList(ContactTypeListFilter filter)
@@ -41,7 +44,6 @@ namespace Modules.ContactTypeModule
 
             var result = query
                 .ApplyPaging(filter)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -49,7 +51,7 @@ namespace Modules.ContactTypeModule
 
             return new ListModel<ContactTypeDTO>
             {
-                Items = result.Result,
+                Items = _mapper.Map<List<ContactTypeDTO>>(result.Result),
                 TotalCount = totalCount.Result
             };
         }
@@ -58,7 +60,7 @@ namespace Modules.ContactTypeModule
         {
             var item = await _db.ContactTypes.FirstOrDefaultAsync(x => x.Id == id);
 
-            return item.CreateDto();
+            return _mapper.Map<ContactTypeDTO>(item);
         }
 
         public async Task<ContactTypeDTO> InsertItem(ContactType item)
@@ -66,7 +68,7 @@ namespace Modules.ContactTypeModule
             _db.ContactTypes.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<ContactTypeDTO>(item) : null;
         }
 
         public async Task<ContactTypeDTO> UpdateItem(ContactType item)
@@ -74,7 +76,7 @@ namespace Modules.ContactTypeModule
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<ContactTypeDTO>(item) : null;
         }
 
         public async Task<bool> DeleteItem(int id)

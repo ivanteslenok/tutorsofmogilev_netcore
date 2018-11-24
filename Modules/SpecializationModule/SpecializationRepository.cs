@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Extensions;
 using Core.Models;
 using Data.DTOs;
 using Data.Entities;
-using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.SpecializationModule.Extensions;
@@ -16,19 +16,22 @@ namespace Modules.SpecializationModule
     public class SpecializationRepository
     {
         private readonly ApplicationContext _db;
+        private readonly IMapper _mapper;
 
-        public SpecializationRepository(ApplicationContext applicationContext)
+        public SpecializationRepository(ApplicationContext applicationContext, IMapper mapper)
         {
             _db = applicationContext;
+            _mapper = mapper;
         }
 
         public async Task<List<SpecializationDTO>> GetList()
         {
-            return await _db.Specializations
+            var entities = await _db.Specializations
                 .OrderBy(x => x.Id)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
+
+            return _mapper.Map<List<SpecializationDTO>>(entities);
         }
 
         public async Task<ListModel<SpecializationDTO>> GetList(SpecializationListFilter filter)
@@ -41,7 +44,6 @@ namespace Modules.SpecializationModule
 
             var result = query
                 .ApplyPaging(filter)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -49,7 +51,7 @@ namespace Modules.SpecializationModule
 
             return new ListModel<SpecializationDTO>
             {
-                Items = result.Result,
+                Items = _mapper.Map<List<SpecializationDTO>>(result.Result),
                 TotalCount = totalCount.Result
             };
         }
@@ -58,7 +60,7 @@ namespace Modules.SpecializationModule
         {
             var item = await _db.Specializations.FirstOrDefaultAsync(x => x.Id == id);
 
-            return item.CreateDto();
+            return _mapper.Map<SpecializationDTO>(item);
         }
 
         public async Task<SpecializationDTO> InsertItem(Specialization item)
@@ -66,7 +68,7 @@ namespace Modules.SpecializationModule
             _db.Specializations.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<SpecializationDTO>(item) : null;
         }
 
         public async Task<SpecializationDTO> UpdateItem(Specialization item)
@@ -74,7 +76,7 @@ namespace Modules.SpecializationModule
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<SpecializationDTO>(item) : null;
         }
 
         public async Task<bool> DeleteItem(int id)

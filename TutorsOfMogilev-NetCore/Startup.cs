@@ -1,4 +1,6 @@
-﻿using DataEntity;
+﻿using AutoMapper;
+using Data;
+using DataEntity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
@@ -33,6 +35,11 @@ namespace TutorsOfMogilev_NetCore
                 opts.UseSqlServer(
                     _configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
             services.AddScoped<ContactRepository>();
             services.AddScoped<ContactTypeRepository>();
             services.AddScoped<DistrictRepository>();
@@ -47,7 +54,9 @@ namespace TutorsOfMogilev_NetCore
 
             services.AddMvc(config =>
                 {
+                    #if !DEBUG
                     config.Filters.Add(new CustomExceptionFilter(new HostingEnvironment()));
+                    #endif
                 })
                 .AddJsonOptions(
                     options => options.SerializerSettings.ReferenceLoopHandling =

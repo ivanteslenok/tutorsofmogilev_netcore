@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Extensions;
 using Core.Models;
 using Data.DTOs;
 using Data.Entities;
-using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.DistrictModule.Extensions;
@@ -16,19 +16,22 @@ namespace Modules.DistrictModule
     public class DistrictRepository
     {
         private readonly ApplicationContext _db;
+        private readonly IMapper _mapper;
 
-        public DistrictRepository(ApplicationContext applicationContext)
+        public DistrictRepository(ApplicationContext applicationContext, IMapper mapper)
         {
             _db = applicationContext;
+            _mapper = mapper;
         }
 
         public async Task<List<DistrictDTO>> GetList()
         {
-            return await _db.Districts
+            var entities = await _db.Districts
                 .OrderBy(x => x.Id)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
+
+            return _mapper.Map<List<DistrictDTO>>(entities);
         }
 
         public async Task<ListModel<DistrictDTO>> GetList(DistrictListFilter filter)
@@ -41,7 +44,6 @@ namespace Modules.DistrictModule
 
             var result = query
                 .ApplyPaging(filter)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -49,7 +51,7 @@ namespace Modules.DistrictModule
 
             return new ListModel<DistrictDTO>
             {
-                Items = result.Result,
+                Items = _mapper.Map<List<DistrictDTO>>(result.Result),
                 TotalCount = totalCount.Result
             };
         }
@@ -58,7 +60,7 @@ namespace Modules.DistrictModule
         {
             var item = await _db.Districts.FirstOrDefaultAsync(x => x.Id == id);
 
-            return item.CreateDto();
+            return _mapper.Map<DistrictDTO>(item);
         }
 
         public async Task<DistrictDTO> InsertItem(District item)
@@ -66,7 +68,7 @@ namespace Modules.DistrictModule
             _db.Districts.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<DistrictDTO>(item) : null;
         }
 
         public async Task<DistrictDTO> UpdateItem(District item)
@@ -74,7 +76,7 @@ namespace Modules.DistrictModule
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<DistrictDTO>(item) : null;
         }
 
         public async Task<bool> DeleteItem(int id)

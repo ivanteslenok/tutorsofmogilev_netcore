@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Extensions;
 using Core.Models;
 using Data.DTOs;
 using Data.Entities;
-using Data.ExtensionsDTO;
 using DataEntity;
 using Microsoft.EntityFrameworkCore;
 using Modules.PhoneModule.Extensions;
@@ -16,19 +16,22 @@ namespace Modules.PhoneModule
     public class PhoneRepository
     {
         private readonly ApplicationContext _db;
+        private readonly IMapper _mapper;
 
-        public PhoneRepository(ApplicationContext applicationContext)
+        public PhoneRepository(ApplicationContext applicationContext, IMapper mapper)
         {
             _db = applicationContext;
+            _mapper = mapper;
         }
 
         public async Task<List<PhoneDTO>> GetList()
         {
-            return await _db.Phones
+            var entities = await _db.Phones
                 .OrderBy(x => x.Id)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
+
+            return _mapper.Map<List<PhoneDTO>>(entities);
         }
 
         public async Task<ListModel<PhoneDTO>> GetList(PhoneListFilter filter)
@@ -41,7 +44,6 @@ namespace Modules.PhoneModule
 
             var result = query
                 .ApplyPaging(filter)
-                .Select(x => x.CreateDto())
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -49,7 +51,7 @@ namespace Modules.PhoneModule
 
             return new ListModel<PhoneDTO>
             {
-                Items = result.Result,
+                Items = _mapper.Map<List<PhoneDTO>>(result.Result),
                 TotalCount = totalCount.Result
             };
         }
@@ -58,7 +60,7 @@ namespace Modules.PhoneModule
         {
             var item = await _db.Phones.FirstOrDefaultAsync(x => x.Id == id);
 
-            return item.CreateDto();
+            return _mapper.Map<PhoneDTO>(item);
         }
 
         public async Task<PhoneDTO> InsertItem(Phone item)
@@ -66,7 +68,7 @@ namespace Modules.PhoneModule
             _db.Phones.Add(item);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<PhoneDTO>(item) : null;
         }
 
         public async Task<PhoneDTO> UpdateItem(Phone item)
@@ -74,7 +76,7 @@ namespace Modules.PhoneModule
             _db.Entry(item).State = EntityState.Modified;
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? item.CreateDto() : null;
+            return i > 0 ? _mapper.Map<PhoneDTO>(item) : null;
         }
 
         public async Task<bool> DeleteItem(int id)
