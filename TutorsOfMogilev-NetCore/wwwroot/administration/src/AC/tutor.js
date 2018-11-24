@@ -4,11 +4,12 @@ import {
   LOAD_LIST,
   CREATE_ITEM,
   UPDATE_ITEM,
-  REMOVE_ITEM} from '../constants';
+  REMOVE_ITEM
+} from '../constants';
 
-export const loadTutors = () => ({
+export const loadTutors = queryParams => ({
   type: TUTOR + LOAD_LIST,
-  get: TUTORS_URL
+  get: `${TUTORS_URL}${queryParams || ''}`
 });
 
 export const createTutor = tutor => ({

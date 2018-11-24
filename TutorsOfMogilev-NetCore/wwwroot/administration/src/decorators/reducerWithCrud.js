@@ -26,7 +26,7 @@ export default function reducerWithCrud(entityName) {
         return { ...state, loading: true };
 
       case entityName + LOAD_LIST + SUCCESS:
-        return { items: data, loading: false, loaded: true };
+        return { ...state, items: data, loading: false, loaded: true };
 
       case entityName + CREATE_ITEM + SUCCESS:
         const itemsAfterCreate = [...state.items, data];
