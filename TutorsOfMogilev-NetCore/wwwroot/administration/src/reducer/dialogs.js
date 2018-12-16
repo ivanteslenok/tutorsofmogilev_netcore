@@ -23,7 +23,7 @@ export default function dialogs(state = initialState, action) {
     return {
       ...state,
       errorOpen: true,
-      errorMessage: error.response.data.message
+      errorMessage: error && error.response ? error.response.data : 'Ошибка'
     };
 
   switch (type) {

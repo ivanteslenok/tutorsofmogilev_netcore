@@ -51,9 +51,7 @@ namespace TutorsOfMogilev_NetCore
 
             services.AddMvc(config =>
                 {
-                    #if !DEBUG
                     config.Filters.Add(new CustomExceptionFilter(new HostingEnvironment()));
-                    #endif
                 })
                 .AddJsonOptions(
                     options => options.SerializerSettings.ReferenceLoopHandling =

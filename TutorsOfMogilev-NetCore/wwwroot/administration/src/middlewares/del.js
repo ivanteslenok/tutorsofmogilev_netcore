@@ -13,6 +13,8 @@ export default store => next => action => {
 
   axios
     .delete(`${del}/${payload.id}`)
-    .then(next({ ...rest, type: type + SUCCESS, payload }))
+    // TODO добавлено для решения проблемы с CORS, можно удалить в релизе
+    .then(resp => (resp.config.method === 'delete') && next({ ...rest, type: type + SUCCESS, payload }))
+    // .then(next({ ...rest, type: type + SUCCESS, payload }))
     .catch(error => next({ ...rest, type: type + FAIL, error }));
 };

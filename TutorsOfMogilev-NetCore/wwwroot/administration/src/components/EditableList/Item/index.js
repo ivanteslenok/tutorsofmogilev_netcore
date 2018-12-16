@@ -1,5 +1,6 @@
 import React from 'react';
-import IconBtn from '../../../components/IconBtn';
+import EditBtn from '../../EditBtn';
+import DeleteBtn from '../../DeleteBtn';
 
 import './index.css';
 
@@ -13,18 +14,8 @@ export default function EditableListItem({
       <div>
         {item.name}
         <div className="del-btn-block">
-          <IconBtn
-            handleClick={handleEdit}
-            title="Изменить"
-            placement="left"
-            icon="edit"
-          />
-          <IconBtn
-            handleClick={handleDelete}
-            title="Удалить"
-            placement="right"
-            icon="delete"
-          />
+          <EditBtn onExecute={handleEdit} />
+          <DeleteBtn onExecute={handleDelete} />
         </div>
       </div>
     </li>

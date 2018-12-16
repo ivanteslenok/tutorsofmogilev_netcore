@@ -25,6 +25,24 @@ namespace Data
                     dest => dest.Subjects,
                     opts => opts.MapFrom(
                         src => src.TutorSubjects.Select(y => y.Subject).ToList()));
+
+            CreateMap<TutorDTO, Tutor>()
+                .ForMember(
+                    dest => dest.TutorSpecializations,
+                    opts => opts.MapFrom(
+                        src => src.Specializations.Select(y => new TutorSpecialization
+                        {
+                            TutorId = src.Id,
+                            SpecializationId = y.Id
+                        }).ToList()))
+                .ForMember(
+                    dest => dest.TutorSubjects,
+                    opts => opts.MapFrom(
+                        src => src.Subjects.Select(y => new TutorSubject
+                        {
+                            TutorId = src.Id,
+                            SubjectId = y.Id
+                        }).ToList()));
         }
     }
 }

@@ -5,6 +5,7 @@ export default store => next => action => {
   const { put, type, payload, ...rest } = action;
 
   if (!put) return next(action);
+  const { id, additionalUrl, data } = payload;
 
   next({
     ...rest,
@@ -12,7 +13,7 @@ export default store => next => action => {
   });
 
   axios
-    .put(`${put}/${payload.id}`, payload.data, {
+    .put(`${put}/${id}${additionalUrl || ''}`, data, {
       headers: {
         'Content-Type': 'application/json'
       }

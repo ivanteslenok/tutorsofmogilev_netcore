@@ -29,6 +29,7 @@ namespace Modules.TutorModule
             var entities = await _db.Tutors
                 .Include(x => x.Phones)
                 .Include(x => x.Contacts)
+                    .ThenInclude(x => x.ContactType)
                 .Include(x => x.TutorSpecializations)
                     .ThenInclude(x => x.Specialization)
                 .Include(x => x.TutorSubjects)
@@ -46,6 +47,7 @@ namespace Modules.TutorModule
             var query = _db.Tutors
                 .Include(x => x.Phones)
                 .Include(x => x.Contacts)
+                    .ThenInclude(x => x.ContactType)
                 .Include(x => x.TutorSpecializations)
                     .ThenInclude(x => x.Specialization)
                 .Include(x => x.TutorSubjects)
@@ -85,17 +87,36 @@ namespace Modules.TutorModule
             return _mapper.Map<TutorDTO>(item);
         }
 
-        public async Task<TutorDTO> InsertItem(Tutor item)
+        public async Task<TutorDTO> InsertItem(TutorDTO item)
         {
-            _db.Tutors.Add(item);
+            var itemForSave = _mapper.Map<Tutor>(item);
+
+            _db.Districts.Attach(itemForSave.District);
+            _db.Tutors.Add(itemForSave);
             int i = await _db.SaveChangesAsync();
 
             return i > 0 ? _mapper.Map<TutorDTO>(item) : null;
         }
 
-        public async Task<TutorDTO> UpdateItem(Tutor item)
+        public async Task<TutorDTO> UpdateItem(TutorDTO item)
         {
-            _db.Entry(item).State = EntityState.Modified;
+            var itemForSave = _mapper.Map<Tutor>(item);
+
+            _db.Tutors.Attach(itemForSave);
+
+            _db.Entry(itemForSave).Property(x => x.FirstName).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.LastName).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Patronymic).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Education).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Job).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Address).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Rating).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.IsVisible).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Cost).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Description).IsModified = true;
+            _db.Entry(itemForSave).Property(x => x.Experience).IsModified = true;
+            _db.Entry(itemForSave).Reference(x => x.District).IsModified = true;
+
             int i = await _db.SaveChangesAsync();
 
             return i > 0 ? _mapper.Map<TutorDTO>(item) : null;
@@ -106,6 +127,58 @@ namespace Modules.TutorModule
             var item = new Tutor { Id = id };
 
             _db.Entry(item).State = EntityState.Deleted;
+            int i = await _db.SaveChangesAsync();
+
+            return i > 0;
+        }
+
+        public async Task<bool> UpdateTutorSubjects(long id, long[] added, long[] deleted)
+        {
+            var tutor = _db.Tutors
+                .Include(x => x.TutorSubjects)
+                .First(x => x.Id == id);
+
+            tutor.TutorSubjects
+                .Where(x => deleted.Contains(x.SubjectId))
+                .ToList()
+                .ForEach(x => tutor.TutorSubjects.Remove(x));
+
+            var addedSubjects = _db.Subjects.Where(x => added.Contains(x.Id));
+
+            foreach (var item in addedSubjects)
+                tutor.TutorSubjects
+                    .Add(new TutorSubject 
+                    { 
+                        Tutor = tutor, 
+                        Subject = item 
+                    });
+
+            int i = await _db.SaveChangesAsync();
+
+            return i > 0;
+        }
+
+        public async Task<bool> UpdateTutorSpecializations(long id, long[] added, long[] deleted)
+        {
+            var tutor = _db.Tutors
+                .Include(x => x.TutorSpecializations)
+                .First(x => x.Id == id);
+
+            tutor.TutorSpecializations
+                .Where(x => deleted.Contains(x.SpecializationId))
+                .ToList()
+                .ForEach(x => tutor.TutorSpecializations.Remove(x));
+
+            var addedSpecializations = _db.Specializations.Where(x => added.Contains(x.Id));
+
+            foreach (var item in addedSpecializations)
+                tutor.TutorSpecializations
+                    .Add(new TutorSpecialization 
+                    { 
+                        Tutor = tutor,
+                        Specialization = item 
+                    });
+
             int i = await _db.SaveChangesAsync();
 
             return i > 0;

@@ -5,11 +5,12 @@
   line-height: 50px;
   box-shadow: 0;
   transition: linear .3s;
+  border-bottom: 1px solid #9E9E9E;
 }
 
-.editable-list-item:hover {
+/* .editable-list-item:hover {
   box-shadow: -4px 4px 10px #9E9E9E;
-}
+} */
 
 .editable-list-item:last-child {  
   border-bottom: none;

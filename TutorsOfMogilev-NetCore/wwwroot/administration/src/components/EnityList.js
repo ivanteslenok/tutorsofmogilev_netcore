@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import EditableList from './EditableList/index';
+import EditableList from './EditableList';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 import DialogWithInput from './DialogWithInput';
 import CreateBtn from './CreateBtn';
@@ -23,9 +23,14 @@ export default class EnityList extends Component {
     this.props.openInputDialog();
   };
 
-  handleDeleteStart = id => {
+  handleDeleteStart = (id, text) => {
     this.setState({ changingItemId: id, isEdit: false });
     this.props.openDeleteDialog();
+  };
+
+  handleDeleteConfirm = () => {
+    this.props.remove(this.state.changingItemId);
+    this.props.closeDeleteDialog();
   };
 
   handleAccept = value => {
@@ -50,13 +55,15 @@ export default class EnityList extends Component {
       closeDeleteDialog,
       withInputDialogOpen,
       openInputDialog,
-      closeInputDialog,
-      remove
+      closeInputDialog
     } = this.props;
 
     const { changingItemId, isEdit } = this.state;
 
     const description = 'Введите название.';
+
+    const deleteItem = changingItemId !== null && _.find(items, { id: changingItemId });
+    const deleteText = deleteItem && deleteItem.name;
 
     const content = loading ? (
       <Loading />
@@ -72,8 +79,9 @@ export default class EnityList extends Component {
         </div>
         <DeleteConfirmDialog
           isOpen={deleteDialogOpen}
+          text={deleteText}
           handleClose={closeDeleteDialog}
-          handleConfirm={() => remove(changingItemId)}
+          handleConfirm={this.handleDeleteConfirm}
         />
         <DialogWithInput
           title={isEdit ? 'Редактирование' : 'Создание'}
@@ -87,7 +95,14 @@ export default class EnityList extends Component {
     );
 
     return (
-      <Paper style={{ width: '50%', minHeight: '100px', margin: '0 auto', position: 'relative' }}>
+      <Paper
+        style={{
+          width: '50%',
+          minHeight: '100px',
+          margin: '0 auto',
+          position: 'relative'
+        }}
+      >
         {content}
       </Paper>
     );

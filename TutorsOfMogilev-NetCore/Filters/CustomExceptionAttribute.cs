@@ -22,12 +22,13 @@ namespace TutorsOfMogilev_NetCore.Filters
 
             ExceptionHandler.HandleError(context.Exception, actionName);
 
+            // TODO разграничивать ппоказ exceptionMessage по ролям (только админу)
             context.Result = new ContentResult
             {
                 StatusCode = 500,
                 Content = _env.IsDevelopment()
                     ? $"В методе {actionName} возникло исключение: \n {exceptionMessage} \n {exceptionStack}"
-                    : "Во время выполнения запроса произошла ошибка."
+                    : $"{exceptionMessage}"
             };
 
             context.ExceptionHandled = true;

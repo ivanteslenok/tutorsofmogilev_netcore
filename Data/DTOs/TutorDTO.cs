@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Data.DTOs
 {
     public class TutorDTO
     {
         public long Id { get; set; }
+        [Required(ErrorMessage = "Задайте имя репетитора!")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Patronymic { get; set; }

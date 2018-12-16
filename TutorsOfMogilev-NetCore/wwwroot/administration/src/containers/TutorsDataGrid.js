@@ -1,13 +1,25 @@
 import { connect } from 'react-redux';
 import * as tutorAC from '../AC/tutor';
-import DataGrid from '../components/DataGrid';
+import * as districtAC from '../AC/district';
+import DataGrid from '../components/DataGrid/index';
 
 const mapStateToProps = state => {
   return {
-    items: state.tutors.items,
+    columns: state.tutors.gridColumns,
+    defaultColumnWidths: state.tutors.gridColumnWidths,
+    defaultHiddenColumnNames: state.tutors.gridHiddenColumnNames,
+    defaultColumnOrder: state.tutors.gridColumnOrder,
+    availableColumnsValues: {
+      district: state.districts.items
+    },
+    availableColumnsValuesLoaded: state.districts.loaded,
+    defaultValues: {
+      district: state.districts.items[0]
+    },
+    rows: state.tutors.items,
     totalCount: state.tutors.totalCount,
     loading: state.tutors.loading,
-    gridColumns: state.tutors.gridColumns
+    lastQueryParams: state.tutors.lastQueryParams
   };
 };
 
@@ -15,22 +27,28 @@ const mapDispatchToProps = dispatch => {
   return {
     loadData: filter => {
       dispatch(tutorAC.loadTutors(filter));
+    },
+    loadAvailableValues: () => {
+      dispatch(districtAC.loadDistricts());
+    },
+    saveQueryParams: queryParams => {
+      dispatch(tutorAC.setLastQueryParams(queryParams));
+    },
+    getDeleteText: deleteRow => {
+      if (deleteRow) {
+        return `${deleteRow.firstName} ${deleteRow.lastName || ''}`;
+      }
+      return '';
+    },
+    remove: id => {
+      dispatch(tutorAC.removeTutor(id));
+    },
+    create: tutor => {
+      dispatch(tutorAC.createTutor(tutor));
+    },
+    update: (id, tutor) => {
+      dispatch(tutorAC.updateTutor(id, tutor));
     }
-    // remove: id => {
-    //   dispatch(districtAC.removeDistrict(id));
-    // },
-    // create: district => {
-    //   dispatch(districtAC.createDistrict(district));
-    // },
-    // update: (id, district) => {
-    //   dispatch(districtAC.updateDistrict(id, district));
-    // },
-    // openDeleteDialog: () => {
-    //   dispatch(dialogsAC.openDeleteConfirmDialog());
-    // },
-    // closeDeleteDialog: () => {
-    //   dispatch(dialogsAC.closeDeleteConfirmDialog());
-    // }
   };
 };
 

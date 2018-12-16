@@ -8,7 +8,7 @@ namespace Modules.TutorModule.Extensions
     {
         public static IQueryable<Tutor> ApplySorting(this IQueryable<Tutor> query, Filter filter)
         {
-            var by = filter.SortBy?.ToUpper() ?? "ID";
+            var by = filter.SortBy?.ToUpper() ?? "LASTNAME";
             var direction = filter.SortDirection?.ToUpper() ?? "ASC";
 
             switch (by)
@@ -155,9 +155,6 @@ namespace Modules.TutorModule.Extensions
                             query = query.OrderByDescending(t => t.Rating);
                             break;
                     }
-                    break;
-                default:
-                    query = query.OrderBy(t => t.Id);
                     break;
             }
 

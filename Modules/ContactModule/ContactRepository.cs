@@ -69,6 +69,9 @@ namespace Modules.ContactModule
 
         public async Task<ContactDTO> InsertItem(Contact item)
         {
+            if (item.ContactType != null)
+                _db.ContactTypes.Attach(item.ContactType);
+
             _db.Contacts.Add(item);
             int i = await _db.SaveChangesAsync();
 
