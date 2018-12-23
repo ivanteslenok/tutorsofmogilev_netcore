@@ -156,6 +156,17 @@ namespace Modules.TutorModule.Extensions
                             break;
                     }
                     break;
+                case "CREATEDATE":
+                    switch (direction)
+                    {
+                        case "ASC":
+                            query = query.OrderBy(t => t.CreateDate);
+                            break;
+                        case "DESC":
+                            query = query.OrderByDescending(t => t.CreateDate);
+                            break;
+                    }
+                    break;
             }
 
             return query;

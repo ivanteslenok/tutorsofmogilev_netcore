@@ -1,4 +1,4 @@
-import moment from 
+import moment from 'moment'
 
 import {
   TUTOR,
@@ -92,15 +92,16 @@ const gridSettings = [
   {
     name: 'district',
     title: 'Район',
-    width: 100,
+    width: 180,
     getCellValue: row => (row.district ? row.district.name : null),
     availableValues: []
   },
   {
     name: 'createDate',
     title: 'Дата добавления',
-    width: 180,
-    getCellValue: row => row.createDate ? row.createDate.toLocalDateString() : ''
+    width: 140,
+    editingEnabled: false,
+    getCellValue: row => row.createDate ? moment(row.createDate).format('DD.MM.YYYY') : ''
   },
 ];
 
@@ -118,6 +119,10 @@ const initialState = {
   gridColumnWidths: gridSettings.map(item => ({
     columnName: item.name,
     width: item.width
+  })),
+  gridColumnEditing: gridSettings.map(item => ({
+    columnName: item.name,
+    editingEnabled: item.editingEnabled
   })),
   gridHiddenColumnNames: [
     'id',

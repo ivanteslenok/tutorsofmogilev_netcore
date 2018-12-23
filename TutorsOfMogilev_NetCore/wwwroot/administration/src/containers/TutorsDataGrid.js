@@ -7,6 +7,7 @@ const mapStateToProps = state => {
   return {
     columns: state.tutors.gridColumns,
     defaultColumnWidths: state.tutors.gridColumnWidths,
+    gridColumnEditing: state.tutors.gridColumnEditing,
     defaultHiddenColumnNames: state.tutors.gridHiddenColumnNames,
     defaultColumnOrder: state.tutors.gridColumnOrder,
     availableColumnsValues: {

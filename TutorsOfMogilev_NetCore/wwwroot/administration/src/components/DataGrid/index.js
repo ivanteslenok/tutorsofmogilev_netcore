@@ -58,6 +58,7 @@ export default class DataGrid extends PureComponent {
     return {
       columns: props.columns,
       defaultColumnWidths: props.defaultColumnWidths,
+      gridColumnEditing: props.gridColumnEditing,
       defaultHiddenColumnNames: props.defaultHiddenColumnNames,
       defaultColumnOrder: props.defaultColumnOrder,
       availableColumnsValues: props.availableColumnsValues,
@@ -187,6 +188,7 @@ export default class DataGrid extends PureComponent {
       rowChanges,
       deletingRows,
       defaultColumnWidths,
+      gridColumnEditing,
       defaultHiddenColumnNames,
       defaultColumnOrder,
       sorting,
@@ -230,6 +232,7 @@ export default class DataGrid extends PureComponent {
             addedRows={addedRows}
             onAddedRowsChange={this.changeAddedRows}
             onCommitChanges={this.commitChanges}
+            columnExtensions={gridColumnEditing}
           />
           <RowDetailState />
 
