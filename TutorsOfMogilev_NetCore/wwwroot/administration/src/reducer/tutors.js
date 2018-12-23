@@ -1,3 +1,5 @@
+import moment from 
+
 import {
   TUTOR,
   PHONE,
@@ -93,7 +95,13 @@ const gridSettings = [
     width: 100,
     getCellValue: row => (row.district ? row.district.name : null),
     availableValues: []
-  }
+  },
+  {
+    name: 'createDate',
+    title: 'Дата добавления',
+    width: 180,
+    getCellValue: row => row.createDate ? row.createDate.toLocalDateString() : ''
+  },
 ];
 
 const initialState = {

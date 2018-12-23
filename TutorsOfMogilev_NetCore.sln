@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorsOfMogilev-NetCore", "TutorsOfMogilev-NetCore\TutorsOfMogilev-NetCore.csproj", "{2D16F84E-BDB6-4E94-ABB9-812FE115EFC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorsOfMogilev_NetCore", "TutorsOfMogilev_NetCore\TutorsOfMogilev_NetCore.csproj", "{2D16F84E-BDB6-4E94-ABB9-812FE115EFC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{0BEC373D-C40B-45DA-B745-3E08AD0737FA}"
 EndProject

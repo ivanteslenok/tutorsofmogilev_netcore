@@ -7,8 +7,6 @@
     @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Tariffs })
     @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Resume })
     
-    @if (Context.User.IsInRole("Admin"))
-    {
+    @*@if (Context.User.IsInRole("Admin"))*@
         @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Administration })
-    }
 </nav>

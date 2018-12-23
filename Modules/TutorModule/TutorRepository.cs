@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -90,6 +91,7 @@ namespace Modules.TutorModule
         public async Task<TutorDTO> InsertItem(TutorDTO item)
         {
             var itemForSave = _mapper.Map<Tutor>(item);
+            itemForSave.CreateDate = DateTime.Now;
 
             _db.Districts.Attach(itemForSave.District);
             _db.Tutors.Add(itemForSave);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities
@@ -19,6 +20,7 @@ namespace Data.Entities
         public decimal? Cost { get; set; }
         public int? Rating { get; set; }
         public bool IsVisible { get; set; }
+        public DateTime CreateDate { get; set; }
 
         public long DistrictId { get; set; }
         public District District { get; set; }

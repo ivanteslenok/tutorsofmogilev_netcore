@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Data.DTOs
@@ -19,7 +20,8 @@ namespace Data.DTOs
         public decimal? Cost { get; set; }
         public int? Rating { get; set; }
         public bool IsVisible { get; set; }
-        
+        public DateTime CreateDate { get; set; }
+
         public DistrictDTO District { get; set; }
 
         public IList<PhoneDTO> Phones { get; set; }

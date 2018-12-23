@@ -1,6 +1,7 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace DataEntity.Mapping
 {
@@ -37,13 +38,15 @@ namespace DataEntity.Mapping
                 .IsUnicode()
                 .HasMaxLength(500);
 
-            //builder.Property(t => t.Cost);
+            builder.Property(t => t.Cost).HasColumnType("decimal(7,2)");
 
             builder.Property(t => t.Address)
                 .IsUnicode()
                 .HasMaxLength(300);
 
             builder.Property(t => t.IsVisible).IsRequired();
+
+            builder.Property(t => t.CreateDate).IsRequired();
 
             builder.HasOne(t => t.District)
                 .WithMany(d => d.Tutors)
@@ -75,7 +78,8 @@ namespace DataEntity.Mapping
                     Job = "Job" + i,
                     Rating = (i % 5) + 1,
                     IsVisible = true,
-                    DistrictId = i % 2 + 1
+                    DistrictId = i % 2 + 1,
+                    CreateDate = DateTime.Now
                 };
             }
 
