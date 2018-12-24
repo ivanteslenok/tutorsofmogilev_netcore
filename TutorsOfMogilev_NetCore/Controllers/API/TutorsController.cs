@@ -29,7 +29,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(long id)
         {
             var result = await _tutorRepository.GetItem(id);
 

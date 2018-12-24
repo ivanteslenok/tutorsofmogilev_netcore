@@ -1,12 +1,8 @@
 ﻿@model MenuModel
 
 <nav>
-    @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Tutors })
-    @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Contacts })
-    @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.AboutUs })
-    @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Tariffs })
-    @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Resume })
-    
-    @*@if (Context.User.IsInRole("Admin"))*@
-        @await Component.InvokeAsync("MenuItemComponent", new { menuItem = Model.Administration })
+    @foreach (var item in Model.MenuItems)
+    {
+        @await Component.InvokeAsync("MenuItemComponent", new { menuItem = item })
+    }
 </nav>

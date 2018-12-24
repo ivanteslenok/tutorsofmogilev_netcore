@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Data.DTOs;
 using System.ComponentModel.DataAnnotations;
-using Data.DTOs;
-using Data.Entities;
 
 namespace TutorsOfMogilev_NetCore.Models
 {
@@ -16,49 +14,59 @@ namespace TutorsOfMogilev_NetCore.Models
         [MaxLength(50, ErrorMessage = "Слишком длинная фамилия")]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
-        
+
         [Required(ErrorMessage = "Введите отчество")]
         [MaxLength(50, ErrorMessage = "Слишком длинное отчество")]
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
         
-        [Required(ErrorMessage = "Введите описание")]
         [MaxLength(1000, ErrorMessage = "Слишком длинное описание")]
         [Display(Name = "Описание")]
         public string Description { get; set; }
-        
+
         [Required(ErrorMessage = "Введите информацию о своем образовании")]
         [MaxLength(500, ErrorMessage = "Превышен лимит символов")]
         [Display(Name = "Образование")]
         public string Education { get; set; }
-        
+
         [MaxLength(500, ErrorMessage = "Превышен лимит символов")]
         [Display(Name = "Работа")]
         public string Job { get; set; }
-        
+
         [MaxLength(300, ErrorMessage = "Превышен лимит символов")]
         [Display(Name = "Адрес")]
         public string Address { get; set; }
-        
+
         [Required(ErrorMessage = "Введите опыт работы в годах")]
         [Display(Name = "Опыт")]
         public byte? Experience { get; set; }
-        
+
         [Required(ErrorMessage = "Введите стоимость одного занятия с вами")]
-        [DataType(DataType.Currency)]
+        [DataType(DataType.Currency, ErrorMessage = "Введите сумму")]
         [Display(Name = "Стоимость одного занятия")]
         public decimal? Cost { get; set; }
         
-        [Required(ErrorMessage = "Введите район в котором вы проживаете")]
         [Display(Name = "Район")]
-        public DistrictDTO District { get; set; }
+        public int DistrictId { get; set; }
         
-        public List<DistrictDTO> Districts { get; set; }
-        
-        public List<SpecializationDTO> Specializations { get; set; }
-        
-        public List<SubjectDTO> Subjects { get; set; }
-        
-        public List<ContactTypeDTO> ContactTypes { get; set; }
+        [Display(Name = "Специализации")]
+        public long[] SpecializationsIds { get; set; }
+
+        [Required(ErrorMessage = "Введите предметы которые вы преподаете")]
+        [Display(Name = "Предметы")]
+        public long[] SubjectsIds { get; set; }
+               
+        [Required(ErrorMessage = "Введите телефон")]
+        [Display(Name = "Телефон")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Оператор")]
+        public string PhoneOperator { get; set; }
+
+        public ResumeVM()
+        {
+            SpecializationsIds = new long[] { };
+            SubjectsIds = new long[] { };
+        }
     }
 }

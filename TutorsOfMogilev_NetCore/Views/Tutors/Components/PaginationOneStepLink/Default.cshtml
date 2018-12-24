@@ -1,13 +1,18 @@
 ﻿@if (ViewBag.Disabled)
 {
-    <li class="disabled">
-        <span aria-hidden="true">@WebUtility.HtmlDecode(ViewBag.Symbol)</span>
+    <li class="page-item disabled">
+        <a class="page-link">
+            <span aria-hidden="true">
+                @WebUtility.HtmlDecode(ViewBag.Symbol)
+            </span>
+        </a>
     </li>
 }
 else
 {
-    <li>
+    <li class="page-item">
         <a aria-label="@ViewBag.Text"
+           class="page-link"
            asp-controller="Tutors"
            asp-action="List"
            asp-route-Subject="@ViewBag.Subject"

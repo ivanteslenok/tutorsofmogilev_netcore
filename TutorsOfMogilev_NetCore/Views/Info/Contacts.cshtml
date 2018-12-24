@@ -1,12 +1,6 @@
-﻿@model MenuModel
-
-@{
+﻿@{
     ViewBag.Title = "Контакты";
-}
-
-@section Menu
-{
-    @await Component.InvokeAsync("Menu", new { menuModel = Model })
+    ViewBag.MenuActive = "Контакты";
 }
 
 @section Styles

@@ -1,0 +1,129 @@
+﻿@model ResumeVM
+
+@{
+    ViewBag.Title = "Оставить заявку";
+    ViewBag.MenuActive = "Оставить заявку";
+}
+
+@section Styles
+    {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/resume.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/resume.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<div class="resume">
+    <form asp-controller="Resume" asp-action="Add" asp-antiforgery="true" method="post">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label required" asp-for="FirstName"></label>
+                <input class="form-control" type="text" asp-for="FirstName" />
+                <span class="text-danger" asp-validation-for="FirstName" />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label required" asp-for="LastName"></label>
+                <input class="form-control" type="text" asp-for="LastName" />
+                <span class="text-danger" asp-validation-for="LastName" />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label required" asp-for="Patronymic"></label>
+                <input class="form-control" type="text" asp-for="Patronymic" />
+                <span class="text-danger" asp-validation-for="Patronymic" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label required" asp-for="DistrictId"></label>
+                <select class="form-control"
+                        asp-for="DistrictId"
+                        asp-items="ViewBag.Districts"></select>
+                <span class="text-danger" asp-validation-for="DistrictId" />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label" asp-for="SpecializationsIds"></label>
+                <select class="form-control"
+                        multiple
+                        title="Выберите специализации"
+                        asp-for="SpecializationsIds"
+                        asp-items="ViewBag.Specializations"></select>
+                <span class="text-danger" asp-validation-for="SpecializationsIds" />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label required" asp-for="SubjectsIds"></label>
+                <select class="form-control"
+                        multiple
+                        title="Выберите предметы"
+                        asp-for="SubjectsIds"
+                        asp-items="ViewBag.Subjects"></select>
+                <span class="text-danger" asp-validation-for="SubjectsIds" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label required" asp-for="Education"></label>
+                <textarea class="form-control resume-large-textarea" asp-for="Education"></textarea>
+                <span class="text-danger" asp-validation-for="Education" />
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label required" asp-for="Experience"></label>
+                        <input class="form-control" type="number" placeholder="Полных лет" asp-for="Experience" />
+                        <span class="text-danger" asp-validation-for="Experience" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label required" asp-for="Cost"></label>
+                        <input class="form-control" type="number" step="0.01" placeholder="BYN" asp-for="Cost" />
+                        <span class="text-danger" asp-validation-for="Cost" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label required" asp-for="Phone"></label>
+                        <input class="form-control" type="text" asp-for="Phone" />
+                        <span class="text-danger" asp-validation-for="Phone" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label" asp-for="PhoneOperator"></label>
+                        <input class="form-control" type="text" placeholder="МТС, Velcom..." asp-for="PhoneOperator" />
+                        <span class="text-danger" asp-validation-for="PhoneOperator" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label" asp-for="Address"></label>
+                <textarea class="form-control" asp-for="Address"></textarea>
+                <span class="text-danger" asp-validation-for="Address" />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label" asp-for="Description"></label>
+                <textarea class="form-control" placeholder="Пару слов о себе" asp-for="Description"></textarea>
+                <span class="text-danger" asp-validation-for="Description" />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label" asp-for="Job"></label>
+                <textarea class="form-control" asp-for="Job"></textarea>
+                <span class="text-danger" asp-validation-for="Job" />
+            </div>
+        </div>
+
+        <div class="resume-active-btn-container">
+            <div class="resume-active-btn-group">
+                <input class="btn btn-info" type="submit" value="Сохранить" />
+                <a class="btn btn-danger" asp-controller="Resume" asp-action="Add">
+                    Отмена
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+    {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

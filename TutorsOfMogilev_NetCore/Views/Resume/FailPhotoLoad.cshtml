@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "FailPhotoLoad";
+    ViewBag.MenuActive = "Оставить заявку";
+}
+
+@section Styles
+    {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/resume.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/resume.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<h2 class="text-danger">Ошибка при загрузке фото, обратитесь к администратору сайта.</h2>
+<a class="btn btn-primary" asp-controller="Resume" asp-action="LoadPhoto">Попробовать еще раз</a>

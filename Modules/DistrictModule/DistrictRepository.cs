@@ -58,7 +58,7 @@ namespace Modules.DistrictModule
 
         public async Task<DistrictDTO> GetItem(int? id)
         {
-            var item = await _db.Districts.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _db.Districts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<DistrictDTO>(item);
         }

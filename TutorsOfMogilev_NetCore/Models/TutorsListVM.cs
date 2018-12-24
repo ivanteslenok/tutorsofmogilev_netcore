@@ -9,6 +9,5 @@ namespace TutorsOfMogilev_NetCore.Models
         public List<TutorVM> Tutors { get; set; }
         public List<SubjectDTO> Subjects { get; set; }
         public PaginationInfo PaginationInfo { get; set; }
-        public MenuModel Menu { get; set; }
     }
 }

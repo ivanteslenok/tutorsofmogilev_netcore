@@ -2,11 +2,7 @@
 
 @{
     ViewBag.Title = "Репетиторы";
-}
-
-@section Menu
-{
-    @await Component.InvokeAsync("Menu", new { menuModel = Model.Menu })
+    ViewBag.MenuActive = "Репетиторы";
 }
 
 @section Styles
@@ -42,14 +38,19 @@
     @foreach (var tutor in Model.Tutors)
     {
         <div class="card bot-left-gradient">
-            <a class="card-title" title="Подробнее" href="">
-                <span class="card-name">@tutor.FIO</span>
+            <a class="card-title" 
+               title="Подробнее" 
+               asp-controller="Tutors" 
+               asp-action="Item" 
+               asp-route-key="@tutor.UrlKey"
+               >
+                <span class="card-name">@tutor.Title</span>
                 <span class="card-subjects">@tutor.Subjects</span>
             </a>
             <div class="card-info">
                 @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
                 {
-                    <img src="~/uploads/UsersPhotos/default-user.png" class="card-photo">
+                    <img src="~/images/default-user.png" class="card-photo">
                 }
                 else
                 {
@@ -58,7 +59,10 @@
                 <p class="card-education"><span class="card-label">Образование</span>@tutor.Education</p>
                 <p class="card-district"><span class="card-label">Район</span>@tutor.District</p>
                 <p class="card-cost"><span class="card-label">Стоимость</span>@tutor.Cost</p>
-                <p class="card-specialization"><span class="card-label">Специализация</span>@tutor.Specializations</p>
+                @if (!string.IsNullOrWhiteSpace(tutor.Specializations))
+                {
+                    <p class="card-specialization"><span class="card-label">Специализация</span>@tutor.Specializations</p>
+                }
             </div>
         </div>
     }

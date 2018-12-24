@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Models;
 using Modules.SubjectModule;
 using Modules.TutorModule;
@@ -13,11 +14,17 @@ namespace TutorsOfMogilev_NetCore.Services
     {
         private readonly SubjectRepository _subjectRepo;
         private readonly TutorRepository _tutorRepo;
+        private readonly IMapper _mapper;
 
-        public TutorService(SubjectRepository subjectRepo, TutorRepository tutorRepo)
+        public TutorService(
+            SubjectRepository subjectRepo,
+            TutorRepository tutorRepo,
+            IMapper mapper
+            )
         {
             _subjectRepo = subjectRepo;
             _tutorRepo = tutorRepo;
+            _mapper = mapper;
         }
 
         public async Task<TutorsListVM> GetListVM(TutorListFilter filter)
@@ -28,23 +35,24 @@ namespace TutorsOfMogilev_NetCore.Services
             {
                 Tutors = totorsList.Items.Select(x => new TutorVM()
                 {
-                    FIO = $"{x.FirstName} {x.LastName}" + (!string.IsNullOrWhiteSpace(x.Patronymic) ? $" {x.Patronymic}" : ""),
+                    Title = $"{x.FirstName} {x.LastName}" + (!string.IsNullOrWhiteSpace(x.Patronymic) ? $" {x.Patronymic}" : ""),
                     PhotoPath = x.PhotoPath,
                     Cost = x.Cost.ToString(),
                     District = x.District.Name,
                     Education = x.Education,
                     Specializations = x.Specializations
                         .Aggregate(
-                            new StringBuilder(), 
+                            new StringBuilder(),
                             (acc, next) => StringAggregator(acc, next.Name)
                             )
                         .ToString(),
                     Subjects = x.Subjects
                         .Aggregate(
-                            new StringBuilder(), 
+                            new StringBuilder(),
                             (acc, next) => StringAggregator(acc, next.Name)
                             )
-                        .ToString()
+                        .ToString(),
+                    UrlKey = $"{x.Id}-{x.CreateDate.ToString("ddMMyyyy")}"
                 }).ToList(),
                 Subjects = await _subjectRepo.GetList(),
                 PaginationInfo = new PaginationInfo
@@ -55,6 +63,12 @@ namespace TutorsOfMogilev_NetCore.Services
                     CurrentSubject = filter.Subject
                 }
             };
+        }
+
+        public async Task<TutorAdvancedVM> GetItemVM(long id)
+        {
+            var tutor = await _tutorRepo.GetItem(id);
+            return _mapper.Map<TutorAdvancedVM>(tutor);
         }
 
         private StringBuilder StringAggregator(StringBuilder acc, string next)

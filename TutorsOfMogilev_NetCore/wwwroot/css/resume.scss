@@ -1,3 +1,26 @@
 @import 'layout';
 @import 'menu';
 @import 'header';
+
+.resume {
+  margin-top: 20px;
+}
+
+textarea.resume-large-textarea {
+  height: 125px;
+}
+
+.resume-active-btn-container {
+  position: relative;
+  height: 40px;
+}
+
+.resume-active-btn-group {
+  position: absolute;
+  right: 54px;
+}
+
+.bootstrap-select > .dropdown-toggle {
+  background-color: #fff;
+  border: 1px solid #ced4da;
+}

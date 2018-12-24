@@ -44,6 +44,8 @@ namespace DataEntity.Mapping
                 .IsUnicode()
                 .HasMaxLength(300);
 
+            builder.Property(t => t.Rating).HasDefaultValue(1);
+
             builder.Property(t => t.IsVisible).IsRequired();
 
             builder.Property(t => t.CreateDate).IsRequired();

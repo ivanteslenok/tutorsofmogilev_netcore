@@ -16,11 +16,12 @@
     {
         var className = i == Model.PageNumber ? "active" : "";
 
-        <li class="@className">
+        <li class="page-item @className">
             <a asp-controller="Tutors"
                asp-action="List"
                asp-route-Subject="@Model.CurrentSubject"
-               asp-route-PageNumber="@i">@i</a>
+               asp-route-PageNumber="@i"
+               class="page-link">@i</a>
         </li>
     }
 

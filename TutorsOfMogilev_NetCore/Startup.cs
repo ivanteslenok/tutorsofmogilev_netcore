@@ -16,6 +16,7 @@ using Modules.SubjectModule;
 using Modules.TutorModule;
 using Newtonsoft.Json;
 using TutorsOfMogilev_NetCore.Filters;
+using TutorsOfMogilev_NetCore.Models;
 using TutorsOfMogilev_NetCore.Services;
 
 namespace TutorsOfMogilev_NetCore
@@ -35,7 +36,10 @@ namespace TutorsOfMogilev_NetCore
                 opts.UseSqlServer(
                     _configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAutoMapper(mc => { mc.AddProfile(new MapperProfile()); });
+            services.AddAutoMapper(mc =>
+            {
+                mc.AddProfiles(new [] { "Data", "TutorsOfMogilev_NetCore" });
+            });
 
             services.AddScoped<ContactRepository>();
             services.AddScoped<ContactTypeRepository>();
@@ -46,6 +50,7 @@ namespace TutorsOfMogilev_NetCore
             services.AddScoped<TutorRepository>();
 
             services.AddTransient<TutorService>();
+            services.AddTransient<ImageService>();
 
             services.AddCors();
 

@@ -1,23 +1,22 @@
 header {
-    width: 100%;
-    /* background-color: #800bbb; */
-    background-color: #607D8B;
+  width: 100%;
+  /* background-color: #800bbb; */
+  background-color: #607d8b;
 }
 
 .head-box {
-    max-width: 1100px;
-    margin: 0 auto;
-    height: 23px;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 26px;
 }
 
 .logo {
-    text-transform: uppercase;
-    color: #fff;
-    padding-top: 1px;
-    padding-left: 2px;
-    display: inline-block;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 1px 0 0 2px;
+  display: inline-block;
 
-    &:hover {
-        color: #fff;
-    }
+  &:hover {
+    color: #fff;
+  }
 }

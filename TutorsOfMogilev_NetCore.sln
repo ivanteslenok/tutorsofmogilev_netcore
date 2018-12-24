@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2050
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorsOfMogilev_NetCore", "TutorsOfMogilev_NetCore\TutorsOfMogilev_NetCore.csproj", "{2D16F84E-BDB6-4E94-ABB9-812FE115EFC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{0BEC373D-C40B-45DA-B745-3E08AD0737FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{0BEC373D-C40B-45DA-B745-3E08AD0737FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{64553806-0B79-456F-AB3C-240A89706460}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{64553806-0B79-456F-AB3C-240A89706460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEntity", "DataEntity\DataEntity.csproj", "{400B8CBC-128D-4776-BDC2-3313B05CDF5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEntity", "DataEntity\DataEntity.csproj", "{400B8CBC-128D-4776-BDC2-3313B05CDF5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules", "Modules\Modules.csproj", "{8F612132-BD97-4FEA-B1D7-DD11E4E97210}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules", "Modules\Modules.csproj", "{8F612132-BD97-4FEA-B1D7-DD11E4E97210}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

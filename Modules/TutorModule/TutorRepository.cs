@@ -73,7 +73,7 @@ namespace Modules.TutorModule
             };
         }
 
-        public async Task<TutorDTO> GetItem(int? id)
+        public async Task<TutorDTO> GetItem(long? id)
         {
             var item = await _db.Tutors
                 .Include(x => x.Phones)
@@ -83,21 +83,22 @@ namespace Modules.TutorModule
                 .Include(x => x.TutorSubjects)
                     .ThenInclude(x => x.Subject)
                 .Include(x => x.District)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<TutorDTO>(item);
         }
 
-        public async Task<TutorDTO> InsertItem(TutorDTO item)
+        public async Task<TutorDTO> InsertItem(TutorDTO itemDTO)
         {
-            var itemForSave = _mapper.Map<Tutor>(item);
+            var itemForSave = _mapper.Map<Tutor>(itemDTO);
             itemForSave.CreateDate = DateTime.Now;
 
             _db.Districts.Attach(itemForSave.District);
             _db.Tutors.Add(itemForSave);
             int i = await _db.SaveChangesAsync();
 
-            return i > 0 ? _mapper.Map<TutorDTO>(item) : null;
+            return i > 0 ? _mapper.Map<TutorDTO>(itemForSave) : null;
         }
 
         public async Task<TutorDTO> UpdateItem(TutorDTO item)
@@ -184,6 +185,15 @@ namespace Modules.TutorModule
             int i = await _db.SaveChangesAsync();
 
             return i > 0;
+        }
+
+        public async Task SetPhotoPath(long id, string photoName)
+        {
+            var tutor = await _db.Tutors.FirstOrDefaultAsync(x => x.Id == id);
+            _db.Attach(tutor);
+            tutor.PhotoPath = photoName;
+
+            await _db.SaveChangesAsync();
         }
     }
 }

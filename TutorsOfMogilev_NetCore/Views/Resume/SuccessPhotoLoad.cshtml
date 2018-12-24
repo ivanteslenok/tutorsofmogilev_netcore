@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "SuccessPhotoLoad";
+    ViewBag.MenuActive = "Оставить заявку";
+}
+
+@section Styles
+    {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/resume.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/resume.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<h2 class="text-success">Ваше фото успешно загружено!</h2>
+

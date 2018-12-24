@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TutorsOfMogilev_NetCore.Services;
 using Modules.TutorModule.Filters;
-using TutorsOfMogilev_NetCore.Models;
+using System;
 
 namespace TutorsOfMogilev_NetCore.Controllers.MVC
 {
@@ -29,7 +29,15 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
             filter.Subject = RouteData.Values["Subject"]?.ToString();
 
             var model = await _tutorService.GetListVM(filter);
-            model.Menu = new MenuModel { Tutors = { IsActive = true } };
+
+            return View(model);
+        }
+
+        [Route("Tutors/Item/{key}")]
+        public async Task<IActionResult> Item(string key)
+        {
+            var tutorId = Convert.ToInt64(key.Split('-')[0]);
+            var model = await _tutorService.GetItemVM(tutorId);
 
             return View(model);
         }
