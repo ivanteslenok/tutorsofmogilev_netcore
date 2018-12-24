@@ -18,5 +18,7 @@ namespace TutorsOfMogilev_NetCore.Models
         public string District { get; set; }
         public string[] Specializations { get; set; }
         public string[] Subjects { get; set; }
+
+        public string Phone { get; set; }
     }
 }

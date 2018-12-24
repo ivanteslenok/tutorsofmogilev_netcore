@@ -1,20 +1,63 @@
 @import 'layout';
 @import 'menu';
 @import 'header';
+@import '_colors';
+
+$tutor-item-info-space: 200px;
 
 .tutor-item {
   &-container {
     padding: 10px;
   }
 
-  &-card{
+  &-card {
     min-height: 420px;
-    padding: 10px 0 10px 0;
+    padding: 10px 0;
   }
 
   &-photo {
     height: 400px;
-    margin: 0 15px 15px 0;
+    margin-right: 30px;
     float: left;
+  }
+
+  &-info {
+    display: inline-block;
+    padding: 15px;
+
+    &__line {
+      border-bottom: 1px solid #ddd;
+      padding: 7px 0;
+    }
+
+    &__label {
+      display: inline-block;
+      width: $tutor-item-info-space;
+      text-align: right;
+      color: #673ab7;
+    }
+
+    &__data {
+      display: inline-block;
+      width: $tutor-item-info-space;
+      text-align: left;
+      padding-left: 20px;
+    }
+  }
+
+  &-phone {
+    &__data {
+      padding: 5px;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      border: 1px solid #03a9f4;
+      border-radius: 0.25rem;
+    }
+  }
+
+  &-badge {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
   }
 }

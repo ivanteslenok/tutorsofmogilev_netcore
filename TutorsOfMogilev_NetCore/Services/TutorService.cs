@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Core.Models;
+using Microsoft.Extensions.Configuration;
 using Modules.SubjectModule;
 using Modules.TutorModule;
 using Modules.TutorModule.Filters;
@@ -15,16 +17,19 @@ namespace TutorsOfMogilev_NetCore.Services
         private readonly SubjectRepository _subjectRepo;
         private readonly TutorRepository _tutorRepo;
         private readonly IMapper _mapper;
+        IConfiguration _config;
 
         public TutorService(
             SubjectRepository subjectRepo,
             TutorRepository tutorRepo,
-            IMapper mapper
+            IMapper mapper,
+            IConfiguration config
             )
         {
             _subjectRepo = subjectRepo;
             _tutorRepo = tutorRepo;
             _mapper = mapper;
+            _config = config;
         }
 
         public async Task<TutorsListVM> GetListVM(TutorListFilter filter)
@@ -68,7 +73,12 @@ namespace TutorsOfMogilev_NetCore.Services
         public async Task<TutorAdvancedVM> GetItemVM(long id)
         {
             var tutor = await _tutorRepo.GetItem(id);
-            return _mapper.Map<TutorAdvancedVM>(tutor);
+            var vm = _mapper.Map<TutorAdvancedVM>(tutor);
+            var rand = new Random();
+            var phoneNumb = new Random().Next(0, 3);
+            vm.Phone = _config.GetSection($"Phones:{phoneNumb}").Value;
+
+            return vm;
         }
 
         private StringBuilder StringAggregator(StringBuilder acc, string next)

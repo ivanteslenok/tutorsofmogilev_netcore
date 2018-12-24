@@ -22,7 +22,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
         [Route("Tutors", Order = 5)]
         public async Task<IActionResult> List(TutorListFilter filter)
         {
-            filter.PageSize = 5;
+            filter.PageSize = 10;
             filter.IsVisible = true;
             filter.SortDirection = "desc";
             filter.SortBy = "rating";
