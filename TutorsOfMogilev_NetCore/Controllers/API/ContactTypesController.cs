@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Data.DTOs;
 using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modules.ContactTypeModule;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
-    #if !DEBUG
-    [Authorize(Roles = "Admin")]
-    #endif
+    [Authorize]
     [Route("api/contact-types")]
     public class ContactTypesController : Controller
     {
@@ -19,13 +18,13 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         {
             _contactTypeRepository = contactTypeRepository;
         }
-        
+
         [HttpGet]
         public async Task<List<ContactTypeDTO>> Get()
         {
             return await _contactTypeRepository.GetList();
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -36,7 +35,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ContactType item)
         {
@@ -47,7 +46,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] ContactType item)
         {
@@ -59,7 +58,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

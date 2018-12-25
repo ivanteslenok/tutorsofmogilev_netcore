@@ -1,5 +1,6 @@
 // export const defaultUrl = 'http://localhost/TutorsOfMogilev';
 export const defaultUrl = 'http://localhost:5000';
+export const logoutUrl = '/Account/Logout';
 // api urls
 
 const apiUrl = `${defaultUrl}/api`;

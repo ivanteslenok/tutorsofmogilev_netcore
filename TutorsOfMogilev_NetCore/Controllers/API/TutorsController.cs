@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Core.Models;
 using Data.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modules.TutorModule;
 using Modules.TutorModule.Filters;
@@ -9,9 +10,7 @@ using TutorsOfMogilev_NetCore.Models;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
-#if !DEBUG
-    [Authorize(Roles = "Admin")]
-#endif
+    [Authorize]
     [Route("api/[controller]")]
     public class TutorsController : Controller
     {
@@ -45,7 +44,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
             if (!ModelState.IsValid)
                 throw new System.Exception(
                     ModelState.Values
-                        .Select(x => 
+                        .Select(x =>
                             x.Errors
                             .Select(y => y.ErrorMessage)
                                 .Aggregate((a, b) => $"{a} \n {b}")

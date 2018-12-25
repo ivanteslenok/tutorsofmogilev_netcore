@@ -17,9 +17,6 @@ namespace TutorsOfMogilev_NetCore.Models
                 new MenuItem("Тарифы", "nav__item_tariff", false, "Info", "Tariffs"),
                 new MenuItem("Оставить заявку", "nav__item_resume", false, "Resume", "Add")
             };
-            
-            //if (User.IsInRole("Admin"))
-                MenuItems.Add(new MenuItem("Administration", "nav__item_administration", false, "Administration", "Index"));
         }
     }
 }

@@ -82,24 +82,40 @@
   border: none;
 
   &-title {
-    font-style: italic;
+    position: relative;
     transition: all 0.3s linear;
+    color: #9C27B0;
 
     &:hover {
       cursor: pointer;
-      opacity: 0.5;
+      opacity: 0.7;
+    }
+
+    &:hover .card-name {
+      text-decoration: underline;
     }
   }
+  
+  &-name {
+    display: inline-block;
+  }
+  
+  &-icon {
+    font-size: 20px;
+    padding-left: 50px;
+    position: absolute;
+    top: 15px;
+  }
+
+  // &-name:after {
+  //   content: '\A';
+  //   white-space: pre;
+  // }
 
   &-info {
     font-size: 11pt;
     margin: 10px 0;
     min-height: 140px;
-  }
-
-  &-name:after {
-    content: '\A';
-    white-space: pre;
   }
 
   &-photo {

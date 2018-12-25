@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Data.DTOs;
 using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modules.SubjectModule;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
-    #if !DEBUG
-    [Authorize(Roles = "Admin")]
-    #endif
+    [Authorize]
     [Route("api/[controller]")]
     public class SubjectsController : Controller
     {
@@ -19,13 +18,13 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         {
             _subjectRepository = subjectRepository;
         }
-        
+
         [HttpGet]
         public async Task<List<SubjectDTO>> Get()
         {
             return await _subjectRepository.GetList();
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -36,7 +35,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Subject item)
         {
@@ -47,7 +46,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Subject item)
         {
@@ -59,7 +58,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -6,7 +6,7 @@
 }
 
 @section Styles
-{
+    {
     <environment include="Development">
         <link rel="stylesheet" href="~/css/tutorsList.css" />
     </environment>
@@ -27,7 +27,7 @@
         {
             <li class="subjects__item">
                 @await Component.InvokeAsync(
-                    "SubjectLink", 
+                    "SubjectLink",
                     new { subjectName = subj.Name, currentSubj = Model.PaginationInfo.CurrentSubject })
             </li>
         }
@@ -38,14 +38,13 @@
     @foreach (var tutor in Model.Tutors)
     {
         <div class="card bot-left-gradient">
-            <a class="card-title" 
-               title="Подробнее" 
-               asp-controller="Tutors" 
-               asp-action="Item" 
-               asp-route-key="@tutor.UrlKey"
-               >
-                <span class="card-name">@tutor.Title</span>
-                <span class="card-subjects">@tutor.Subjects</span>
+            <a class="card-title"
+               title="Подробнее"
+               asp-controller="Tutors"
+               asp-action="Item"
+               asp-route-key="@tutor.UrlKey">
+                <span class="card-name">@tutor.Title <br /> @tutor.Subjects</span>
+                <i class="fa fa-arrow-alt-circle-right card-icon"></i>
             </a>
             <div class="card-info">
                 @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
@@ -61,7 +60,10 @@
                 <p class="card-cost"><span class="card-label">Стоимость</span>@tutor.Cost</p>
                 @if (!string.IsNullOrWhiteSpace(tutor.Specializations))
                 {
-                    <p class="card-specialization"><span class="card-label">Специализация</span>@tutor.Specializations</p>
+                    <p class="card-specialization">
+                        <span class="card-label">Цель занятий</span>
+                        @tutor.Specializations
+                    </p>
                 }
             </div>
         </div>

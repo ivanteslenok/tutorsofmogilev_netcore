@@ -4,12 +4,11 @@ using Data.DTOs;
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Modules.ContactModule;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
-    #if !DEBUG
-    [Authorize(Roles = "Admin")]
-    #endif
+    [Authorize]
     [Route("api/[controller]")]
     public class ContactsController : Controller
     {
@@ -59,7 +58,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
 
             return Ok(result);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

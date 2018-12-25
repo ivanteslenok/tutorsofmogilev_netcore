@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Data;
 using DataEntity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
@@ -16,7 +16,6 @@ using Modules.SubjectModule;
 using Modules.TutorModule;
 using Newtonsoft.Json;
 using TutorsOfMogilev_NetCore.Filters;
-using TutorsOfMogilev_NetCore.Models;
 using TutorsOfMogilev_NetCore.Services;
 
 namespace TutorsOfMogilev_NetCore
@@ -36,9 +35,15 @@ namespace TutorsOfMogilev_NetCore
                 opts.UseSqlServer(
                     _configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+
             services.AddAutoMapper(mc =>
             {
-                mc.AddProfiles(new [] { "Data", "TutorsOfMogilev_NetCore" });
+                mc.AddProfiles(new[] { "Data", "TutorsOfMogilev_NetCore" });
             });
 
             services.AddScoped<ContactRepository>();
@@ -80,6 +85,8 @@ namespace TutorsOfMogilev_NetCore
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

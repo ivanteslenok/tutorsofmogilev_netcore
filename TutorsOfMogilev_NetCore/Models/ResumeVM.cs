@@ -49,7 +49,7 @@ namespace TutorsOfMogilev_NetCore.Models
         [Display(Name = "Район")]
         public int DistrictId { get; set; }
         
-        [Display(Name = "Специализации")]
+        [Display(Name = "Цели занятий")]
         public long[] SpecializationsIds { get; set; }
 
         [Required(ErrorMessage = "Введите предметы которые вы преподаете")]
