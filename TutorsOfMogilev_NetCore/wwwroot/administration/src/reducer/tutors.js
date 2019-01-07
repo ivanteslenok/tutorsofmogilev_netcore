@@ -131,7 +131,8 @@ const initialState = {
     'cost',
     'description',
     'experience',
-    'photo'
+    'photo',
+    'createDate'
   ],
   gridColumnOrder: gridSettings.map(item => item.name),
   phonesGridColumns: [

@@ -86,7 +86,7 @@ export default class MultipleSelectEditor extends Component {
     ) : (
       <div style={{ display: 'flex', paddingTop: '10px' }}>
         <Select
-          style={{ minWidth: '150px' }}
+          style={{ minWidth: '150px', maxWidth: '600px' }}
           multiple
           value={value}
           onChange={this.handleChange}

@@ -90,7 +90,7 @@ export default class CrudDataGrid extends PureComponent {
     }
 
     return (
-      <Paper>
+      <Paper style={{maxWidth: '600px'}}>
         <Grid rows={rows} columns={columns} getRowId={row => row.id}>
           <EditingState
             addedRows={addedRows}
