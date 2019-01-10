@@ -8,7 +8,9 @@ using Modules.DistrictModule;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
+#if !DEBUG
     [Authorize]
+#endif
     [Route("api/[controller]")]
     public class DistrictsController : Controller
     {

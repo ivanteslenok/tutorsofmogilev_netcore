@@ -8,7 +8,9 @@ using Modules.ContactTypeModule;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
+#if !DEBUG
     [Authorize]
+#endif
     [Route("api/contact-types")]
     public class ContactTypesController : Controller
     {

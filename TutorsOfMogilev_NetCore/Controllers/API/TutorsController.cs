@@ -10,7 +10,9 @@ using TutorsOfMogilev_NetCore.Models;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
+#if !DEBUG
     [Authorize]
+#endif
     [Route("api/[controller]")]
     public class TutorsController : Controller
     {
