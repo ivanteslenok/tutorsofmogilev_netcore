@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.CityModule;
 using Modules.ContactModule;
 using Modules.ContactTypeModule;
-using Modules.DistrictModule;
 using Modules.PhoneModule;
 using Modules.SpecializationModule;
 using Modules.SubjectModule;
@@ -46,9 +46,9 @@ namespace TutorsOfMogilev_NetCore
                 mc.AddProfiles(new[] { "Data", "TutorsOfMogilev_NetCore" });
             });
 
+            services.AddScoped<CityRepository>();
             services.AddScoped<ContactRepository>();
             services.AddScoped<ContactTypeRepository>();
-            services.AddScoped<DistrictRepository>();
             services.AddScoped<PhoneRepository>();
             services.AddScoped<SpecializationRepository>();
             services.AddScoped<SubjectRepository>();

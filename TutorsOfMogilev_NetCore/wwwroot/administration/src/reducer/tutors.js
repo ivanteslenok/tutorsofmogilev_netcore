@@ -90,10 +90,10 @@ const gridSettings = [
   //   getCellValue: row => (row.photo)
   // },
   {
-    name: 'district',
-    title: 'Район',
+    name: 'city',
+    title: 'Город',
     width: 180,
-    getCellValue: row => (row.district ? row.district.name : null),
+    getCellValue: row => (row.city ? row.city.name : null),
     availableValues: []
   },
   {

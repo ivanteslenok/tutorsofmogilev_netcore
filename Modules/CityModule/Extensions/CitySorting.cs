@@ -1,12 +1,15 @@
-﻿using System.Linq;
-using Core.Models;
+﻿using Core.Models;
 using Data.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Modules.DistrictModule.Extensions
+namespace Modules.CityModule.Extensions
 {
-    public static class DistrictSorting
+    public static class CitySorting
     {
-        public static IQueryable<District> ApplySorting(this IQueryable<District> query, Filter filter)
+        public static IQueryable<City> ApplySorting(this IQueryable<City> query, Filter filter)
         {
             var by = filter.SortBy?.ToUpper() ?? "ID";
             var direction = filter.SortDirection?.ToUpper() ?? "ASC";

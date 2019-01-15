@@ -6,7 +6,7 @@ import TutorsPage from './components/routes/TutorsPage';
 import SubjectsPage from './components/routes/SubjectsPage';
 import ContactTypesPage from './components/routes/ContactTypesPage';
 import SpecializationsPage from './components/routes/SpecializationsPage';
-import DistrictsPage from './components/routes/DistrictsPages';
+import CitiesPage from './components/routes/CitiesPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ErrorDialogContainer from './containers/ErrorDialogContainer';
 
@@ -22,7 +22,7 @@ export default function App() {
               <Route path="/subjects" component={SubjectsPage} />
               <Route path="/contact-types" component={ContactTypesPage} />
               <Route path="/specializations" component={SpecializationsPage} />
-              <Route path="/districts" component={DistrictsPage} />
+              <Route path="/cities" component={CitiesPage} />
               <Route path="*" component={TutorsPage} />
             </Switch>
           </>

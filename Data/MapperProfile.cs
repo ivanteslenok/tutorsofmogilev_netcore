@@ -9,9 +9,9 @@ namespace Data
     {
         public MapperProfile()
         {
+            CreateMap<City, CityDTO>().ReverseMap();
             CreateMap<Contact, ContactDTO>().ReverseMap();
             CreateMap<ContactType, ContactTypeDTO>().ReverseMap();
-            CreateMap<District, DistrictDTO>().ReverseMap();
             CreateMap<Phone, PhoneDTO>().ReverseMap();
             CreateMap<Specialization, SpecializationDTO>().ReverseMap();
             CreateMap<Subject, SubjectDTO>().ReverseMap();

@@ -2,14 +2,14 @@
 
 namespace Data.Entities
 {
-    public class District
+    public class City
     {
         public long Id { get; set; }
         public string Name { get; set; }
 
         public ICollection<Tutor> Tutors { get; set; }
 
-        public District()
+        public City()
         {
             Tutors = new List<Tutor>();
         }

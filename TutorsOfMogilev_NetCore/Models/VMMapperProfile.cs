@@ -12,8 +12,8 @@ namespace TutorsOfMogilev_NetCore.Models
 
             CreateMap<TutorDTO, TutorAdvancedVM>()
                 .ForMember(
-                    dest => dest.District,
-                    opts => opts.MapFrom(src => src.District.Name))
+                    dest => dest.City,
+                    opts => opts.MapFrom(src => src.City.Name))
                 .ForMember(
                     dest => dest.Specializations,
                     opts => opts.MapFrom(src => src.Specializations.Select(x => x.Name)))

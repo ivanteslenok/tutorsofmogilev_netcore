@@ -50,9 +50,9 @@ namespace DataEntity.Mapping
 
             builder.Property(t => t.CreateDate).IsRequired();
 
-            builder.HasOne(t => t.District)
+            builder.HasOne(t => t.City)
                 .WithMany(d => d.Tutors)
-                .HasForeignKey(t => t.DistrictId);
+                .HasForeignKey(t => t.CityId);
 
             builder.HasMany(t => t.Phones)
                 .WithOne(p => p.Tutor)
@@ -80,7 +80,7 @@ namespace DataEntity.Mapping
                     Job = "Job" + i,
                     Rating = (i % 5) + 1,
                     IsVisible = true,
-                    DistrictId = i % 2 + 1,
+                    CityId = i % 6 + 1,
                     CreateDate = DateTime.Now
                 };
             }

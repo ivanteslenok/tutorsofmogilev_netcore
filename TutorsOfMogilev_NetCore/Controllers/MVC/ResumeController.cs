@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Data.DTOs;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Modules.DistrictModule;
+using Modules.CityModule;
 using Modules.PhoneModule;
 using Modules.SpecializationModule;
 using Modules.SubjectModule;
@@ -20,41 +19,38 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
 {
     public class ResumeController : Controller
     {
-        private readonly TutorRepository _tutorRepository;
-        private readonly DistrictRepository _districtRepository;
-        private readonly SpecializationRepository _specializationRepository;
-        private readonly SubjectRepository _subjectRepository;
-        private readonly PhoneRepository _phoneRepository;
+        private readonly TutorRepository _tutorRepo;
+        private readonly CityRepository _cityRepo;
+        private readonly SpecializationRepository _specializationRepo;
+        private readonly SubjectRepository _subjectRepo;
+        private readonly PhoneRepository _phoneRepo;
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _appEnvironment;
         private readonly ImageService _imageService;
 
         public ResumeController(
             TutorRepository tutorRepository,
-            DistrictRepository districtRepository,
+            CityRepository cityRepository,
             SpecializationRepository specializationRepository,
             SubjectRepository subjectRepository,
             PhoneRepository phoneRepository,
             IMapper mapper,
-            IHostingEnvironment appEnvironment,
             ImageService imageService
             )
         {
-            _districtRepository = districtRepository;
-            _specializationRepository = specializationRepository;
-            _subjectRepository = subjectRepository;
-            _phoneRepository = phoneRepository;
+            _tutorRepo = tutorRepository;
+            _cityRepo = cityRepository;
+            _specializationRepo = specializationRepository;
+            _subjectRepo = subjectRepository;
+            _phoneRepo = phoneRepository;
             _mapper = mapper;
-            _tutorRepository = tutorRepository;
-            _appEnvironment = appEnvironment;
             _imageService = imageService;
         }
 
         public async Task<IActionResult> Add()
         {
-            ViewBag.Districts = new SelectList(await _districtRepository.GetList(), "Id", "Name");
-            ViewBag.Specializations = new MultiSelectList(await _specializationRepository.GetList(), "Id", "Name");
-            ViewBag.Subjects = new MultiSelectList(await _subjectRepository.GetList(), "Id", "Name");
+            ViewBag.Cities = new SelectList(await _cityRepo.GetList(), "Id", "Name");
+            ViewBag.Specializations = new MultiSelectList(await _specializationRepo.GetList(), "Id", "Name");
+            ViewBag.Subjects = new MultiSelectList(await _subjectRepo.GetList(), "Id", "Name");
 
             return View();
         }
@@ -65,12 +61,12 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
             if (ModelState.IsValid)
             {
                 var tutorDTO = _mapper.Map<TutorDTO>(resume);
-                tutorDTO.District = await _districtRepository.GetItem(resume.DistrictId);
+                tutorDTO.City = await _cityRepo.GetItem(resume.CityId);
 
-                var newTutor = await _tutorRepository.InsertItem(tutorDTO);
-                await _tutorRepository.UpdateTutorSpecializations(newTutor.Id, resume.SpecializationsIds, new long[] { });
-                await _tutorRepository.UpdateTutorSubjects(newTutor.Id, resume.SubjectsIds, new long[] { });
-                await _phoneRepository.InsertItem(new Phone
+                var newTutor = await _tutorRepo.InsertItem(tutorDTO);
+                await _tutorRepo.UpdateTutorSpecializations(newTutor.Id, resume.SpecializationsIds, new long[] { });
+                await _tutorRepo.UpdateTutorSubjects(newTutor.Id, resume.SubjectsIds, new long[] { });
+                await _phoneRepo.InsertItem(new Phone
                 {
                     Tutor = _mapper.Map<Tutor>(newTutor),
                     Number = resume.Phone,
@@ -98,7 +94,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
                 && TempData["addedTutorId"] != null)
             {
                 var tutorId = Convert.ToInt64(TempData["addedTutorId"]);
-                var tutor = await _tutorRepository.GetItem(tutorId);
+                var tutor = await _tutorRepo.GetItem(tutorId);
                 var oldPhoto = tutor.PhotoPath;
 
                 if (!string.IsNullOrWhiteSpace(oldPhoto))
@@ -106,7 +102,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
 
                 var savedPhotoName = await _imageService.SavePhoto(photo);
 
-                await _tutorRepository.SetPhotoPath(tutorId, savedPhotoName);
+                await _tutorRepo.SetPhotoPath(tutorId, savedPhotoName);
                 TempData["addedTutorId"] = null;
 
                 return RedirectToAction("SuccessPhotoLoad");

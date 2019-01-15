@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import { getSortedDistricts } from './../selectors/districts';
-import * as districtAC from '../AC/district';
+import { getSortedCities } from './../selectors/cities';
+import * as cityAC from '../AC/city';
 import * as dialogsAC from '../AC/dialogs';
 import EnityList from '../components/EnityList';
 
 const mapStateToProps = state => {
   return {
-    items: getSortedDistricts(state),
-    loading: state.districts.loading,
-    loaded: state.districts.loaded,
+    items: getSortedCities(state),
+    loading: state.cities.loading,
+    loaded: state.cities.loaded,
     deleteDialogOpen: state.dialogs.deleteConfirmOpen,
     withInputDialogOpen: state.dialogs.withInputOpen
   };
@@ -17,16 +17,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: () => {
-      dispatch(districtAC.loadDistricts());
+      dispatch(cityAC.loadCities());
     },
     remove: id => {
-      dispatch(districtAC.removeDistrict(id));
+      dispatch(cityAC.removeCity(id));
     },
-    create: district => {
-      dispatch(districtAC.createDistrict(district));
+    create: city => {
+      dispatch(cityAC.createCity(city));
     },
-    update: (id, district) => {
-      dispatch(districtAC.updateDistrict(id, district));
+    update: (id, city) => {
+      dispatch(cityAC.updateCity(id, city));
     },
     openDeleteDialog: () => {
       dispatch(dialogsAC.openDeleteConfirmDialog());

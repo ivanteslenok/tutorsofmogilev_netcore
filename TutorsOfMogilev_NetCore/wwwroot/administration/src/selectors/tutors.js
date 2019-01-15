@@ -19,7 +19,6 @@ export const getRowsForGrid = createSelector(
       description: tutor.description,
       experience: tutor.experience,
       photo: tutor.photoPath,
-      district: tutor.district,
-      district: tutor.createDate
+      createDate: tutor.createDate
     }))
 );

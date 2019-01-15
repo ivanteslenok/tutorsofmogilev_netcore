@@ -21,8 +21,8 @@ namespace Data.DTOs
         public int? Rating { get; set; }
         public bool IsVisible { get; set; }
         public DateTime CreateDate { get; set; }
-
-        public DistrictDTO District { get; set; }
+        
+        public CityDTO City { get; set; }
 
         public IList<PhoneDTO> Phones { get; set; }
         public IList<ContactDTO> Contacts { get; set; }

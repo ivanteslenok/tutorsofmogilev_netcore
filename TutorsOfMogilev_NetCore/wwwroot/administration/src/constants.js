@@ -11,7 +11,7 @@ export const TUTORS_SPECIALIZATIONS_ADDITIONAL_URL = `/specializations`;
 export const SUBJECTS_URL = `${apiUrl}/subjects`;
 export const CONTACT_TYPES_URL = `${apiUrl}/contact-types`;
 export const SPECIALIZATIONS_URL = `${apiUrl}/specializations`;
-export const DISTRICTS_URL = `${apiUrl}/districts`;
+export const CITYS_URL = `${apiUrl}/cities`;
 export const PHONES_URL = `${apiUrl}/phones`;
 export const CONTACTS_URL = `${apiUrl}/contacts`;
 
@@ -30,7 +30,7 @@ export const TUTOR = 'TUTOR';
 export const SUBJECT = 'SUBJECT';
 export const CONTACT_TYPE = 'CONTACT_TYPE';
 export const SPECIALIZATION = 'SPECIALIZATION';
-export const DISTRICT = 'DISTRICT';
+export const CITY = 'CITY';
 export const PHONE = 'PHONE';
 export const CONTACT = 'CONTACT';
 

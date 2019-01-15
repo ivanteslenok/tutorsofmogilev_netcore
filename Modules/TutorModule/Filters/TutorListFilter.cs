@@ -23,7 +23,7 @@ namespace Modules.TutorModule.Filters
         public string ContactValue { get; set; }
 
         public long? SubjectId { get; set; }
-        public long? DistrictId { get; set; }
+        public long? CityId { get; set; }
         public long? SpecializationId { get; set; }
         public long? ContactTypeId { get; set; }
 

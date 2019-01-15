@@ -132,10 +132,10 @@ namespace Modules.TutorModule.Extensions
                 );
             }
 
-            if (filter.DistrictId != null)
+            if (filter.CityId != null)
             {
-                query = query.Where(x => 
-                    x.DistrictId == filter.DistrictId
+                query = query.Where(x =>
+                    x.CityId == filter.CityId
                 );
             }
 

@@ -35,7 +35,7 @@ namespace Modules.TutorModule
                     .ThenInclude(x => x.Specialization)
                 .Include(x => x.TutorSubjects)
                     .ThenInclude(x => x.Subject)
-                .Include(x => x.District)
+                .Include(x => x.City)
                 .OrderBy(x => x.Id)
                 .AsNoTracking()
                 .ToListAsync();
@@ -53,7 +53,7 @@ namespace Modules.TutorModule
                     .ThenInclude(x => x.Specialization)
                 .Include(x => x.TutorSubjects)
                     .ThenInclude(x => x.Subject)
-                .Include(x => x.District)
+                .Include(x => x.City)
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
@@ -82,7 +82,7 @@ namespace Modules.TutorModule
                     .ThenInclude(x => x.Specialization)
                 .Include(x => x.TutorSubjects)
                     .ThenInclude(x => x.Subject)
-                .Include(x => x.District)
+                .Include(x => x.City)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -93,8 +93,8 @@ namespace Modules.TutorModule
         {
             var itemForSave = _mapper.Map<Tutor>(itemDTO);
             itemForSave.CreateDate = DateTime.Now;
-
-            _db.Districts.Attach(itemForSave.District);
+            
+            _db.Cities.Attach(itemForSave.City);
             _db.Tutors.Add(itemForSave);
             int i = await _db.SaveChangesAsync();
 
@@ -118,7 +118,7 @@ namespace Modules.TutorModule
             _db.Entry(itemForSave).Property(x => x.Cost).IsModified = true;
             _db.Entry(itemForSave).Property(x => x.Description).IsModified = true;
             _db.Entry(itemForSave).Property(x => x.Experience).IsModified = true;
-            _db.Entry(itemForSave).Reference(x => x.District).IsModified = true;
+            _db.Entry(itemForSave).Reference(x => x.City).IsModified = true;
 
             int i = await _db.SaveChangesAsync();
 

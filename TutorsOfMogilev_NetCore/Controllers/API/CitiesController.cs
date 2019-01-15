@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Data.DTOs;
+﻿using Data.DTOs;
 using Data.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modules.DistrictModule;
+using Modules.CityModule;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
@@ -12,25 +12,25 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
     [Authorize]
 #endif
     [Route("api/[controller]")]
-    public class DistrictsController : Controller
+    public class CitiesController : Controller
     {
-        private readonly DistrictRepository _districtRepository;
+        private readonly CityRepository _CityRepository;
 
-        public DistrictsController(DistrictRepository districtRepository)
+        public CitiesController(CityRepository CityRepository)
         {
-            _districtRepository = districtRepository;
+            _CityRepository = CityRepository;
         }
 
         [HttpGet]
-        public async Task<List<DistrictDTO>> Get()
+        public async Task<List<CityDTO>> Get()
         {
-            return await _districtRepository.GetList();
+            return await _CityRepository.GetList();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _districtRepository.GetItem(id);
+            var result = await _CityRepository.GetItem(id);
 
             if (result == null)
                 return NotFound();
@@ -39,9 +39,9 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] District item)
+        public async Task<IActionResult> Post([FromBody] City item)
         {
-            var result = await _districtRepository.InsertItem(item);
+            var result = await _CityRepository.InsertItem(item);
 
             if (result == null)
                 return BadRequest("Объект не был создан");
@@ -50,10 +50,10 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] District item)
+        public async Task<IActionResult> Put(int id, [FromBody] City item)
         {
             item.Id = id;
-            var result = await _districtRepository.UpdateItem(item);
+            var result = await _CityRepository.UpdateItem(item);
 
             if (result == null)
                 return BadRequest("Объект не был обновлен");
@@ -64,7 +64,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _districtRepository.DeleteItem(id);
+            var result = await _CityRepository.DeleteItem(id);
 
             if (!result)
                 return BadRequest("Объект не был удален");

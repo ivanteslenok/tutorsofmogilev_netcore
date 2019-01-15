@@ -46,8 +46,8 @@ namespace TutorsOfMogilev_NetCore.Models
         [Display(Name = "Стоимость одного занятия")]
         public decimal? Cost { get; set; }
         
-        [Display(Name = "Район")]
-        public int DistrictId { get; set; }
+        [Display(Name = "Город")]
+        public int CityId { get; set; }
         
         [Display(Name = "Цели занятий")]
         public long[] SpecializationsIds { get; set; }

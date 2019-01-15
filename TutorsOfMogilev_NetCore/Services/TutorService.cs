@@ -43,7 +43,7 @@ namespace TutorsOfMogilev_NetCore.Services
                     Title = $"{x.FirstName} {x.LastName}" + (!string.IsNullOrWhiteSpace(x.Patronymic) ? $" {x.Patronymic}" : ""),
                     PhotoPath = x.PhotoPath,
                     Cost = x.Cost.ToString(),
-                    District = x.District.Name,
+                    City = x.City.Name,
                     Education = x.Education,
                     Specializations = x.Specializations
                         .Aggregate(

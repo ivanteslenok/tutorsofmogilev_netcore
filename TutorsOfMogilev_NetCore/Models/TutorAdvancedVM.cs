@@ -15,7 +15,7 @@ namespace TutorsOfMogilev_NetCore.Models
         public byte? Experience { get; set; }
         public decimal? Cost { get; set; }
         public DateTime CreateDate { get; set; }
-        public string District { get; set; }
+        public string City { get; set; }
         public string[] Specializations { get; set; }
         public string[] Subjects { get; set; }
 

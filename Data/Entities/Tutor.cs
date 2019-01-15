@@ -22,10 +22,11 @@ namespace Data.Entities
         public bool IsVisible { get; set; }
         public DateTime CreateDate { get; set; }
 
-        public long DistrictId { get; set; }
-        public District District { get; set; }
+        public long? CityId { get; set; }
+        public City City { get; set; }
 
         // one-to-many
+
         public ICollection<Phone> Phones { get; set; }
         public ICollection<Contact> Contacts { get; set; }
 

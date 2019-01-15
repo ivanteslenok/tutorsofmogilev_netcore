@@ -4,7 +4,7 @@ import tutors from './tutors';
 import subjects from './subjects';
 import contactTypes from './contactTypes';
 import specializations from './specializations';
-import districts from './districts';
+import cities from './cities';
 
 export default combineReducers({
   dialogs,
@@ -12,5 +12,5 @@ export default combineReducers({
   subjects,
   contactTypes,
   specializations,
-  districts
+  cities
 });

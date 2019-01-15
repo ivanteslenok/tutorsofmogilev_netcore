@@ -134,14 +134,14 @@ namespace Modules.TutorModule.Extensions
                             break;
                     }
                     break;
-                case "DISTRICT":
+                case "CITY":
                     switch (direction)
                     {
                         case "ASC":
-                            query = query.OrderBy(t => t.District.Name);
+                            query = query.OrderBy(t => t.City.Name);
                             break;
                         case "DESC":
-                            query = query.OrderByDescending(t => t.District.Name);
+                            query = query.OrderByDescending(t => t.City.Name);
                             break;
                     }
                     break;

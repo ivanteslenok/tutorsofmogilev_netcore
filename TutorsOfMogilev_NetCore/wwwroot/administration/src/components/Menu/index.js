@@ -18,7 +18,7 @@ export default function Menu(params) {
         <MenuItem to="/subjects" text="Предметы" />
         <MenuItem to="/contact-types" text="Типы контактов" />
         <MenuItem to="/specializations" text="Специализации" />
-        <MenuItem to="/districts" text="Районы" />
+        <MenuItem to="/cities" text="Города" />
         <ListItem
           button
           style={{ padding: 0, borderTop: '1px solid #ddd', marginTop: '20px' }}
