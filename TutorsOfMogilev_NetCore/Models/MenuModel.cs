@@ -12,9 +12,8 @@ namespace TutorsOfMogilev_NetCore.Models
             MenuItems = new List<MenuItem>
             {
                 new MenuItem("Репетиторы", "nav__item_tutors", false, "Tutors", "List"),
-                new MenuItem("Контакты", "nav__item_contacts", false, "Info", "Contacts"),
                 new MenuItem("О нас", "nav__item_about-us", false, "Info", "AboutUs"),
-                new MenuItem("Тарифы", "nav__item_tariff", false, "Info", "Tariffs"),
+                new MenuItem("Преимущества", "nav__item_advantages", false, "Info", "Advantages"),
                 new MenuItem("Оставить заявку", "nav__item_resume", false, "Resume", "Add")
             };
         }

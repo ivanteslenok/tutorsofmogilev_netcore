@@ -8,93 +8,96 @@
 
 @section Styles
     {
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/tutorItem.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/tutorItem.min.css" asp-append-version="true" />
-    </environment>
+    <link rel="stylesheet" href="~/styles/tutorItem.css" />
 }
 
-<div class="tutor-item-container">
+<div class="tutor-container">
     <a class="btn-link" href='javascript:history.go(-1)'>
         <i class="fa fa-long-arrow-alt-left"></i>
         Вернуться назад
     </a>
-    <div class="tutor-item-card">
-        @if (!string.IsNullOrWhiteSpace(Model.PhotoPath))
-        {
-            <img src="~/uploads/UsersPhotos/@Model.PhotoPath" class="tutor-item-photo">
-        }
-        <div class="tutor-item-fio">
-            <h4>@Model.FirstName @Model.LastName @Model.Patronymic</h4>
-            <div>
-                @foreach (var subject in Model.Subjects)
-                {
-                    <span class="badge badge-pill tutor-item-badge color-@rand.Next(1, 123)">
-                        @subject
-                    </span>
-                }
-            </div>
-            <div>
-                @foreach (var spec in Model.Specializations)
-                {
-                    <span class="badge tutor-item-badge color-@rand.Next(1, 123)">
-                        @spec
-                    </span>
-                }
-            </div>
+    <div class="tutor-card">
+        <div class="tutor-card__photo">
+            @if (string.IsNullOrWhiteSpace(Model.PhotoPath))
+            {
+                <img src="~/images/default-user.png" class="tutor-photo">
+            }
+            else
+            {
+                <img src="~/uploads/UsersPhotos/@Model.PhotoPath" class="tutor-photo">
+            }
         </div>
-        <ul class="tutor-item-info">
-            <li class="tutor-item-info__line">
-                <div class="tutor-item-info__label">Образование</div>
-                <div class="tutor-item-info__data">@Model.Education</div>
-            </li>
-            @if (!string.IsNullOrWhiteSpace(Model.Job))
-            {
-                <li class="tutor-item-info__line">
-                    <div class="tutor-item-info__label">Работа</div>
-                    <div class="tutor-item-info__data">@Model.Job</div>
-                </li>
-            }
-            <li class="tutor-item-info__line">
-                <div class="tutor-item-info__label">Опыт работы</div>
-                <div class="tutor-item-info__data">@Model.Experience</div>
-            </li>
-            @if (!string.IsNullOrWhiteSpace(Model.Address))
-            {
-                <li class="tutor-item-info__line">
-                    <div class="tutor-item-info__label">Адрес</div>
-                    <div class="tutor-item-info__data">@Model.Address</div>
-                </li>
-            }
-            <li class="tutor-item-info__line">
-                <div class="tutor-item-info__label">Дата добавления на сайт</div>
-                <div class="tutor-item-info__data">@Model.CreateDate.ToString("dd/MM/yyyy")</div>
-            </li>
-            <li class="tutor-item-info__line">
-                <div class="tutor-item-info__label">Город</div>
-                <div class="tutor-item-info__data">@Model.City</div>
-            </li>
-        </ul>
-        <div class="tutor-item-phone">
-            <button class="btn btn-success"
-                    id="show"
-                    style="display: inline-block;"
-                    onclick="toggle_visibility();">
-                Показать телефон
-            </button>
-            <span class="tutor-item-phone__data"
-                  style="display: none;"
-                  id="hidden">
-                @Model.Phone
-            </span>
+        <div class="tutor-card__data">
+            <div class="tutor-fio">
+                <h4>@Model.FirstName @Model.LastName @Model.Patronymic</h4>
+                <div>
+                    @foreach (var subject in Model.Subjects)
+                    {
+                        <span class="badge badge-pill tutor-badge color-@rand.Next(1, 123)">
+                            @subject
+                        </span>
+                    }
+                </div>
+                <div>
+                    @foreach (var spec in Model.Specializations)
+                    {
+                        <span class="badge tutor-badge color-@rand.Next(1, 123)">
+                            @spec
+                        </span>
+                    }
+                </div>
+            </div>
+            <div class="tutor-info">
+                <div class="tutor-info__line">
+                    <div class="tutor-info__label">Образование</div>
+                    <div class="tutor-info__data">@Model.Education</div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Job))
+                {
+                    <div class="tutor-info__line">
+                        <div class="tutor-info__label">Работа</div>
+                        <div class="tutor-info__data">@Model.Job</div>
+                    </div>
+                }
+                <div class="tutor-info__line">
+                    <div class="tutor-info__label">Опыт работы</div>
+                    <div class="tutor-info__data">@Model.Experience</div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Address))
+                {
+                    <div class="tutor-info__line">
+                        <div class="tutor-info__label">Адрес</div>
+                        <div class="tutor-info__data">@Model.Address</div>
+                    </div>
+                }
+                <div class="tutor-info__line">
+                    <div class="tutor-info__label">Дата добавления на сайт</div>
+                    <div class="tutor-info__data">@Model.CreateDate.ToString("dd/MM/yyyy")</div>
+                </div>
+                <div class="tutor-info__line">
+                    <div class="tutor-info__label">Город</div>
+                    <div class="tutor-info__data">@Model.City</div>
+                </div>
+            </div>
+            <div class="tutor-phone">
+                <button class="btn btn-success"
+                        id="show"
+                        style="display: inline-block;"
+                        onclick="toggle_visibility();">
+                    Показать телефон
+                </button>
+                <span class="tutor-phone__data"
+                      style="display: none;"
+                      id="hidden">
+                    @Model.Phone
+                </span>
+            </div>
         </div>
     </div>
 
     @if (!string.IsNullOrWhiteSpace(Model.Description))
     {
-        <div class="tutor-item-discription">
+        <div class="tutor-discription">
             <h5>Описание</h5>
             @Model.Description
         </div>

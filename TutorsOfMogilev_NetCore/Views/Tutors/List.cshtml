@@ -7,12 +7,7 @@
 
 @section Styles
     {
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/tutorsList.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/tutorsList.min.css" asp-append-version="true" />
-    </environment>
+    <link rel="stylesheet" href="~/styles/tutorsList.css" />
 }
 
 <div class="subjects">
@@ -21,14 +16,19 @@
         <li>
             @await Component.InvokeAsync(
                 "SubjectLink",
-                new { currentSubj = Model.PaginationInfo.CurrentSubject })
+                new {
+                    currentSubj = Model.PaginationInfo.CurrentSubject
+                })
         </li>
         @foreach (var subj in Model.Subjects)
         {
             <li class="subjects__item">
                 @await Component.InvokeAsync(
                     "SubjectLink",
-                    new { subjectName = subj.Name, currentSubj = Model.PaginationInfo.CurrentSubject })
+                    new {
+                        subjectName = subj.Name,
+                        currentSubj = Model.PaginationInfo.CurrentSubject
+                    })
             </li>
         }
     </ul>
@@ -43,28 +43,66 @@
                asp-controller="Tutors"
                asp-action="Item"
                asp-route-key="@tutor.UrlKey">
-                <span class="card-name">@tutor.Title <br /> @tutor.Subjects</span>
-                <i class="fa fa-arrow-alt-circle-right card-icon"></i>
+                @tutor.Title
             </a>
             <div class="card-info">
-                @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
-                {
-                    <img src="~/images/default-user.png" class="card-photo">
-                }
-                else
-                {
-                    <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo">
-                }
-                <p class="card-education"><span class="card-label">Образование</span>@tutor.Education</p>
-                <p class="card-city"><span class="card-label">Город</span>@tutor.City</p>
-                <p class="card-cost"><span class="card-label">Стоимость</span>@tutor.Cost</p>
-                @if (!string.IsNullOrWhiteSpace(tutor.Specializations))
-                {
-                    <p class="card-specialization">
-                        <span class="card-label">Цель занятий</span>
-                        @tutor.Specializations
+                <div class="card-info__photo">
+                    @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
+                    {
+                        <img src="~/images/default-user.png" class="card-photo">
+                    }
+                    else
+                    {
+                        <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo">
+                    }
+                </div>
+                <div class="card-info__data">
+                    <p>
+                        <span class="card-label">Предметы</span>
+                        @tutor.Subjects
                     </p>
-                }
+                    <p>
+                        <span class="card-label">Образование</span>
+                        @tutor.Education
+                    </p>
+                    <p>
+                        <span class="card-label">Город</span>
+                        @tutor.City
+                    </p>
+                    <p>
+                        <span class="card-label">Стоимость</span>
+                        @tutor.Cost
+                    </p>
+                    @if (!string.IsNullOrWhiteSpace(tutor.Specializations))
+                    {
+                        <p>
+                            <span class="card-label">Цель занятий</span>
+                            @tutor.Specializations
+                        </p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(tutor.Description))
+                    {
+                        <p>
+                            <span class="card-label">Описание</span>
+                            @if (tutor.Description.Length > 100)
+                            {
+                                @tutor.Description.Substring(0, 100)<span>...</span>
+                            }
+                            else
+                            {
+                                @tutor.Description
+                            }
+                        </p>
+                    }
+                    <div class="card-info__more-btn">
+                        <a class="btn btn-dark"
+                           asp-controller="Tutors"
+                           asp-action="Item"
+                           asp-route-key="@tutor.UrlKey">
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TutorsOfMogilev_NetCore.Models;
 
 namespace TutorsOfMogilev_NetCore.Controllers.MVC
 {
@@ -10,12 +9,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
             return View();
         }
 
-        public IActionResult Contacts()
-        {
-            return View();
-        }
-
-        public IActionResult Tariffs()
+        public IActionResult Advantages()
         {
             return View();
         }

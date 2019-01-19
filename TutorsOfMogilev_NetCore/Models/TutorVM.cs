@@ -9,6 +9,7 @@
         public string City { get; set; }
         public string Cost { get; set; }
         public string Specializations { get; set; }
+        public string Description { get; set; }
         public string UrlKey { get; set; }
     }
 }
