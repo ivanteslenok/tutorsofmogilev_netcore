@@ -10,12 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
+    <Content Remove="wwwroot\css\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
+    <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
   </ItemGroup>
@@ -26,26 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\aboutUs.css" />
-    <None Include="wwwroot\css\aboutUs.css.map" />
-    <None Include="wwwroot\css\aboutUs.scss" />
-    <None Include="wwwroot\css\contacts.css" />
-    <None Include="wwwroot\css\contacts.css.map" />
-    <None Include="wwwroot\css\contacts.scss" />
-    <None Include="wwwroot\css\resume.css" />
-    <None Include="wwwroot\css\resume.css.map" />
-    <None Include="wwwroot\css\resume.scss" />
-    <None Include="wwwroot\css\tariffs.css" />
-    <None Include="wwwroot\css\tariffs.css.map" />
-    <None Include="wwwroot\css\tariffs.scss" />
-    <None Include="wwwroot\css\tutorsList.css" />
-    <None Include="wwwroot\css\tutorsList.css.map" />
-    <None Include="wwwroot\css\tutorsList.scss" />
-    <None Include="wwwroot\css\_bot-left-gradient.scss" />
-    <None Include="wwwroot\css\_colors.scss" />
-    <None Include="wwwroot\css\_header.scss" />
-    <None Include="wwwroot\css\_layout.scss" />
-    <None Include="wwwroot\css\_menu.scss" />
     <None Include="wwwroot\lib\bootstrap-select\.github\ISSUE_TEMPLATE.md" />
     <None Include="wwwroot\lib\bootstrap-select\.github\move.yml" />
     <None Include="wwwroot\lib\bootstrap-select\CHANGELOG.md" />

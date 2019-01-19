@@ -1,0 +1,66 @@
+@import 'colors';
+
+nav {
+    text-align: right;
+    display: block;
+}
+
+.nav__item {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 10px 25px;
+    font-weight: 600;
+    opacity: 0.5;
+    border: 1px solid transparent;
+    transition: all 0.5s ease;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &::before {
+        margin-right: 10px;
+    }
+
+    &_tutors::before {
+        content: url(../images/teacher-at-the-blackboard_24.png);
+    }
+
+    &_resume::before {
+        content: url(../images/contract_24.png);
+    }
+
+    &_about-us::before {
+        content: url(../images/about-us_24.png);
+    }
+
+    &_advantages::before {
+        content: url(../images/advantages_24.png);
+    }
+
+    &_administration::before {
+        content: url(../images/settings-gears_24.png);
+    }
+
+    &_active {
+        opacity: 1;
+        border-top: 2px solid $orange;
+        border-bottom: 1px solid #fff;
+    }
+}
+
+@media screen and (max-width: 970px) {
+    .nav__item {
+        font-size: 0;
+
+        &:before {
+            margin: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .nav__item {
+        padding: 15px;
+    }
+}

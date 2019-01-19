@@ -1,0 +1,19 @@
+{
+  "name": "wwwroot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-sass": "^4.0.2"
+  }
+}
