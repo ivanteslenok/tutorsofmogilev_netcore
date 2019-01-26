@@ -16,6 +16,13 @@ namespace Modules.SubjectModule.Extensions
                 );
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.City))
+            {
+                query = query.Where(x =>
+                    x.TutorSubjects.Any(y => y.Tutor.City.Name == filter.City)
+                );
+            }
+
             return query;
         }
     }

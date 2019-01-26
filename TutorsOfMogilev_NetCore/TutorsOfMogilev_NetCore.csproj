@@ -438,4 +438,10 @@
     <TypeScriptCompile Include="wwwroot\lib\popper.js\index.d.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Tutors\Components\CityLink\Default.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

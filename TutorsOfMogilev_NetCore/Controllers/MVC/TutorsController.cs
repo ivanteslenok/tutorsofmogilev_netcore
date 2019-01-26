@@ -15,18 +15,18 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
             _tutorService = tutorService;
         }
 
-        [Route("Tutors/{Subject}/Page{PageNumber}", Order = 1)]
-        [Route("Tutors/Page{PageNumber}", Order = 2)]
-        [Route("Tutors/{Subject}", Order = 3)]
-        [Route("", Order = 4)]
-        [Route("Tutors", Order = 5)]
+        [Route("tutors/{City}/{Subject}/page{PageNumber}", Order = 1)]
+        [Route("tutors/{City}/page{PageNumber}", Order = 2)]
+        [Route("tutors/{City}/{Subject}", Order = 3)]
+        [Route("tutors/{City}", Order = 4)]
+        [Route("tutors", Order = 5)]
+        [Route("", Order = 6)]
         public async Task<IActionResult> List(TutorListFilter filter)
         {
             filter.PageSize = 10;
             filter.IsVisible = true;
             filter.SortDirection = "desc";
             filter.SortBy = "rating";
-            filter.Subject = RouteData.Values["Subject"]?.ToString();
 
             var model = await _tutorService.GetListVM(filter);
 

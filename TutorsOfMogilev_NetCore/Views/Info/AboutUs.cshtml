@@ -5,7 +5,45 @@
     ViewBag.MenuActive = "О нас";
 }
 
-@section Styles
-    {
+@section Styles {
     <link rel="stylesheet" href="~/styles/aboutUs.css" />
 }
+
+<h3 class="title">Как мы работаем</h3>
+<div class="box">
+    <div class="msg msg-1">
+        <strong class="msg__title">Оформление заявки</strong>
+        <span>Заполните все необходимые данные в форме заказа</span>
+    </div>
+    <div class="msg msg-2">
+        <strong class="msg__title">Уточнение данных заявки</strong>
+        <span>
+            Наш специалист свяжется с Вами и уточнит необходимую информацию, чтобы подобрать лучшего
+            репетитора
+        </span>
+    </div>
+    <div class="msg msg-3">
+        <strong class="msg__title">Поиск репетитора</strong>
+        <span>Наш специалист подберет Вам подходящего преподавателя и передаст Вам его контакты</span>
+    </div>
+    <div class="msg msg-4">
+        <strong class="msg__title">Проведение занятий</strong>
+        <span>После подбора репетитора Вы с ним связываетесь и проводите занятия</span>
+    </div>
+    <div class="line">
+        <span class="line__point">1</span>
+        <span class="line__point">2</span>
+        <span class="line__point">3</span>
+        <span class="line__point">4</span>
+        <div class="line__edge"></div>
+        <a class="btn"
+           asp-controller="Tutors"
+           asp-action="List"
+           asp-route-City=@null
+           asp-route-Subject=@null
+           asp-route-PageNumber=@null
+           >
+            Найти репетитора
+        </a>
+    </div>
+</div>

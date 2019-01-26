@@ -1,3 +1,56 @@
 ﻿@import 'layout';
 @import 'menu';
 @import 'header';
+@import 'info';
+
+.title {
+    margin-bottom: 40px;
+}
+
+.box {
+    margin: 0 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    & [class*="msg-"] {
+        background-repeat: no-repeat;
+    }
+}
+
+.msg {
+    padding-left: 100px;
+    padding-top: 0;
+    width: 47%;
+
+    &__title {
+        text-transform: uppercase;
+    }
+
+    &-1 {
+        background: url(../images/loupe.png);
+    }
+
+    &-2 {
+        background: url(../images/free-delivery.png);
+    }
+
+    &-3 {
+        background: url(../images/friendship.png);
+    }
+
+    &-4 {
+        background: url(../images/medal.png);
+    }
+
+    &-5 {
+        background: url(../images/thumbs-up.png);
+    }
+
+    &-6 {
+        background: url(../images/progress.png);
+    }
+}

@@ -28,5 +28,6 @@ namespace Modules.TutorModule.Filters
         public long? ContactTypeId { get; set; }
 
         public string Subject { get; set; }
+        public string City { get; set; }
     }
 }

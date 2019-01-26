@@ -8,6 +8,7 @@ namespace Core.Models
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
         public string CurrentSubject { get; set; }
+        public string CurrentCity { get; set; }
 
         public int TotalPages => ItemsCount >= PageSize ? (int)Math.Ceiling((decimal)ItemsCount / PageSize) : 1;
         public bool HasPrevPage => PageNumber > 1;

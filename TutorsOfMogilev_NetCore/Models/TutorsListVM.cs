@@ -8,6 +8,7 @@ namespace TutorsOfMogilev_NetCore.Models
     {
         public List<TutorVM> Tutors { get; set; }
         public List<SubjectDTO> Subjects { get; set; }
+        public List<CityDTO> Cities { get; set; }
         public PaginationInfo PaginationInfo { get; set; }
     }
 }

@@ -5,7 +5,54 @@
     ViewBag.MenuActive = "Преимущества";
 }
 
-@section Styles
-    {
+@section Styles {
     <link rel="stylesheet" href="~/styles/advantages.css" />
 }
+
+<h3 class="title">С нами очень комфортно и выгодно работать</h3>
+<div class="box">
+    <div class="row">
+        <div class="msg msg-1">
+            <strong class="msg__title">Никаких долгих поисков</strong>
+            <span>Мы сами подберем Вам подходящего под Ваши требования репетитора</span>
+        </div>
+        <div class="msg msg-2">
+            <strong class="msg__title">Для вас наш сервис бесплатный</strong>
+            <span>Рассчитывайтесь только с репетитором по заранее оговоренной с ним цене</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="msg msg-3">
+            <strong class="msg__title">3500 довольных заказчиков</strong>
+            <span>Мы знаем как угодить каждому</span>
+        </div>
+        <div class="msg msg-4">
+            <strong class="msg__title">Качественный подбор репетиторов</strong>
+            <span>
+                97% наших заказчиков остаются довольны выбором репетитора, лишь трем процентам учеников мы подбираем репетитора повторно
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="msg msg-5">
+            <strong class="msg__title">Лучшие педагоги</strong>
+            <span>
+                Мы работаем с проверенными преподавателями, которые успешно провели множество уроков
+            </span>
+        </div>
+        <div class="msg msg-6">
+            <strong class="msg__title">+34 балла к ЦТ 2017</strong>
+            <span>По итогам опроса наших заказчиков за 2017 год</span>
+        </div>
+    </div>
+</div>
+<div class="btn-container">
+    <a class="btn"
+       asp-controller="Tutors"
+       asp-action="List"
+       asp-route-City=@null
+       asp-route-Subject=@null
+       asp-route-PageNumber=@null>
+        Найти репетитора
+    </a>
+</div>

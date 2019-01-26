@@ -3,11 +3,36 @@
 @{
     ViewBag.Title = "Репетиторы";
     ViewBag.MenuActive = "Репетиторы";
+    var cityChooserTitle = Model.PaginationInfo.CurrentCity ?? "Выбрать город";
 }
 
-@section Styles
-    {
+@section Styles {
     <link rel="stylesheet" href="~/styles/tutorsList.css" />
+}
+
+@section CitiesChooser {
+    <div class="city-dropdown">
+        <button class="city-dropdown__btn dropdown-toggle"
+                type="button"
+                id="city-dropdown-btn"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+            @cityChooserTitle
+        </button>
+        <div class="dropdown-menu" aria-labelledby="city-dropdown-btn">
+            @foreach (var city in Model.Cities)
+            {
+                @await Component.InvokeAsync(
+                    "CityLink",
+                    new
+                    {
+                        cityName = city.Name,
+                        currentCity = Model.PaginationInfo.CurrentCity
+                    })
+            }
+        </div>
+    </div>
 }
 
 <div class="subjects">
@@ -16,7 +41,8 @@
         <li>
             @await Component.InvokeAsync(
                 "SubjectLink",
-                new {
+                new
+                {
                     currentSubj = Model.PaginationInfo.CurrentSubject
                 })
         </li>
@@ -25,7 +51,8 @@
             <li class="subjects__item">
                 @await Component.InvokeAsync(
                     "SubjectLink",
-                    new {
+                    new
+                         {
                         subjectName = subj.Name,
                         currentSubj = Model.PaginationInfo.CurrentSubject
                     })
@@ -43,18 +70,23 @@
                asp-controller="Tutors"
                asp-action="Item"
                asp-route-key="@tutor.UrlKey">
-                @tutor.Title
+                <h5>@tutor.Title</h5>
             </a>
             <div class="card-info">
                 <div class="card-info__photo">
-                    @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
-                    {
-                        <img src="~/images/default-user.png" class="card-photo">
-                    }
-                    else
-                    {
-                        <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo">
-                    }
+                    <a title="Подробнее"
+                       asp-controller="Tutors"
+                       asp-action="Item"
+                       asp-route-key="@tutor.UrlKey">
+                        @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
+                        {
+                            <img src="~/images/default-user.png" class="card-photo">
+                        }
+                        else
+                        {
+                            <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo">
+                        }
+                    </a>
                 </div>
                 <div class="card-info__data">
                     <p>

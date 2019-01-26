@@ -37,6 +37,8 @@ namespace Modules.SubjectModule
         public async Task<ListModel<SubjectDTO>> GetList(SubjectListFilter filter)
         {
             var query = _db.Subjects
+                .Include(x => x.TutorSubjects)
+                    .ThenInclude(x => x.Tutor)
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 

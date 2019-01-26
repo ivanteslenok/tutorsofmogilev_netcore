@@ -7,7 +7,7 @@ var sassSrc = './styles/*.scss',
 
 gulp.task('sass', function (done) {
     gulp.src(sassSrc)
-        .pipe(gulpSass())
+        .pipe(gulpSass().on('error', gulpSass.logError))
         .pipe(gulpCssNano())
         .pipe(gulp.dest(cssDest));
     done();

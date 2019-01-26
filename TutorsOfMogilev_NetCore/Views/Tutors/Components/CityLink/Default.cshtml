@@ -1,0 +1,12 @@
+﻿@{
+    var clasName = ViewBag.CityName == ViewBag.CurrentCity ? "dropdown-item active" : "dropdown-item";
+}
+
+<a class="@clasName"
+   asp-controller="Tutors"
+   asp-action="List"
+   asp-route-City="@ViewBag.CityName"
+   asp-route-Subject=@null
+   asp-route-PageNumber=@null>
+    @ViewBag.CityName
+</a>

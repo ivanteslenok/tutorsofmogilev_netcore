@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Core.Models;
 using Microsoft.Extensions.Configuration;
+using Modules.CityModule;
 using Modules.SubjectModule;
+using Modules.SubjectModule.Filters;
 using Modules.TutorModule;
 using Modules.TutorModule.Filters;
 using TutorsOfMogilev_NetCore.Models;
@@ -15,18 +17,21 @@ namespace TutorsOfMogilev_NetCore.Services
     public class TutorService
     {
         private readonly SubjectRepository _subjectRepo;
+        private readonly CityRepository _cityRepo;
         private readonly TutorRepository _tutorRepo;
         private readonly IMapper _mapper;
         IConfiguration _config;
 
         public TutorService(
             SubjectRepository subjectRepo,
+            CityRepository cityRepo,
             TutorRepository tutorRepo,
             IMapper mapper,
             IConfiguration config
             )
         {
             _subjectRepo = subjectRepo;
+            _cityRepo = cityRepo;
             _tutorRepo = tutorRepo;
             _mapper = mapper;
             _config = config;
@@ -35,6 +40,7 @@ namespace TutorsOfMogilev_NetCore.Services
         public async Task<TutorsListVM> GetListVM(TutorListFilter filter)
         {
             var totorsList = await _tutorRepo.GetList(filter);
+            var subjects = await _subjectRepo.GetList(new SubjectListFilter { City = filter.City });
 
             return new TutorsListVM
             {
@@ -45,6 +51,7 @@ namespace TutorsOfMogilev_NetCore.Services
                     Cost = x.Cost.ToString(),
                     City = x.City.Name,
                     Education = x.Education,
+                    Description = x.Description,
                     Specializations = x.Specializations
                         .Aggregate(
                             new StringBuilder(),
@@ -59,13 +66,15 @@ namespace TutorsOfMogilev_NetCore.Services
                         .ToString(),
                     UrlKey = $"{x.Id}-{x.CreateDate.ToString("ddMMyyyy")}"
                 }).ToList(),
-                Subjects = await _subjectRepo.GetList(),
+                Subjects = subjects.Items,
+                Cities = await _cityRepo.GetList(),
                 PaginationInfo = new PaginationInfo
                 {
                     ItemsCount = totorsList.TotalCount,
                     PageSize = filter.PageSize,
                     PageNumber = filter.PageNumber,
-                    CurrentSubject = filter.Subject
+                    CurrentSubject = filter.Subject,
+                    CurrentCity = filter.City
                 }
             };
         }

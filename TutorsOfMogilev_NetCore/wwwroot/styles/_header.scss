@@ -1,7 +1,6 @@
 header {
     width: 100%;
-    /* background-color: #800bbb; */
-    background-color: #607d8b;
+    background-color: #009688;
 }
 
 .head-box {
@@ -27,13 +26,26 @@ header {
     margin-left: 70px;
     outline: none !important;
 
+    $city-active: #0d5852;
+
     &__btn {
         height: 100%;
         outline: none !important;
-        background-color: #879ba5;
+        background-color: #10756c;
         color: #fff;
         padding: 0 10px;
         cursor: pointer;
+        transition: all 0.5s ease;
+
+        &:hover,
+        &[aria-expanded="true"] {
+            background-color: $city-active;
+        }
+    }
+
+    & .dropdown-item.active,
+    & .dropdown-item:active {
+        background-color: $city-active;
     }
 }
 
@@ -64,6 +76,10 @@ header {
     &__instagram {
         color: #fff;
         font-size: 40px;
-        transition: all 0.5s ease;
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: #22776f;
+        }
     }
 }
