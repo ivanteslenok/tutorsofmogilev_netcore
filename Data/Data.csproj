@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="AutoMapper">
       <HintPath>C:\Users\ivanteslenok\.nuget\packages\automapper\8.0.0\lib\netstandard2.0\AutoMapper.dll</HintPath>
     </Reference>
