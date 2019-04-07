@@ -18,6 +18,7 @@ namespace DataEntity.Mapping
             builder
                 .HasOne(ts => ts.Subject)
                 .WithMany(s => s.TutorSubjects)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(ts => ts.SubjectId);
 
             TutorSubject[] tutorSubjectsData = new TutorSubject[50];

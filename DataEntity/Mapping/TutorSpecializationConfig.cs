@@ -18,6 +18,7 @@ namespace DataEntity.Mapping
             builder
                 .HasOne(ts => ts.Specialization)
                 .WithMany(s => s.TutorSpecializations)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(ts => ts.SpecializationId);
         }
     }
