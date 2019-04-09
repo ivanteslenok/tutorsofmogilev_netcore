@@ -56,7 +56,8 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ResumeVM resume)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add([FromForm] ResumeVM resume)
         {
             if (ModelState.IsValid)
             {
@@ -73,27 +74,31 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
                     Operator = resume.PhoneOperator
                 });
 
-                TempData["addedTutorId"] = newTutor.Id;
+                var IsPhotoLoadSuccess = await LoadPhoto(resume.Photo, newTutor.Id);
 
-                return RedirectToAction("LoadPhoto");
+                if (!IsPhotoLoadSuccess)
+                    ModelState.AddModelError("", "Ошибка при загрузке фото");
+                else
+                    return RedirectToAction("Success");
             }
+
+            ViewBag.Cities = new SelectList(await _cityRepo.GetList(), "Id", "Name");
+            ViewBag.Specializations = new MultiSelectList(await _specializationRepo.GetList(), "Id", "Name");
+            ViewBag.Subjects = new MultiSelectList(await _subjectRepo.GetList(), "Id", "Name");
 
             return View(resume);
         }
 
-        public IActionResult LoadPhoto()
+        public IActionResult Success()
         {
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> LoadPhoto(IFormFile photo)
+        private async Task<bool> LoadPhoto(IFormFile photo, long tutorId)
         {
             if (photo != null
-                && _imageService.IsImage(photo)
-                && TempData["addedTutorId"] != null)
+                && _imageService.IsImage(photo))
             {
-                var tutorId = Convert.ToInt64(TempData["addedTutorId"]);
                 var tutor = await _tutorRepo.GetItem(tutorId);
                 var oldPhoto = tutor.PhotoPath;
 
@@ -103,22 +108,11 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
                 var savedPhotoName = await _imageService.SavePhoto(photo);
 
                 await _tutorRepo.SetPhotoPath(tutorId, savedPhotoName);
-                TempData["addedTutorId"] = null;
 
-                return RedirectToAction("SuccessPhotoLoad");
+                return true;
             }
 
-            return RedirectToAction("FailPhotoLoad");
-        }
-
-        public IActionResult SuccessPhotoLoad()
-        {
-            return View();
-        }
-
-        public IActionResult FailPhotoLoad()
-        {
-            return View();
+            return false;
         }
     }
 }

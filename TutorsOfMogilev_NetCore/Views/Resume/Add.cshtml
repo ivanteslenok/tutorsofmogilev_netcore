@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="~/styles/resume.css" />
 }
 
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
 <div class="resume">
-    <form asp-controller="Resume" asp-action="Add" asp-antiforgery="true" method="post">
+    <form asp-controller="Resume" asp-action="Add" asp-antiforgery="true" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="form-group col-md-4">
                 <label class="control-label required" asp-for="FirstName"></label>
@@ -104,6 +106,11 @@
                 <label class="control-label" asp-for="Job"></label>
                 <textarea class="form-control" asp-for="Job"></textarea>
                 <span class="text-danger" asp-validation-for="Job" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                Фото: <input type="file" asp-for="Photo" />
             </div>
         </div>
 

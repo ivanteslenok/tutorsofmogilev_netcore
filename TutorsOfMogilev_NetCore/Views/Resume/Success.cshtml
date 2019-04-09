@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Success";
+    ViewBag.MenuActive = "Оставить заявку";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/styles/resume.css" />
+}
+
+<h2 class="text-success">Ваша заявка принята, она будет рассмотрена нашими администраторами.</h2>
+
+<div><a asp-action="List" asp-controller="Tutors">Вернуться на главную</a></div>
+

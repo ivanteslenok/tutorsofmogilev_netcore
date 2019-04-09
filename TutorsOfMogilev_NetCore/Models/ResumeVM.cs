@@ -1,4 +1,4 @@
-﻿using Data.DTOs;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace TutorsOfMogilev_NetCore.Models
@@ -19,7 +19,7 @@ namespace TutorsOfMogilev_NetCore.Models
         [MaxLength(50, ErrorMessage = "Слишком длинное отчество")]
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
-        
+
         [MaxLength(1000, ErrorMessage = "Слишком длинное описание")]
         [Display(Name = "Описание")]
         public string Description { get; set; }
@@ -45,23 +45,25 @@ namespace TutorsOfMogilev_NetCore.Models
         [DataType(DataType.Currency, ErrorMessage = "Введите сумму")]
         [Display(Name = "Стоимость одного занятия")]
         public decimal? Cost { get; set; }
-        
+
         [Display(Name = "Город")]
         public int CityId { get; set; }
-        
+
         [Display(Name = "Цели занятий")]
         public long[] SpecializationsIds { get; set; }
 
         [Required(ErrorMessage = "Введите предметы которые вы преподаете")]
         [Display(Name = "Предметы")]
         public long[] SubjectsIds { get; set; }
-               
+
         [Required(ErrorMessage = "Введите телефон")]
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
 
         [Display(Name = "Оператор")]
         public string PhoneOperator { get; set; }
+
+        public IFormFile Photo { get; set; }
 
         public ResumeVM()
         {
