@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { START, SUCCESS, FAIL } from '../constants';
+import { httpGet } from '../helpers/httpHelper';
 
 export default store => next => action => {
   const { get, type, ...rest } = action;
@@ -11,9 +11,9 @@ export default store => next => action => {
     type: type + START
   });
 
-  axios
-    .get(get)
-    .then(response => response.data)
-    .then(data => next({ ...rest, type: type + SUCCESS, data }))
-    .catch(error => next({ ...rest, type: type + FAIL, error }));
+  httpGet(
+    get,
+    data => next({ ...rest, type: type + SUCCESS, data }),
+    error => next({ ...rest, type: type + FAIL, error })
+  );
 };

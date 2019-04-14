@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { START, SUCCESS, FAIL } from '../constants';
+import { httpPost } from '../helpers/httpHelper';
 
 export default store => next => action => {
   const { post, type, payload, ...rest } = action;
@@ -11,13 +11,10 @@ export default store => next => action => {
     type: type + START
   });
 
-  axios
-    .post(post, payload.data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.data)
-    .then(data => next({ ...rest, type: type + SUCCESS, data }))
-    .catch(error => next({ ...rest, type: type + FAIL, error }));
+  httpPost(
+    post,
+    payload.data,
+    data => next({ ...rest, type: type + SUCCESS, data }),
+    error => next({ ...rest, type: type + FAIL, error })
+  );
 };

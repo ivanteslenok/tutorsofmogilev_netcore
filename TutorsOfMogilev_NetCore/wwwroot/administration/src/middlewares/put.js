@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { START, SUCCESS, FAIL } from '../constants';
+import { httpPut } from '../helpers/httpHelper';
 
 export default store => next => action => {
   const { put, type, payload, ...rest } = action;
@@ -12,13 +12,10 @@ export default store => next => action => {
     type: type + START
   });
 
-  axios
-    .put(`${put}/${id}${additionalUrl || ''}`, data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.data)
-    .then(data => next({ ...rest, type: type + SUCCESS, data, payload }))
-    .catch(error => next({ ...rest, type: type + FAIL, error }));
+  httpPut(
+    `${put}/${id}${additionalUrl || ''}`,
+    data,
+    data => next({ ...rest, type: type + SUCCESS, data, payload }),
+    error => next({ ...rest, type: type + FAIL, error })
+  );
 };
