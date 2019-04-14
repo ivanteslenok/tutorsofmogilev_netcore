@@ -1,6 +1,7 @@
 import moment from 'moment'
 
 import {
+  GRID_STATE_CHANGE_ACTION,
   TUTOR,
   PHONE,
   CONTACT,
@@ -108,7 +109,13 @@ const gridSettings = [
 const initialState = {
   items: [],
   totalCount: 0,
+  pageSize: 10,
+  currentPage: 0,
   loading: false,
+  sorting: [],
+  editingRowIds: [],
+  addedRows: [],
+  rowChanges: {},
   lastQueryParams: '',
   gridColumns: gridSettings.map(item => ({
     name: item.name,
@@ -169,6 +176,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const { type, payload, data } = action;
+
+  if (type === GRID_STATE_CHANGE_ACTION) {
+    return {
+      ...state,
+      [action.partialStateName]: action.partialStateValue,
+    };
+  }
 
   switch (type) {
     case TUTOR + LOAD_LIST + START:
