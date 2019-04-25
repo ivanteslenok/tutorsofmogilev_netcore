@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,50 +10,40 @@ import Chip from '@material-ui/core/Chip';
 import SaveBtn from './SaveBtn';
 import CancelBtn from './CancelBtn';
 
-export default class MultipleSelectEditor extends Component {
-  state = {
-    currentValues: [],
-    hasChanges: false
-  };
+const MultipleSelectEditor = props => {
+  const [currentValues, setCurrentValues] = useState([]);
+  const [hasChanges, setHasChanges] = useState(false);
 
-  componentDidMount() {
-    const { loading, loaded, loadData, currentValues } = this.props;
+  useEffect(() => {
+    const { loading, loaded, loadData, currentValues } = props;
 
-    this.setState({ currentValues: currentValues });
+    setCurrentValues(currentValues);
 
     if (!loaded && !loading) loadData();
-  }
+  });
 
-  setHasChanges = () => {
-    const fromState = new Set(this.state.currentValues.map(x => x.id));
-    const fromProps = new Set(this.props.currentValues.map(x => x.id));
+  const detectChanges = () => {
+    const fromState = new Set(currentValues.map(x => x.id));
+    const fromProps = new Set(props.currentValues.map(x => x.id));
 
-    if (!_.isEqual(fromState, fromProps)) {
-      this.setState({ hasChanges: true });
-    } else {
-      this.setState({ hasChanges: false });
-    }
+    setHasChanges(!_.isEqual(fromState, fromProps));
   };
 
-  handleChange = event => {
-    this.setState({ currentValues: event.target.value }, this.setHasChanges);
+  const handleChange = event => {
+    setCurrentValues(event.target.value);
+    detectChanges();
   };
 
-  handleDelete = id => {
-    const { currentValues } = this.state;
-    this.setState(
-      {
-        currentValues: currentValues.filter(x => x.id !== id),
-        hasChanges: true
-      },
-      this.setHasChanges
-    );
+  const handleDelete = id => {
+    setCurrentValues(currentValues.filter(x => x.id !== id));
+    setHasChanges(true);
+    detectChanges();
   };
 
-  saveChanges = () => {
-    const { editId, update } = this.props;
-    let fromState = this.state.currentValues.map(x => x.id);
-    let fromProps = this.props.currentValues.map(x => x.id);
+  const saveChanges = () => {
+    const { editId, update } = props;
+    let fromState = currentValues.map(x => x.id);
+    let fromProps = props.currentValues.map(x => x.id);
 
     const added = fromState.filter(x => !fromProps.includes(x));
     const deleted = fromProps.filter(x => !fromState.includes(x));
@@ -63,67 +53,64 @@ export default class MultipleSelectEditor extends Component {
       deleted
     });
 
-    this.setState({ hasChanges: false });
+    setHasChanges(false);
   };
 
-  cancelChanges = () => {
-    this.setState((state, props) => ({
-      currentValues: props.currentValues,
-      hasChanges: false
-    }));
+  const cancelChanges = () => {
+    setCurrentValues(props.currentValues);
+    setHasChanges(false);
   };
 
-  render() {
-    const { currentValues, hasChanges } = this.state;
-    const { label, availableValues, loading } = this.props;
+  const { label, availableValues, loading } = props;
 
-    const value = availableValues.filter(x =>
-      currentValues.find(y => y.id === x.id)
-    );
+  const value = availableValues.filter(x =>
+    currentValues.find(y => y.id === x.id)
+  );
 
-    const content = loading ? (
-      'Loading...'
-    ) : (
-      <div style={{ display: 'flex', paddingTop: '10px' }}>
-        <Select
-          style={{ minWidth: '150px', maxWidth: '600px' }}
-          multiple
-          value={value}
-          onChange={this.handleChange}
-          input={<Input />}
-          renderValue={selected => (
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {selected.map(x => (
-                <Chip
-                  key={x.id}
-                  label={x.name}
-                  style={{ margin: '2px' }}
-                  onDelete={() => this.handleDelete(x.id)}
-                />
-              ))}
-            </div>
-          )}
-        >
-          {availableValues.map(x => (
-            <MenuItem key={x.id} value={x}>
-              {x.name}
-            </MenuItem>
-          ))}
-        </Select>
-        {hasChanges && (
-          <div>
-            <SaveBtn onExecute={this.saveChanges} />
-            <CancelBtn onExecute={this.cancelChanges} />
+  const content = loading ? (
+    'Loading...'
+  ) : (
+    <div style={{ display: 'flex', paddingTop: '10px' }}>
+      <Select
+        style={{ minWidth: '150px', maxWidth: '600px' }}
+        multiple
+        value={value}
+        onChange={handleChange}
+        input={<Input />}
+        renderValue={selected => (
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {selected.map(x => (
+              <Chip
+                key={x.id}
+                label={x.name}
+                style={{ margin: '2px' }}
+                onDelete={() => handleDelete(x.id)}
+              />
+            ))}
           </div>
         )}
-      </div>
-    );
+      >
+        {availableValues.map(x => (
+          <MenuItem key={x.id} value={x}>
+            {x.name}
+          </MenuItem>
+        ))}
+      </Select>
+      {hasChanges && (
+        <div>
+          <SaveBtn onExecute={saveChanges} />
+          <CancelBtn onExecute={cancelChanges} />
+        </div>
+      )}
+    </div>
+  );
 
-    return (
-      <FormControl style={{ minWidth: 300, maxWidth: 500 }}>
-        <InputLabel>{label}</InputLabel>
-        {content}
-      </FormControl>
-    );
-  }
-}
+  return (
+    <FormControl style={{ minWidth: 300, maxWidth: 500 }}>
+      <InputLabel>{label}</InputLabel>
+      {content}
+    </FormControl>
+  );
+};
+
+export default MultipleSelectEditor;
