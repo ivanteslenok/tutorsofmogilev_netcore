@@ -11,18 +11,16 @@ const styles = theme => ({
   }
 });
 
-function MenuItem({ classes, to, text }) {
-  return (
-    <ListItem button className={classes.padding}>
-      <NavLink
-        className="menu-item__nav-link"
-        activeClassName="menu-item__nav-link_active"
-        to={to}
-      >
-        {text}
-      </NavLink>
-    </ListItem>
-  );
-}
+const MenuItem = ({ classes, to, text }) => (
+  <ListItem button className={classes.padding}>
+    <NavLink
+      className="menu-item__nav-link"
+      activeClassName="menu-item__nav-link_active"
+      to={to}
+    >
+      {text}
+    </NavLink>
+  </ListItem>
+);
 
 export default withStyles(styles)(MenuItem);

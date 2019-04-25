@@ -13,7 +13,10 @@ const commandComponents = {
   cancel: CancelBtn
 };
 
-export default ({ id, onExecute }) => {
+const Command = ({ id, onExecute }) => {
   const CommandButton = commandComponents[id];
+
   return <CommandButton onExecute={onExecute} />;
 };
+
+export default Command;

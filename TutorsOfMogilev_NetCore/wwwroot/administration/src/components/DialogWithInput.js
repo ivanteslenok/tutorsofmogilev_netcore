@@ -7,14 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 
-export default function DialogWithInput({
+const DialogWithInput = ({
   isOpen,
   handleClose,
   handleAccept,
   inputValue,
   title,
   description
-}) {
+}) => {
   let input = createRef();
 
   const onAccept = () => {
@@ -25,7 +25,7 @@ export default function DialogWithInput({
   };
 
   return (
-    <Dialog fullWidth maxWidth='sm' open={isOpen} onClose={handleClose}>
+    <Dialog fullWidth maxWidth="sm" open={isOpen} onClose={handleClose}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>{description}</DialogContentText>
@@ -50,6 +50,6 @@ export default function DialogWithInput({
       </DialogActions>
     </Dialog>
   );
-}
+};
 
-
+export default DialogWithInput;

@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TableCell from '@material-ui/core/TableCell';
 
-export default ({ availableColumnValues, value, onValueChange }) => (
+const LookupEditCell = ({ availableColumnValues, value, onValueChange }) => (
   <TableCell>
     <Select
       value={value}
@@ -23,3 +23,5 @@ export default ({ availableColumnValues, value, onValueChange }) => (
     </Select>
   </TableCell>
 );
+
+export default LookupEditCell;

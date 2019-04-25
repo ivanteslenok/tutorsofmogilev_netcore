@@ -17,17 +17,15 @@ const styles = theme => ({
   }
 });
 
-function CreateBtn({ classes, handleClick }) {
-  return (
-    <Button
-      onClick={handleClick}
-      variant="contained"
-      className={classNames(classes.teal, classes.margin)}
-    >
-      Создать
-      <i className="material-icons right">add</i>
-    </Button>
-  );
-}
+const CreateBtn = ({ classes, handleClick }) => (
+  <Button
+    onClick={handleClick}
+    variant="contained"
+    className={classNames(classes.teal, classes.margin)}
+  >
+    Создать
+    <i className="material-icons right">add</i>
+  </Button>
+);
 
 export default withStyles(styles)(CreateBtn);

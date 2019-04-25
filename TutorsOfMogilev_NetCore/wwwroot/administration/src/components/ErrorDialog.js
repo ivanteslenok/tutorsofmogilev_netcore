@@ -6,18 +6,20 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function DeleteConfirmDialog({ isOpen, handleClose, errorMessage }) {
-  return (
-    <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>Упс! Произошла ошибка :{'('}</DialogTitle>
-      <DialogContent>
-        <DialogContentText style={{color: '#F44336'}}>{errorMessage}</DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Закрыть
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
+const ErrorDialog = ({ isOpen, handleClose, errorMessage }) => (
+  <Dialog open={isOpen} onClose={handleClose}>
+    <DialogTitle>Упс! Произошла ошибка :{'('}</DialogTitle>
+    <DialogContent>
+      <DialogContentText style={{ color: '#F44336' }}>
+        {errorMessage}
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={handleClose} color="primary">
+        Закрыть
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
+
+export default ErrorDialog;

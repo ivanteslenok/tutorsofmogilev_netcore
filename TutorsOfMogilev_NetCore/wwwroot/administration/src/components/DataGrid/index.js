@@ -36,7 +36,7 @@ const columnChooserMessages = {
   showColumnChooser: 'Список столбцов'
 };
 
-export default props => {
+const DataGrid = props => {
   const pageSizes = [5, 10, 15];
 
   const [editingRowIds, setEditingRowIds] = useState([]);
@@ -89,7 +89,9 @@ export default props => {
   const cancelDelete = () => setDeletingRows([]);
 
   const changeAddedRows = addedRows =>
-    setAddedRows(addedRows.map(row => (_.keys(row).length ? row : props.defaultValues)));
+    setAddedRows(
+      addedRows.map(row => (_.keys(row).length ? row : props.defaultValues))
+    );
 
   const commitChanges = ({ added, changed, deleted }) => {
     if (added) {
@@ -118,13 +120,17 @@ export default props => {
       : x
   );
 
-  const deleteRow = deletingRows[0] && _.find(props.rows, { id: deletingRows[0] });
+  const deleteRow =
+    deletingRows[0] && _.find(props.rows, { id: deletingRows[0] });
   const deleteText = props.getDeleteText(deleteRow);
 
   return (
     <Paper style={{ position: 'relative' }}>
       <Grid rows={props.rows} columns={columns} getRowId={row => row.id}>
-        <SortingState sorting={props.sorting} onSortingChange={props.onSortingChange} />
+        <SortingState
+          sorting={props.sorting}
+          onSortingChange={props.onSortingChange}
+        />
         <PagingState
           currentPage={props.currentPage}
           onCurrentPageChange={props.onCurrentPageChange}
@@ -186,3 +192,5 @@ export default props => {
     </Paper>
   );
 };
+
+export default DataGrid;

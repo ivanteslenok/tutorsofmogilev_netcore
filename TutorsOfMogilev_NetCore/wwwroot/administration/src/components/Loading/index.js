@@ -26,14 +26,12 @@ const styles = theme => ({
   }
 });
 
-function Loading({ classes }) {
-  return (
-    <div className={classes.outer}>
-      <div className={classes.centrilize}>
-        <CircularProgress className={classes.teal} size={50} />
-      </div>
+const Loading = ({ classes }) => (
+  <div className={classes.outer}>
+    <div className={classes.centrilize}>
+      <CircularProgress className={classes.teal} size={50} />
     </div>
-  );
-}
+  </div>
+);
 
 export default withStyles(styles)(Loading);

@@ -2,7 +2,7 @@ import React from 'react';
 import { TableEditRow } from '@devexpress/dx-react-grid-material-ui';
 import LookupEditCell from './LookupEditCell';
 
-export default props => {
+const EditCell = props => {
   const { column } = props;
 
   if (column.availableValues) {
@@ -16,3 +16,5 @@ export default props => {
 
   return <TableEditRow.Cell {...props} />;
 };
+
+export default EditCell;
