@@ -1,7 +1,7 @@
 import { START, SUCCESS, FAIL } from '../constants';
 import { httpDelete } from '../helpers/httpHelper';
 
-export default store => next => action => {
+export default store => next => async action => {
   const { del, type, payload, ...rest } = action;
 
   if (!del) return next(action);
@@ -11,9 +11,10 @@ export default store => next => action => {
     type: type + START
   });
 
-  httpDelete(
-    `${del}/${payload.id}`,
-    () => next({ ...rest, type: type + SUCCESS, payload }),
-    error => next({ ...rest, type: type + FAIL, error })
-  );
+  try {
+    await httpDelete(`${del}/${payload.id}`);
+    next({ ...rest, type: type + SUCCESS, payload });
+  } catch (error) {
+    next({ ...rest, type: type + FAIL, error });
+  }
 };

@@ -1,7 +1,7 @@
 import { START, SUCCESS, FAIL } from '../constants';
 import { httpPost } from '../helpers/httpHelper';
 
-export default store => next => action => {
+export default store => next => async action => {
   const { post, type, payload, ...rest } = action;
 
   if (!post) return next(action);
@@ -11,10 +11,10 @@ export default store => next => action => {
     type: type + START
   });
 
-  httpPost(
-    post,
-    payload.data,
-    data => next({ ...rest, type: type + SUCCESS, data }),
-    error => next({ ...rest, type: type + FAIL, error })
-  );
+  try {
+    const data = await httpPost(post, payload.data);
+    next({ ...rest, type: type + SUCCESS, data });
+  } catch (error) {
+    next({ ...rest, type: type + FAIL, error });
+  }
 };
