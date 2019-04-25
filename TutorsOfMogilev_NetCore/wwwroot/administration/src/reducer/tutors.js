@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment';
 
 import {
   GRID_STATE_CHANGE_ACTION,
@@ -10,6 +10,7 @@ import {
   CREATE_ITEM,
   UPDATE_ITEM,
   REMOVE_ITEM,
+  SET_FILTER,
   UPDATE_TUTORS_SUBJECTS,
   UPDATE_TUTORS_SPECIALIZATIONS,
   START,
@@ -102,8 +103,9 @@ const gridSettings = [
     title: 'Дата добавления',
     width: 140,
     editingEnabled: false,
-    getCellValue: row => row.createDate ? moment(row.createDate).format('DD.MM.YYYY') : ''
-  },
+    getCellValue: row =>
+      row.createDate ? moment(row.createDate).format('DD.MM.YYYY') : ''
+  }
 ];
 
 const initialState = {
@@ -113,6 +115,10 @@ const initialState = {
   currentPage: 0,
   loading: false,
   sorting: [],
+  filter: {
+    subjectId: null,
+    cityId: null
+  },
   editingRowIds: [],
   addedRows: [],
   rowChanges: {},
@@ -180,7 +186,7 @@ export default (state = initialState, action) => {
   if (type === GRID_STATE_CHANGE_ACTION) {
     return {
       ...state,
-      [action.partialStateName]: action.partialStateValue,
+      [action.partialStateName]: action.partialStateValue
     };
   }
 
@@ -207,6 +213,13 @@ export default (state = initialState, action) => {
 
     case TUTOR + SAVE_QUERY_PARAMS:
       return { ...state, lastQueryParams: payload.params };
+
+    case TUTOR + SET_FILTER:
+      return {
+        ...state,
+        filter: { ...state.filter, ...payload.filter },
+        lastQueryParams: ''
+      };
 
     case TUTOR + CREATE_ITEM + SUCCESS:
     case TUTOR + REMOVE_ITEM + SUCCESS:

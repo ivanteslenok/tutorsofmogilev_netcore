@@ -21,6 +21,7 @@ const mapStateToProps = state => {
     },
     rows: state.tutors.items,
     sorting: state.tutors.sorting,
+    filter: state.tutors.filter,
     pageSize: state.tutors.pageSize,
     currentPage: state.tutors.currentPage,
     totalCount: state.tutors.totalCount,
@@ -44,8 +45,7 @@ const mapDispatchToProps = dispatch => {
     remove: id => dispatch(tutorAC.removeTutor(id)),
     create: tutor => dispatch(tutorAC.createTutor(tutor)),
     update: (id, tutor) => dispatch(tutorAC.updateTutor(id, tutor)),
-    onSortingChange: sorting =>
-      dispatch(createGridAction('sorting', sorting)),
+    onSortingChange: sorting => dispatch(createGridAction('sorting', sorting)),
     onCurrentPageChange: currentPage =>
       dispatch(createGridAction('currentPage', currentPage)),
     onPageSizeChange: pageSize =>

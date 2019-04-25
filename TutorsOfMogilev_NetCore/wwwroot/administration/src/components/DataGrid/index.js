@@ -50,6 +50,7 @@ const DataGrid = props => {
     const columnSorting = props.sorting[0];
 
     const filter = {
+      ...props.filter,
       pageSize: props.pageSize,
       pageNumber: props.currentPage + 1
     };

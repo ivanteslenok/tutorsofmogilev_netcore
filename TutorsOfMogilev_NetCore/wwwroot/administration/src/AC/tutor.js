@@ -5,6 +5,7 @@ import {
   TUTORS_SPECIALIZATIONS_ADDITIONAL_URL,
   LOAD_LIST,
   SAVE_QUERY_PARAMS,
+  SET_FILTER,
   CREATE_ITEM,
   UPDATE_ITEM,
   REMOVE_ITEM,
@@ -24,6 +25,11 @@ export const loadTutors = queryParams => ({
 export const setLastQueryParams = queryParams => ({
   type: TUTOR + SAVE_QUERY_PARAMS,
   payload: { params: queryParams }
+});
+
+export const setFilter = filter => ({
+  type: TUTOR + SET_FILTER,
+  payload: { filter }
 });
 
 export const createTutor = tutor => ({
