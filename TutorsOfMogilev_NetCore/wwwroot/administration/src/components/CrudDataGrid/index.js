@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import { EditingState } from '@devexpress/dx-react-grid';
 import {
@@ -14,44 +14,30 @@ import DeleteConfirmDialog from '../DeleteConfirmDialog';
 import Command from '../DataGrid/Command';
 import EditCell from '../DataGrid/EditCell';
 
-export default class CrudDataGrid extends PureComponent {
-  state = {
-    columns: [],
-    rows: [],
-    addedRows: [],
-    deletingRows: []
-  };
+const CrudDataGrid = props => {
+  const [addedRows, setAddedRows] = useState([]);
+  const [deletingRows, setDeletingRows] = useState([]);
 
-  static getDerivedStateFromProps(props) {
-    return {
-      columns: props.columns,
-      availableColumnsValues: props.availableColumnsValues,
-      defaultValues: props.defaultValues || {},
-      rows: props.rows
-    };
-  }
+  useEffect(() => {
+    const { availableColumnsValuesLoaded, loadAvailableValues } = props;
 
-  componentDidMount = () => {
-    const { availableColumnsValuesLoaded, loadAvailableValues } = this.props;
     if (!availableColumnsValuesLoaded && loadAvailableValues)
       loadAvailableValues();
+  }, []);
+
+  const cancelDelete = () => setDeletingRows([]);
+
+  const changeAddedRows = added => {
+    const defaultValues = props.defaultValues || {};
+    const newAddedRows = added.map(row =>
+      _.keys(row).length ? row : defaultValues
+    );
+
+    setAddedRows(newAddedRows);
   };
 
-  cancelDelete = () => this.setState({ deletingRows: [] });
-
-  changeAddedRows = addedRows =>
-    this.setState(state => {
-      return {
-        addedRows: addedRows.map(row =>
-          _.keys(row).length ? row : state.defaultValues
-        )
-      };
-    });
-
-  commitChanges = ({ added, changed, deleted }) => {
-    let { rows } = this.state;
-    const { deletingRows } = this.state;
-    const { editId, create } = this.props;
+  const commitChanges = ({ added, changed, deleted }) => {
+    const { editId, create } = props;
 
     if (added) {
       added.forEach(item => {
@@ -60,62 +46,55 @@ export default class CrudDataGrid extends PureComponent {
       });
     }
 
-    this.setState({ rows, deletingRows: deleted || deletingRows });
+    setDeletingRows(deleted || deletingRows);
   };
 
-  deleteRows = () => {
-    const { deletingRows } = this.state;
-    deletingRows.forEach(rowId => this.props.remove(rowId));
-    this.setState({ deletingRows: [] });
+  const deleteRows = () => {
+    deletingRows.forEach(rowId => props.remove(rowId));
+    setDeletingRows([]);
   };
 
-  render() {
-    const {
-      rows,
-      addedRows,
-      deletingRows,
-      availableColumnsValues
-    } = this.state;
+  let { columns } = props;
 
-    let { columns } = this.state;
+  const deleteRow =
+    deletingRows[0] && _.find(props.rows, { id: deletingRows[0] });
+  const deleteText = props.getDeleteText(deleteRow);
 
-    const deleteRow = deletingRows[0] && _.find(rows, { id: deletingRows[0] });
-    const deleteText = this.props.getDeleteText(deleteRow);
-
-    if (availableColumnsValues) {
-      columns.forEach(x => {
-        if (availableColumnsValues[x.name])
-          x.availableValues = availableColumnsValues[x.name];
-      });
-    }
-
-    return (
-      <Paper style={{maxWidth: '600px'}}>
-        <Grid rows={rows} columns={columns} getRowId={row => row.id}>
-          <EditingState
-            addedRows={addedRows}
-            onAddedRowsChange={this.changeAddedRows}
-            onCommitChanges={this.commitChanges}
-          />
-
-          <Table />
-          <TableHeaderRow />
-
-          <TableEditRow cellComponent={EditCell} />
-          <TableEditColumn
-            width={150}
-            showAddCommand={!addedRows.length}
-            showDeleteCommand
-            commandComponent={Command}
-          />
-        </Grid>
-        <DeleteConfirmDialog
-          isOpen={!!deletingRows.length}
-          text={deleteText}
-          handleClose={this.cancelDelete}
-          handleConfirm={this.deleteRows}
-        />
-      </Paper>
-    );
+  if (props.availableColumnsValues) {
+    columns.forEach(x => {
+      if (props.availableColumnsValues[x.name])
+        x.availableValues = props.availableColumnsValues[x.name];
+    });
   }
-}
+
+  return (
+    <Paper style={{ maxWidth: '600px' }}>
+      <Grid rows={props.rows} columns={columns} getRowId={row => row.id}>
+        <EditingState
+          addedRows={addedRows}
+          onAddedRowsChange={changeAddedRows}
+          onCommitChanges={commitChanges}
+        />
+
+        <Table />
+        <TableHeaderRow />
+
+        <TableEditRow cellComponent={EditCell} />
+        <TableEditColumn
+          width={150}
+          showAddCommand={!addedRows.length}
+          showDeleteCommand
+          commandComponent={Command}
+        />
+      </Grid>
+      <DeleteConfirmDialog
+        isOpen={!!deletingRows.length}
+        text={deleteText}
+        handleClose={cancelDelete}
+        handleConfirm={deleteRows}
+      />
+    </Paper>
+  );
+};
+
+export default CrudDataGrid;
