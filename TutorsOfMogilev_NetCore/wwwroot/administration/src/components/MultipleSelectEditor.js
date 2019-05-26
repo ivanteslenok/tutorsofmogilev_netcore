@@ -15,12 +15,16 @@ const MultipleSelectEditor = props => {
   const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
-    const { loading, loaded, loadData, currentValues } = props;
-
-    setCurrentValues(currentValues);
+    const { loading, loaded, loadData } = props;
 
     if (!loaded && !loading) loadData();
+
+    detectChanges();
   });
+
+  useEffect(() => {
+    setCurrentValues(props.currentValues);
+  }, [])
 
   const detectChanges = () => {
     const fromState = new Set(currentValues.map(x => x.id));
@@ -31,13 +35,11 @@ const MultipleSelectEditor = props => {
 
   const handleChange = event => {
     setCurrentValues(event.target.value);
-    detectChanges();
   };
 
   const handleDelete = id => {
     setCurrentValues(currentValues.filter(x => x.id !== id));
     setHasChanges(true);
-    detectChanges();
   };
 
   const saveChanges = () => {
