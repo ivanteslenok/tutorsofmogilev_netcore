@@ -9,8 +9,15 @@ const TutorsFilter = props => {
     if (!isLookupValuesLoaded && loadLookupValues) loadLookupValues();
   }, []);
 
+  const filterHeaderStyle = {
+    color: 'rgb(3, 169, 244)',
+    fontWeight: '500',
+    margin: '0 20px'
+  };
+
   return (
     <Paper>
+      <span style={filterHeaderStyle}>Выберите фильтр: </span>
       <FilterSelect
         items={props.cities}
         itemId={props.cityId}
