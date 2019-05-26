@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { getSortedContactTypes } from './../selectors/contactTypes';
 import contactTypeAC from '../AC/contactType';
-import * as dialogsAC from '../AC/dialogs';
 import EntityList from '../components/EntityList';
 
 const mapStateToProps = state => {
@@ -9,9 +8,7 @@ const mapStateToProps = state => {
     items: getSortedContactTypes(state),
     loading: state.contactTypes.loading,
     loaded: state.contactTypes.loaded,
-    loadingFailed: state.contactTypes.loadingFailed,
-    deleteDialogOpen: state.dialogs.deleteConfirmOpen,
-    withInputDialogOpen: state.dialogs.withInputOpen
+    loadingFailed: state.contactTypes.loadingFailed
   };
 };
 
@@ -28,18 +25,6 @@ const mapDispatchToProps = dispatch => {
     },
     update: (id, contactType) => {
       dispatch(contactTypeAC.updateEntity(id, contactType));
-    },
-    openDeleteDialog: () => {
-      dispatch(dialogsAC.openDeleteConfirmDialog());
-    },
-    closeDeleteDialog: () => {
-      dispatch(dialogsAC.closeDeleteConfirmDialog());
-    },
-    openInputDialog: () => {
-      dispatch(dialogsAC.openDialogWithInput());
-    },
-    closeInputDialog: () => {
-      dispatch(dialogsAC.closeDialogWithInput());
     }
   };
 };

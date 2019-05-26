@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { getSortedSubjects } from './../selectors/subjects';
 import subjectAC from '../AC/subject';
-import * as dialogsAC from '../AC/dialogs';
 import EntityList from '../components/EntityList';
 
 const mapStateToProps = state => {
@@ -9,9 +8,7 @@ const mapStateToProps = state => {
     items: getSortedSubjects(state),
     loading: state.subjects.loading,
     loaded: state.subjects.loaded,
-    loadingFailed: state.subjects.loadingFailed,
-    deleteDialogOpen: state.dialogs.deleteConfirmOpen,
-    withInputDialogOpen: state.dialogs.withInputOpen
+    loadingFailed: state.subjects.loadingFailed
   };
 };
 
@@ -28,18 +25,6 @@ const mapDispatchToProps = dispatch => {
     },
     update: (id, subject) => {
       dispatch(subjectAC.updateEntity(id, subject));
-    },
-    openDeleteDialog: () => {
-      dispatch(dialogsAC.openDeleteConfirmDialog());
-    },
-    closeDeleteDialog: () => {
-      dispatch(dialogsAC.closeDeleteConfirmDialog());
-    },
-    openInputDialog: () => {
-      dispatch(dialogsAC.openDialogWithInput());
-    },
-    closeInputDialog: () => {
-      dispatch(dialogsAC.closeDialogWithInput());
     }
   };
 };

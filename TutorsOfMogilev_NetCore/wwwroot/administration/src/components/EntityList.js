@@ -10,27 +10,37 @@ import Paper from '@material-ui/core/Paper';
 const EntityList = props => {
   const [changingItemId, setChangingItemId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [deleteDialogOpen, togleDeleteDialog] = useState(false);
+  const [inputDialogOpen, togleInputDialog] = useState(false);
 
   useEffect(() => {
     const { loading, loaded, loadingFailed, loadData } = props;
     if (!loaded && !loading && !loadingFailed) loadData();
   });
 
+  const openDeleteDialog = () => togleDeleteDialog(true);
+
+  const closeDeleteDialog = () => togleDeleteDialog(false);
+
+  const openInputDialog = () => togleInputDialog(true);
+  
+  const closeInputDialog = () => togleInputDialog(false);
+
   const handleEditStart = id => {
     setChangingItemId(id);
     setIsEdit(true);
-    props.openInputDialog();
+    openInputDialog();
   };
 
   const handleDeleteStart = id => {
     setChangingItemId(id);
     setIsEdit(false);
-    props.openDeleteDialog();
+    openDeleteDialog();
   };
 
   const handleDeleteConfirm = () => {
     props.remove(changingItemId);
-    props.closeDeleteDialog();
+    closeDeleteDialog();
   };
 
   const handleAccept = value => {
@@ -45,18 +55,13 @@ const EntityList = props => {
   const handleEditClose = () => {
     setChangingItemId(null);
     setIsEdit(false);
-    props.closeInputDialog();
+    closeInputDialog();
   };
 
   const {
     items,
     loading,
-    loadingFailed,
-    deleteDialogOpen,
-    closeDeleteDialog,
-    withInputDialogOpen,
-    openInputDialog,
-    closeInputDialog
+    loadingFailed
   } = props;
 
   const description = 'Введите название.';
@@ -90,7 +95,7 @@ const EntityList = props => {
       <DialogWithInput
         title={isEdit ? 'Редактирование' : 'Создание'}
         description={description}
-        isOpen={withInputDialogOpen}
+        isOpen={inputDialogOpen}
         handleClose={isEdit ? handleEditClose : closeInputDialog}
         inputValue={isEdit ? _.find(items, { id: changingItemId }).name : ''}
         handleAccept={handleAccept}

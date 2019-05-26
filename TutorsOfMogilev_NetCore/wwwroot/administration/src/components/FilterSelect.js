@@ -31,7 +31,7 @@ const FilterSelect = ({ items, itemId, setItemId, placeholder }) => {
           </MenuItem>
         ))}
       </Select>
-      <Tooltip title="Сбросить" placement="down">
+      <Tooltip title="Сбросить">
         <IconButton color="secondary" onClick={clear}>
           <CancelIcon />
         </IconButton>

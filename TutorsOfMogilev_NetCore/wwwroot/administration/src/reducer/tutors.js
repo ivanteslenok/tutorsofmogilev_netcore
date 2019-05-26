@@ -180,7 +180,7 @@ const initialState = {
   ]
 };
 
-export default (state = initialState, action) => {
+const tutors = (state = initialState, action) => {
   const { type, payload, data } = action;
 
   if (type === GRID_STATE_CHANGE_ACTION) {
@@ -253,3 +253,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default tutors;
