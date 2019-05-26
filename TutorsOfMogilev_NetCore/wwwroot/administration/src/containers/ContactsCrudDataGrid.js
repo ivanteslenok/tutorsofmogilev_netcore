@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import * as tutorAC from '../AC/tutor';
-import * as contactTypesAC from '../AC/contactType';
+import contactTypesAC from '../AC/contactType';
 import CrudDataGrid from '../components/CrudDataGrid/index';
 
 const emptyAvailableValue = { name: '-' };
@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     loadAvailableValues: () => {
-      dispatch(contactTypesAC.loadContactTypes());
+      dispatch(contactTypesAC.loadEntities());
     },
     getDeleteText: deleteRow => {
       if (deleteRow) {

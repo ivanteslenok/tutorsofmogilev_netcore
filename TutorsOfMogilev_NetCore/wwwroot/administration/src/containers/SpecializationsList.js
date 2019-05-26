@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { getSortedSpecializations } from './../selectors/specializations';
-import * as specializationAC from '../AC/specialization';
+import specializationAC from '../AC/specialization';
 import * as dialogsAC from '../AC/dialogs';
-import EnityList from '../components/EnityList';
+import EntityList from '../components/EntityList';
 
 const mapStateToProps = state => {
   return {
@@ -17,16 +17,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: () => {
-      dispatch(specializationAC.loadSpecializations());
+      dispatch(specializationAC.loadEntities());
     },
     remove: id => {
-      dispatch(specializationAC.removeSpecialization(id));
+      dispatch(specializationAC.removeEntity(id));
     },
     create: specialization => {
-      dispatch(specializationAC.createSpecialization(specialization));
+      dispatch(specializationAC.createEntity(specialization));
     },
     update: (id, specialization) => {
-      dispatch(specializationAC.updateSpecialization(id, specialization));
+      dispatch(specializationAC.updateEntity(id, specialization));
     },
     openDeleteDialog: () => {
       dispatch(dialogsAC.openDeleteConfirmDialog());
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EnityList);
+)(EntityList);

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { getSortedCities } from './../selectors/cities';
-import * as cityAC from '../AC/city';
+import cityAC from '../AC/city';
 import * as dialogsAC from '../AC/dialogs';
-import EnityList from '../components/EnityList';
+import EntityList from '../components/EntityList';
 
 const mapStateToProps = state => {
   return {
@@ -17,16 +17,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: () => {
-      dispatch(cityAC.loadCities());
+      dispatch(cityAC.loadEntities());
     },
     remove: id => {
-      dispatch(cityAC.removeCity(id));
+      dispatch(cityAC.removeEntity(id));
     },
     create: city => {
-      dispatch(cityAC.createCity(city));
+      dispatch(cityAC.createEntity(city));
     },
     update: (id, city) => {
-      dispatch(cityAC.updateCity(id, city));
+      dispatch(cityAC.updateEntity(id, city));
     },
     openDeleteDialog: () => {
       dispatch(dialogsAC.openDeleteConfirmDialog());
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EnityList);
+)(EntityList);

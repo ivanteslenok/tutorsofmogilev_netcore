@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { getSortedContactTypes } from './../selectors/contactTypes';
-import * as contactTypeAC from '../AC/contactType';
+import contactTypeAC from '../AC/contactType';
 import * as dialogsAC from '../AC/dialogs';
-import EnityList from '../components/EnityList';
+import EntityList from '../components/EntityList';
 
 const mapStateToProps = state => {
   return {
@@ -17,16 +17,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: () => {
-      dispatch(contactTypeAC.loadContactTypes());
+      dispatch(contactTypeAC.loadEntities());
     },
     remove: id => {
-      dispatch(contactTypeAC.removeContactType(id));
+      dispatch(contactTypeAC.removeEntity(id));
     },
     create: contactType => {
-      dispatch(contactTypeAC.createContactType(contactType));
+      dispatch(contactTypeAC.createEntity(contactType));
     },
     update: (id, contactType) => {
-      dispatch(contactTypeAC.updateContactType(id, contactType));
+      dispatch(contactTypeAC.updateEntity(id, contactType));
     },
     openDeleteDialog: () => {
       dispatch(dialogsAC.openDeleteConfirmDialog());
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EnityList);
+)(EntityList);

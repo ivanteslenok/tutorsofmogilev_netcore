@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createGridAction } from '../AC/dataGrid';
 import * as tutorAC from '../AC/tutor';
-import * as cityAC from '../AC/city';
+import cityAC from '../AC/city';
 import DataGrid from '../components/DataGrid/index';
 
 const mapStateToProps = state => {
@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: filter => dispatch(tutorAC.loadTutors(filter)),
-    loadAvailableValues: () => dispatch(cityAC.loadCities()),
+    loadAvailableValues: () => dispatch(cityAC.loadEntities()),
     saveQueryParams: queryParams =>
       dispatch(tutorAC.setLastQueryParams(queryParams)),
     getDeleteText: deleteRow => {

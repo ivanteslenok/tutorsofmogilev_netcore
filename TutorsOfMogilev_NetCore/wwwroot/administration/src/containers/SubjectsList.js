@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { getSortedSubjects } from './../selectors/subjects';
-import * as subjectAC from '../AC/subject';
+import subjectAC from '../AC/subject';
 import * as dialogsAC from '../AC/dialogs';
-import EnityList from '../components/EnityList';
+import EntityList from '../components/EntityList';
 
 const mapStateToProps = state => {
   return {
@@ -17,16 +17,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: () => {
-      dispatch(subjectAC.loadSubjects());
+      dispatch(subjectAC.loadEntities());
     },
     remove: id => {
-      dispatch(subjectAC.removeSubject(id));
+      dispatch(subjectAC.removeEntity(id));
     },
     create: subject => {
-      dispatch(subjectAC.createSubject(subject));
+      dispatch(subjectAC.createEntity(subject));
     },
     update: (id, subject) => {
-      dispatch(subjectAC.updateSubject(id, subject));
+      dispatch(subjectAC.updateEntity(id, subject));
     },
     openDeleteDialog: () => {
       dispatch(dialogsAC.openDeleteConfirmDialog());
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EnityList);
+)(EntityList);

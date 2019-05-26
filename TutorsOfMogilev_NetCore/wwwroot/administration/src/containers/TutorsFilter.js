@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import * as tutorAC from '../AC/tutor';
-import * as cityAC from '../AC/city';
-import * as subjectAC from '../AC/subject';
+import cityAC from '../AC/city';
+import subjectAC from '../AC/subject';
 import TutorsFilter from '../components/TutorsFilter';
 
 const mapStateToProps = state => {
@@ -17,8 +17,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadLookupValues: () => {
-      dispatch(cityAC.loadCities());
-      dispatch(subjectAC.loadSubjects());
+      dispatch(cityAC.loadEntities());
+      dispatch(subjectAC.loadEntities());
     },
     setCityId: cityId => {
       dispatch(tutorAC.setFilter({ cityId }));

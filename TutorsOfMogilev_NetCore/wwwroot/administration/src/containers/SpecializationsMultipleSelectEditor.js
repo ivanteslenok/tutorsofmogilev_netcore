@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { getSortedSpecializations } from './../selectors/specializations';
 import * as tutorAC from '../AC/tutor';
-import * as specializationAC from '../AC/specialization';
+import specializationAC from '../AC/specialization';
 import MultipleSelectEditor from '../components/MultipleSelectEditor';
 
 const mapStateToProps = (state, ownProps) => {
@@ -18,7 +18,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     loadData: () => {
-      dispatch(specializationAC.loadSpecializations());
+      dispatch(specializationAC.loadEntities());
     },
     update: (id, data) => {
       dispatch(tutorAC.updateTutorSpecializations(id, data));
