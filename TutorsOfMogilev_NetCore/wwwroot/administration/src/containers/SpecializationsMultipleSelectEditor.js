@@ -10,8 +10,8 @@ const mapStateToProps = (state, ownProps) => {
     availableValues: getSortedSpecializations(state),
     currentValues: ownProps.currentValues,
     editId: ownProps.editId,
-    loading: state.subjects.loading,
-    loaded: state.subjects.loaded
+    loading: state.specializations.loading,
+    loaded: state.specializations.loaded
   };
 };
 
