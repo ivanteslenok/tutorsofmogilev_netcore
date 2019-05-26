@@ -7,7 +7,7 @@ import CreateBtn from './CreateBtn';
 import Loading from './Loading';
 import Paper from '@material-ui/core/Paper';
 
-const EnityList = props => {
+const EntityList = props => {
   const [changingItemId, setChangingItemId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -60,8 +60,7 @@ const EnityList = props => {
 
   const description = 'Введите название.';
 
-  const deleteItem =
-    changingItemId !== null && _.find(items, { id: changingItemId });
+  const deleteItem = changingItemId !== null && _.find(items, { id: changingItemId });
   const deleteText = deleteItem && deleteItem.name;
 
   const content = loading ? (
@@ -107,4 +106,4 @@ const EnityList = props => {
   );
 };
 
-export default EnityList;
+export default EntityList;
