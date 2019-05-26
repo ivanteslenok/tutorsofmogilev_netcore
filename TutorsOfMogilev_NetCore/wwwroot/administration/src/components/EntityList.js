@@ -12,8 +12,8 @@ const EntityList = props => {
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    const { loading, loaded, loadData } = props;
-    if (!loaded && !loading) loadData();
+    const { loading, loaded, loadingFailed, loadData } = props;
+    if (!loaded && !loading && !loadingFailed) loadData();
   });
 
   const handleEditStart = id => {
@@ -51,6 +51,7 @@ const EntityList = props => {
   const {
     items,
     loading,
+    loadingFailed,
     deleteDialogOpen,
     closeDeleteDialog,
     withInputDialogOpen,
@@ -63,9 +64,14 @@ const EntityList = props => {
   const deleteItem = changingItemId !== null && _.find(items, { id: changingItemId });
   const deleteText = deleteItem && deleteItem.name;
 
-  const content = loading ? (
-    <Loading />
-  ) : (
+  let paperStyle = {
+    width: '50%',
+    minHeight: '100px',
+    margin: '0 auto',
+    position: 'relative'
+  };
+
+  let content = (
     <>
       <EditableList
         items={items}
@@ -92,18 +98,19 @@ const EntityList = props => {
     </>
   );
 
-  return (
-    <Paper
-      style={{
-        width: '50%',
-        minHeight: '100px',
-        margin: '0 auto',
-        position: 'relative'
-      }}
-    >
-      {content}
-    </Paper>
-  );
+  if (loading) content = <Loading />;
+
+  if (loadingFailed) {
+    content = <h2 style={{ color: '#f00' }}>Ошибка загрузки</h2>;
+    paperStyle = {
+      ...paperStyle,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    };
+  }
+
+  return <Paper style={paperStyle}>{content}</Paper>;
 };
 
 export default EntityList;

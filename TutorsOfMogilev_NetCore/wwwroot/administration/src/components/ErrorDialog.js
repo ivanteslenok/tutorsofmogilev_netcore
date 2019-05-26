@@ -10,9 +10,7 @@ const ErrorDialog = ({ isOpen, handleClose, errorMessage }) => (
   <Dialog open={isOpen} onClose={handleClose}>
     <DialogTitle>Упс! Произошла ошибка :{'('}</DialogTitle>
     <DialogContent>
-      <DialogContentText style={{ color: '#F44336' }}>
-        {errorMessage}
-      </DialogContentText>
+      <DialogContentText style={{ color: '#F44336' }}>{errorMessage}</DialogContentText>
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} color="primary">

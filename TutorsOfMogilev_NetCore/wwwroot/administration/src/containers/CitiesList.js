@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     items: getSortedCities(state),
     loading: state.cities.loading,
     loaded: state.cities.loaded,
+    loadingFailed: state.cities.loadingFailed,
     deleteDialogOpen: state.dialogs.deleteConfirmOpen,
     withInputDialogOpen: state.dialogs.withInputOpen
   };

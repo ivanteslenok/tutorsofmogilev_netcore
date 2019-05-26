@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     items: getSortedContactTypes(state),
     loading: state.contactTypes.loading,
     loaded: state.contactTypes.loaded,
+    loadingFailed: state.contactTypes.loadingFailed,
     deleteDialogOpen: state.dialogs.deleteConfirmOpen,
     withInputDialogOpen: state.dialogs.withInputOpen
   };

@@ -12,7 +12,8 @@ export default function reducerWithCrud(entityName) {
   const initialState = {
     items: [],
     loading: false,
-    loaded: false
+    loaded: false,
+    loadingFailed: false
   };
 
   return (state = initialState, action) => {
@@ -48,7 +49,7 @@ export default function reducerWithCrud(entityName) {
       case entityName + CREATE_ITEM + FAIL:
       case entityName + UPDATE_ITEM + FAIL:
       case entityName + REMOVE_ITEM + FAIL:
-        return { ...state, loading: false, loaded: false };
+        return { ...state, loading: false, loaded: false, loadingFailed: true };
 
       default:
         return state;

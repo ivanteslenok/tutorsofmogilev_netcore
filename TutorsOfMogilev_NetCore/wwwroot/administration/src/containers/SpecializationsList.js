@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     items: getSortedSpecializations(state),
     loading: state.specializations.loading,
     loaded: state.specializations.loaded,
+    loadingFailed: state.specializations.loadingFailed,
     deleteDialogOpen: state.dialogs.deleteConfirmOpen,
     withInputDialogOpen: state.dialogs.withInputOpen
   };
