@@ -1,17 +1,20 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using TutorsOfMogilev_NetCore.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Modules.TutorModule.Filters;
 using System;
+using System.Threading.Tasks;
+using TutorsOfMogilev_NetCore.Services;
 
 namespace TutorsOfMogilev_NetCore.Controllers.MVC
 {
     public class TutorsController : Controller
     {
+        private readonly IConfiguration _configuration;
         private readonly TutorService _tutorService;
 
-        public TutorsController(TutorService tutorService)
+        public TutorsController(IConfiguration configuration, TutorService tutorService)
         {
+            _configuration = configuration;
             _tutorService = tutorService;
         }
 
@@ -29,6 +32,14 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
             filter.SortBy = "rating";
 
             var model = await _tutorService.GetListVM(filter);
+            model.Tutors.ForEach(x =>
+            {
+                if (!string.IsNullOrWhiteSpace(x.PhotoPath))
+                {
+                    var prefix = _configuration.GetSection("PhotoSettings").GetValue<string>("smallPrefix");
+                    x.PhotoPath = $"{x.PhotoPath}{prefix}{ImageService.photoExtension}";
+                }
+            });
 
             return View(model);
         }
@@ -38,6 +49,12 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
         {
             var tutorId = Convert.ToInt64(key.Split('-')[0]);
             var model = await _tutorService.GetItemVM(tutorId);
+
+            if (!string.IsNullOrWhiteSpace(model.PhotoPath))
+            {
+                var prefix = _configuration.GetSection("PhotoSettings").GetValue<string>("originalPrefix");
+                model.PhotoPath = $"{model.PhotoPath}{prefix}{ImageService.photoExtension}";
+            }
 
             return View(model);
         }

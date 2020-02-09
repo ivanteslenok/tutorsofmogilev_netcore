@@ -1,18 +1,28 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using ImageProcessor;
+using ImageProcessor.Plugins.WebP.Imaging.Formats;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TutorsOfMogilev_NetCore.Services
 {
     // https://www.codeproject.com/Articles/1256591/%2FArticles%2F1256591%2FUpload-Image-to-NET-Core-2-1-API
     public class ImageService
     {
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
         private readonly string photosFolder;
+        private readonly int quality;
+        private readonly int smallHeight;
+        private readonly string originalPhotoPrefix;
+        private readonly string smallPhotoPrefix;
         private enum ImageFormat
         {
             bmp,
@@ -23,9 +33,18 @@ namespace TutorsOfMogilev_NetCore.Services
             unknown
         }
 
-        public ImageService(string webRootPath)
+        public const string photoExtension = ".webp";
+
+        public ImageService(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            photosFolder = Path.Combine(webRootPath, "uploads", "UsersPhotos");
+            _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
+
+            quality = configuration.GetSection("PhotoSettings").GetValue<int>("quality");
+            smallHeight = configuration.GetSection("PhotoSettings").GetValue<int>("smallHeight");
+            originalPhotoPrefix = configuration.GetSection("PhotoSettings").GetValue<string>("originalPrefix");
+            smallPhotoPrefix = configuration.GetSection("PhotoSettings").GetValue<string>("smallPrefix");
+            photosFolder = Path.Combine(webHostEnvironment.WebRootPath, @"uploads\UsersPhotos");
         }
 
         public bool IsImage(IFormFile file)
@@ -40,27 +59,50 @@ namespace TutorsOfMogilev_NetCore.Services
             return GetImageFormat(fileBytes) != ImageFormat.unknown;
         }
 
-        public void DeleteOldPhoto(string oldPhoto)
+        public void DeleteOldPhoto(string oldPhotoName)
         {
-            var pathForDelete = photosFolder + $@"\{oldPhoto}";
-            if (File.Exists(pathForDelete))
-                File.Delete(pathForDelete);
+            var photosMap = GetImagesPathes(oldPhotoName);
+
+            foreach (var photoPath in photosMap)
+            {
+                if (File.Exists(photoPath.Value))
+                {
+                    File.Delete(photoPath.Value);
+                }
+            }
         }
 
-        public async Task<string> SavePhoto(IFormFile photo)
+        public string SavePhoto(Stream photo, string exsistingPhotoName = null)
         {
-            var photoName = Guid.NewGuid().ToString();
-            var photoExtension = Path.GetExtension(photo.FileName);
-            var photoFullName = $"{photoName}{photoExtension}";
-            var path = photosFolder + $@"\{photoFullName}";
+            var photoName = string.IsNullOrWhiteSpace(exsistingPhotoName)
+                ? Guid.NewGuid().ToString()
+                : exsistingPhotoName;
+            var photosMap = GetImagesPathes(photoName);
 
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            if (!Directory.Exists(photosFolder))
             {
-                await photo.CopyToAsync(fileStream);
-                fileStream.Flush();
+                Directory.CreateDirectory(photosFolder);
             }
 
-            return photoFullName;
+            using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+            {
+                var factory = imageFactory.Load(photo)
+                            .Format(new WebPFormat());
+
+                using (var webPFileStream = new FileStream(photosMap[originalPhotoPrefix], FileMode.Create))
+                {
+                    factory.Quality(quality).Save(webPFileStream);
+                    webPFileStream.Flush();
+                }
+
+                using (var webPSmallFileStream = new FileStream(photosMap[smallPhotoPrefix], FileMode.Create))
+                {
+                    factory.Resize(new Size { Height = smallHeight }).Save(webPSmallFileStream);
+                    webPSmallFileStream.Flush();
+                }
+            }
+
+            return photoName;
         }
 
         private ImageFormat GetImageFormat(byte[] bytes)
@@ -95,6 +137,15 @@ namespace TutorsOfMogilev_NetCore.Services
                 return ImageFormat.jpeg;
 
             return ImageFormat.unknown;
+        }
+
+        private Dictionary<string, string> GetImagesPathes(string name)
+        {
+            return new Dictionary<string, string>
+            {
+                { originalPhotoPrefix, Path.Combine(photosFolder, $"{name}{originalPhotoPrefix}{photoExtension}") },
+                { smallPhotoPrefix, Path.Combine(photosFolder, $"{name}{smallPhotoPrefix}{photoExtension}") }
+            };
         }
     }
 }

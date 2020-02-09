@@ -14,6 +14,8 @@ export const CITIES_URL = `${apiUrl}/cities`;
 export const PHONES_URL = `${apiUrl}/phones`;
 export const CONTACTS_URL = `${apiUrl}/contacts`;
 
+export const OPTIMIZE_TUTORS_PHOTOS_URL = '/Administration/OptimizePhotos'
+
 // action types
 
 export const GRID_STATE_CHANGE_ACTION = 'GRID_STATE_CHANGE';

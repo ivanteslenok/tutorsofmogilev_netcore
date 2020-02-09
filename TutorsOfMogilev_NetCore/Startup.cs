@@ -26,12 +26,10 @@ namespace TutorsOfMogilev_NetCore
     public class Startup
     {
         private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -64,7 +62,7 @@ namespace TutorsOfMogilev_NetCore
 
             services.AddTransient<ExceptionHandler>();
             services.AddTransient<TutorService>();
-            services.AddTransient(x => new ImageService(_webHostEnvironment.WebRootPath));
+            services.AddTransient<ImageService>();
 
             services.AddCors();
 

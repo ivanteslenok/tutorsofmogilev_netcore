@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Core.Models;
+﻿using Core.Models;
 using Data.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modules.TutorModule;
 using Modules.TutorModule.Filters;
+using System.Linq;
+using System.Threading.Tasks;
 using TutorsOfMogilev_NetCore.Models;
+using TutorsOfMogilev_NetCore.Services;
 
 namespace TutorsOfMogilev_NetCore.Controllers.API
 {
@@ -17,10 +17,12 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
     public class TutorsController : Controller
     {
         private readonly TutorRepository _tutorRepository;
+        private readonly ImageService _imageService;
 
-        public TutorsController(TutorRepository tutorRepository)
+        public TutorsController(TutorRepository tutorRepository, ImageService imageService)
         {
             _tutorRepository = tutorRepository;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -98,6 +100,13 @@ namespace TutorsOfMogilev_NetCore.Controllers.API
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var tutor = await _tutorRepository.GetItem(id);
+
+            if (tutor != null && !string.IsNullOrWhiteSpace(tutor.PhotoPath))
+            {
+                _imageService.DeleteOldPhoto(tutor.PhotoPath);
+            }
+
             var result = await _tutorRepository.DeleteItem(id);
 
             if (!result)

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Data.DTOs;
 using Data.Entities;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +9,7 @@ using Modules.PhoneModule;
 using Modules.SpecializationModule;
 using Modules.SubjectModule;
 using Modules.TutorModule;
+using System.Threading.Tasks;
 using TutorsOfMogilev_NetCore.Models;
 using TutorsOfMogilev_NetCore.Services;
 
@@ -69,7 +67,7 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
                 await _tutorRepo.UpdateTutorSubjects(newTutor.Id, resume.SubjectsIds, new long[] { });
                 await _phoneRepo.InsertItem(new Phone
                 {
-                    Tutor = _mapper.Map<Tutor>(newTutor),
+                    TutorId = newTutor.Id,
                     Number = resume.Phone,
                     Operator = resume.PhoneOperator
                 });
@@ -96,16 +94,17 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
 
         private async Task<bool> LoadPhoto(IFormFile photo, long tutorId)
         {
-            if (photo != null
-                && _imageService.IsImage(photo))
+            if (photo != null && _imageService.IsImage(photo))
             {
                 var tutor = await _tutorRepo.GetItem(tutorId);
                 var oldPhoto = tutor.PhotoPath;
 
                 if (!string.IsNullOrWhiteSpace(oldPhoto))
+                {
                     _imageService.DeleteOldPhoto(oldPhoto);
+                }
 
-                var savedPhotoName = await _imageService.SavePhoto(photo);
+                var savedPhotoName = _imageService.SavePhoto(photo.OpenReadStream());
 
                 await _tutorRepo.SetPhotoPath(tutorId, savedPhotoName);
 
