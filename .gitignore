@@ -259,7 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+package-lock.json
 /TutorsOfMogilev_NetCore/wwwroot/uploads/UsersPhotos
 /TutorsOfMogilev_NetCore/wwwroot/package-lock.json
 /TutorsOfMogilev_NetCore/wwwroot/administration/package-lock.json
-package-lock.json
+/TutorsOfMogilev_NetCore/Logs

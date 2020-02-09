@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core;
 using Data;
 using DataEntity;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Modules.CityModule;
 using Modules.ContactModule;
 using Modules.ContactTypeModule;
@@ -16,7 +18,6 @@ using Modules.SpecializationModule;
 using Modules.SubjectModule;
 using Modules.TutorModule;
 using Newtonsoft.Json;
-using TutorsOfMogilev_NetCore.Filters;
 using TutorsOfMogilev_NetCore.Models;
 using TutorsOfMogilev_NetCore.Services;
 
@@ -61,21 +62,25 @@ namespace TutorsOfMogilev_NetCore
             services.AddScoped<SubjectRepository>();
             services.AddScoped<TutorRepository>();
 
+            services.AddTransient<ExceptionHandler>();
             services.AddTransient<TutorService>();
             services.AddTransient(x => new ImageService(_webHostEnvironment.WebRootPath));
 
             services.AddCors();
 
-            services.AddMvc(config =>
-                {
-                    config.Filters.Add<CustomExceptionFilter>();
-                })
+            services.AddMvc()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
-        public void Configure(IApplicationBuilder app, IHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostEnvironment env,
+            ILoggerFactory loggerFactory
+            )
         {
+            loggerFactory.AddFile("Logs/{Date}.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

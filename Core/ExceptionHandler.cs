@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Core
 {
-    public static class ExceptionHandler
+    public class ExceptionHandler
     {
-        public static void HandleError(Exception ex, string actionName)
+        private readonly ILogger<ExceptionHandler> _log;
+
+        public ExceptionHandler(ILogger<ExceptionHandler> log)
         {
-            //todo logging
+            _log = log;
+        }
+
+        public void HandleError(string errorText)
+        {
+            _log.LogError(errorText);
         }
     }
 }
