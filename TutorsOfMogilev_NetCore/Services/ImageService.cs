@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,15 +12,7 @@ namespace TutorsOfMogilev_NetCore.Services
     // https://www.codeproject.com/Articles/1256591/%2FArticles%2F1256591%2FUpload-Image-to-NET-Core-2-1-API
     public class ImageService
     {
-        private readonly IHostingEnvironment _appEnvironment;
         private readonly string photosFolder;
-
-        public ImageService(IHostingEnvironment appEnvironment)
-        {
-            _appEnvironment = appEnvironment;
-            photosFolder = Path.Combine(_appEnvironment.WebRootPath, "uploads", "UsersPhotos");
-        }
-
         private enum ImageFormat
         {
             bmp,
@@ -28,6 +21,11 @@ namespace TutorsOfMogilev_NetCore.Services
             tiff,
             png,
             unknown
+        }
+
+        public ImageService(string webRootPath)
+        {
+            photosFolder = Path.Combine(webRootPath, "uploads", "UsersPhotos");
         }
 
         public bool IsImage(IFormFile file)
@@ -67,13 +65,13 @@ namespace TutorsOfMogilev_NetCore.Services
 
         private ImageFormat GetImageFormat(byte[] bytes)
         {
-            var bmp = Encoding.ASCII.GetBytes("BM");     // BMP
-            var gif = Encoding.ASCII.GetBytes("GIF");    // GIF
-            var png = new byte[] { 137, 80, 78, 71 };              // PNG
-            var tiff = new byte[] { 73, 73, 42 };                  // TIFF
-            var tiff2 = new byte[] { 77, 77, 42 };                 // TIFF
-            var jpeg = new byte[] { 255, 216, 255, 224 };          // jpeg
-            var jpeg2 = new byte[] { 255, 216, 255, 225 };         // jpeg canon
+            var bmp = Encoding.ASCII.GetBytes("BM");        // BMP
+            var gif = Encoding.ASCII.GetBytes("GIF");       // GIF
+            var png = new byte[] { 137, 80, 78, 71 };       // PNG
+            var tiff = new byte[] { 73, 73, 42 };           // TIFF
+            var tiff2 = new byte[] { 77, 77, 42 };          // TIFF
+            var jpeg = new byte[] { 255, 216, 255, 224 };   // jpeg
+            var jpeg2 = new byte[] { 255, 216, 255, 225 };  // jpeg canon
 
             if (bmp.SequenceEqual(bytes.Take(bmp.Length)))
                 return ImageFormat.bmp;

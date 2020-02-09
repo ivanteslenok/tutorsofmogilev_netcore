@@ -42,19 +42,16 @@ namespace Modules.SubjectModule
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
-            var totalCount = query.CountAsync();
-
-            var result = query
+            var totalCount = await query.CountAsync();
+            var result = await query
                 .ApplyPaging(filter)
                 .AsNoTracking()
                 .ToListAsync();
 
-            await Task.WhenAll(totalCount, result);
-
             return new ListModel<SubjectDTO>
             {
-                Items = _mapper.Map<List<SubjectDTO>>(result.Result),
-                TotalCount = totalCount.Result
+                Items = _mapper.Map<List<SubjectDTO>>(result),
+                TotalCount = totalCount
             };
         }
 

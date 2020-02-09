@@ -40,19 +40,16 @@ namespace Modules.CityModule
                 .ApplyFiltering(filter)
                 .ApplySorting(filter);
 
-            var totalCount = query.CountAsync();
-
-            var result = query
+            var totalCount = await query.CountAsync();
+            var result = await query
                 .ApplyPaging(filter)
                 .AsNoTracking()
                 .ToListAsync();
 
-            await Task.WhenAll(totalCount, result);
-
             return new ListModel<CityDTO>
             {
-                Items = _mapper.Map<List<CityDTO>>(result.Result),
-                TotalCount = totalCount.Result
+                Items = _mapper.Map<List<CityDTO>>(result),
+                TotalCount = totalCount
             };
         }
 

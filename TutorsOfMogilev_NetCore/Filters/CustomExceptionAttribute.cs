@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 
 namespace TutorsOfMogilev_NetCore.Filters
 {
     public class CustomExceptionFilter : IExceptionFilter
     {
-        readonly IHostingEnvironment _env;
+        private readonly IHostEnvironment _env;
 
-        public CustomExceptionFilter(IHostingEnvironment env)
+        public CustomExceptionFilter(IHostEnvironment env)
         {
             _env = env;
         }
@@ -22,7 +23,6 @@ namespace TutorsOfMogilev_NetCore.Filters
 
             ExceptionHandler.HandleError(context.Exception, actionName);
 
-            // TODO разграничивать ппоказ exceptionMessage по ролям (только админу)
             context.Result = new ContentResult
             {
                 StatusCode = 500,

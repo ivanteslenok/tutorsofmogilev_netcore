@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using Data;
 using DataEntity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Modules.CityModule;
 using Modules.ContactModule;
 using Modules.ContactTypeModule;
@@ -16,6 +17,7 @@ using Modules.SubjectModule;
 using Modules.TutorModule;
 using Newtonsoft.Json;
 using TutorsOfMogilev_NetCore.Filters;
+using TutorsOfMogilev_NetCore.Models;
 using TutorsOfMogilev_NetCore.Services;
 
 namespace TutorsOfMogilev_NetCore
@@ -23,10 +25,12 @@ namespace TutorsOfMogilev_NetCore
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -41,10 +45,13 @@ namespace TutorsOfMogilev_NetCore
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
 
-            services.AddAutoMapper(mc =>
-            {
-                mc.AddProfiles(new[] { "Data", "TutorsOfMogilev_NetCore" });
-            });
+            IMapper mapper = new MapperConfiguration(mc =>
+                {
+                    mc.AddProfile(new MapperProfile());
+                    mc.AddProfile(new VMMapperProfile());
+                })
+                .CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddScoped<CityRepository>();
             services.AddScoped<ContactRepository>();
@@ -55,29 +62,23 @@ namespace TutorsOfMogilev_NetCore
             services.AddScoped<TutorRepository>();
 
             services.AddTransient<TutorService>();
-            services.AddTransient<ImageService>();
+            services.AddTransient(x => new ImageService(_webHostEnvironment.WebRootPath));
 
             services.AddCors();
 
             services.AddMvc(config =>
                 {
-                    config.Filters.Add(new CustomExceptionFilter(new HostingEnvironment()));
+                    config.Filters.Add<CustomExceptionFilter>();
                 })
-                .AddJsonOptions(
-                    options => options.SerializerSettings.ReferenceLoopHandling =
-                        ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(builder =>
-                    builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                );
             }
             else
             {
@@ -85,14 +86,23 @@ namespace TutorsOfMogilev_NetCore
             }
 
             app.UseStaticFiles();
+            app.UseRouting();
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                );
+            }
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Tutors}/{action=List}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Tutors}/{action=List}/{id?}");
             });
         }
     }
