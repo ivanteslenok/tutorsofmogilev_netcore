@@ -260,3 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 /TutorsOfMogilev_NetCore/wwwroot/uploads/UsersPhotos
+/TutorsOfMogilev_NetCore/wwwroot/package-lock.json
+/TutorsOfMogilev_NetCore/wwwroot/administration/package-lock.json
+package-lock.json
