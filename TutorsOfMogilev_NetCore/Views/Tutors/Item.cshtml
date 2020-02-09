@@ -20,11 +20,11 @@
         <div class="tutor-card__photo">
             @if (string.IsNullOrWhiteSpace(Model.PhotoPath))
             {
-                <img src="~/images/default-user.png" class="tutor-photo">
+                <img src="~/images/default-user.png" class="tutor-photo" alt="Фото отсутствует">
             }
             else
             {
-                <img src="~/uploads/UsersPhotos/@Model.PhotoPath" class="tutor-photo">
+                <img src="~/uploads/UsersPhotos/@Model.PhotoPath" class="tutor-photo" alt="Фото репетитора @Model.FirstName @Model.LastName">
             }
         </div>
         <div class="tutor-card__data">

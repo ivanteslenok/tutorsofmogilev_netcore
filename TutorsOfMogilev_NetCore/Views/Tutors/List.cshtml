@@ -70,7 +70,7 @@
                asp-controller="Tutors"
                asp-action="Item"
                asp-route-key="@tutor.UrlKey">
-                <h5>@tutor.Title</h5>
+            <h5>@tutor.Title</h5>
             </a>
             <div class="card-info">
                 <div class="card-info__photo">
@@ -80,11 +80,11 @@
                        asp-route-key="@tutor.UrlKey">
                         @if (string.IsNullOrWhiteSpace(tutor.PhotoPath))
                         {
-                            <img src="~/images/default-user.png" class="card-photo">
+                            <img src="~/images/default-user.png" class="card-photo" alt="Фото отсутствует">
                         }
                         else
                         {
-                            <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo">
+                            <img src="~/uploads/UsersPhotos/@tutor.PhotoPath" class="card-photo" alt="Фото репетитора @tutor.Title">
                         }
                     </a>
                 </div>
