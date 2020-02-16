@@ -10,15 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Logs\**" />
     <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
+    <Content Remove="Logs\**" />
     <Content Remove="wwwroot\css\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
+    <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
+    <None Remove="Logs\**" />
     <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap-select\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\bootstrap\**" />
