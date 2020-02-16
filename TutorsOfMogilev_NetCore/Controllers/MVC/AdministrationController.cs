@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DataEntity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TutorsOfMogilev_NetCore.Services;
 
 namespace TutorsOfMogilev_NetCore.Controllers.MVC
@@ -11,11 +13,14 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
     {
         private readonly ImageService _imageService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationContext _db;
 
-        public AdministrationController(ImageService imageService, IWebHostEnvironment webHostEnvironment)
+        public AdministrationController(ImageService imageService, IWebHostEnvironment webHostEnvironment,
+            ApplicationContext applicationContext)
         {
             _imageService = imageService;
             _webHostEnvironment = webHostEnvironment;
+            _db = applicationContext;
         }
 
         [Authorize]
@@ -35,6 +40,12 @@ namespace TutorsOfMogilev_NetCore.Controllers.MVC
                 var stream = new FileStream(photo, FileMode.Open);
                 _imageService.SavePhoto(stream, Path.GetFileNameWithoutExtension(photo));
             }
+
+            _db.Tutors
+                .Where(x => !string.IsNullOrWhiteSpace(x.PhotoPath))
+                .ToList()
+                .ForEach(x => x.PhotoPath = Path.GetFileNameWithoutExtension(x.PhotoPath));
+            _db.SaveChanges();
         }
     }
 }
