@@ -264,3 +264,4 @@ package-lock.json
 /TutorsOfMogilev_NetCore/wwwroot/package-lock.json
 /TutorsOfMogilev_NetCore/wwwroot/administration/package-lock.json
 /TutorsOfMogilev_NetCore/Logs
+/TutorsOfMogilev_NetCore/.config/dotnet-tools.json
